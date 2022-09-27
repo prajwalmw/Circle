@@ -1,14 +1,16 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'com.google.gms.google-services'
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    namespace 'com.example.circle'
     compileSdk 32
-
+    namespace 'com.example.circle'
     defaultConfig {
         applicationId "com.example.circle"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -42,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Firebase
-    implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-storage'
@@ -56,6 +58,7 @@ dependencies {
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2' // otp view
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     implementation 'com.android.volley:volley:1.2.0' // for calling api's similar Retrofit but Volley is product of Google.
+//    implementation 'com.google.android.gms:play-services-ads:21.1.0'
 
 
 }
