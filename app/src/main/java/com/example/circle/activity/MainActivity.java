@@ -1,8 +1,10 @@
-package com.example.circle;
+package com.example.circle.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.circle.R;
 
 public class MainActivity extends AppCompatActivity {
 
