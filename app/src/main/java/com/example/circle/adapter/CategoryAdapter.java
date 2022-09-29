@@ -13,21 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.circle.R;
-import com.example.circle.activity.CategoryActivity;
 import com.example.circle.activity.Chat_UserList;
+import com.example.circle.model.CategoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
     private Context context;
+    private List<CategoryModel> modelList;
 
-    public CategoryAdapter(Context context) {
+    public CategoryAdapter(Context context, List<CategoryModel> modelList) {
         this.context = context;
-
-        List<String> iconlist = new ArrayList<>();
-        List<String> titleList = new ArrayList<>();
-
+        this.modelList = modelList;
     }
 
     @NonNull
@@ -39,26 +37,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.MyHolder holder, int position) {
+        CategoryModel model = modelList.get(position);
+        if (model != null) {
+            holder.image.setImageDrawable(model.getIcon());
+            holder.title.setText(model.getTitle());
 
-        holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.icons8_romance_48));
-        holder.title.setText("Dating");
-
-        holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.movies));
-        holder.title.setText("Movies");
-
-        holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.barchart));
-        holder.title.setText("Business");
-
-        holder.relativeLayout.setOnClickListener(v -> {
-            Intent i = new Intent(context, Chat_UserList.class);
-            context.startActivity(i);
-        });
+            holder.relativeLayout.setOnClickListener(v -> {
+                Intent i = new Intent(context, Chat_UserList.class);
+                context.startActivity(i);
+            });
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return modelList.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

@@ -5,30 +5,21 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
+    android:layout_marginStart="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:elevation="0dp"
-        android:layout_marginStart="30dp"
-        app:cardCornerRadius="40dp">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/icons8_romance_48"/>
-
-    </androidx.cardview.widget.CardView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sport_icon"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dating"
-        android:layout_toEndOf="@+id/icon"
+        android:layout_toEndOf="@+id/image"
         android:layout_centerVertical="true"
         android:layout_marginStart="30dp"
         android:textStyle="bold"
