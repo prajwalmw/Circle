@@ -126,7 +126,7 @@ public class UserSetupScreen extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         dialog.dismiss();
-                                                        Intent intent = new Intent(UserSetupScreen.this, MainActivity.class);
+                                                        Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }
@@ -150,7 +150,7 @@ public class UserSetupScreen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
-                                    Intent intent = new Intent(UserSetupScreen.this, MainActivity.class);
+                                    Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

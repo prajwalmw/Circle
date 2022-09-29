@@ -55,7 +55,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
         FirebaseUser user = mauth.getCurrentUser();
         Log.v("user", "user_: " + user);
         if (user != null) { // TODO: user != null
-            startActivity(new Intent(ProfileOTP_Login.this, MainActivity.class));
+            startActivity(new Intent(ProfileOTP_Login.this, CategoryActivity.class));
         }
         else {
             //  startActivity(new Intent(ProfileOTP_Login.this, UserSetupScreen.class));
