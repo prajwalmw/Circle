@@ -10,5 +10,6 @@
     <color name="grey">#E3E3E3</color>
     <color name="red">#FF0000</color>
     <color name="greenDark">#28852C</color>
+    <color name="fade_color">#20BB86FC</color>
 
 </resources>

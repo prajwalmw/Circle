@@ -23,12 +23,12 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
 
         modelList = new ArrayList<>();
-        modelList.add(new CategoryModel(getDrawable(R.drawable.sport_icon), "Sports"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.travel_icon), "Travel"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.food_icon), "Food"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.movies), "Movies"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.movies), "Movies"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.movies), "Movies"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.sport_large_icon), "Sports"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.travel_large_icon), "Travel"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.food_large_icon), "Food"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.technology_large_icon), "Technology"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.business_large_icon), "Business/Startup"));
+        modelList.add(new CategoryModel(getDrawable(R.drawable.fun_large_icon), "Fun & Games"));
 
         recyclerview_category = findViewById(R.id.recyclerview_category);
         adapter = new CategoryAdapter(this, modelList);

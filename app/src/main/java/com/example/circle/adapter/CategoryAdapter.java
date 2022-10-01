@@ -66,6 +66,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             title = itemView.findViewById(R.id.title);
             image = itemView.findViewById(R.id.image);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
+
+            relativeLayout.setOnClickListener(v -> {
+                relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
+            });
         }
     }
 }
