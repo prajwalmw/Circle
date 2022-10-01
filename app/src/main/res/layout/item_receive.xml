@@ -29,13 +29,17 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="7dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="7dp"
+            android:paddingTop="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
             android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="@null"
+            android:textColor="@null"
+            android:fontFamily="@font/lato"
+            android:textAppearance="@style/hi_how_to_c"
+            android:lineSpacingExtra="3sp"
+            android:gravity="center_vertical" />
     </LinearLayout>
 
     <ImageView

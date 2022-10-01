@@ -80,7 +80,7 @@ public class ChatActivity extends AppCompatActivity {
 
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.toolbar);
+      //  setSupportActionBar(binding.toolbar);
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#005005"));
 
@@ -90,7 +90,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         // Set BackgroundDrawable
-        binding.toolbar.setBackgroundDrawable(colorDrawable);
+     //   binding.toolbar.setBackgroundDrawable(colorDrawable);
 
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -156,10 +156,10 @@ public class ChatActivity extends AppCompatActivity {
                             String status = snapshot.getValue(String.class);
                             if (!status.isEmpty()) {
                                 if (status.equals("Offline")) {
-                                    binding.status.setVisibility(View.GONE);
+                                 //   binding.status.setVisibility(View.GONE);
                                 } else {
-                                    binding.status.setText(status);
-                                    binding.status.setVisibility(View.VISIBLE);
+                                  //  binding.status.setText(status);
+                                  //  binding.status.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
