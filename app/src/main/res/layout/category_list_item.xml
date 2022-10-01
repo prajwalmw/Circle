@@ -3,7 +3,6 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:paddingVertical="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -18,10 +17,12 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dating"
-        android:layout_toEndOf="@+id/image"
         android:layout_centerVertical="true"
         android:layout_marginStart="30dp"
-        android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:layout_toEndOf="@+id/image"
+        android:fontFamily="@font/lato_bold"
+        android:lineSpacingExtra="3sp"
+        android:text="Dating"
+        android:textSize="14sp"
+        android:translationY="-1.39sp" />
 </RelativeLayout>
