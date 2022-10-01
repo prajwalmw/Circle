@@ -74,11 +74,11 @@ public class UserSetupScreen extends AppCompatActivity {
 //                        user = snapshot.getValue(User.class);
 //                        if(user != null) {
 //                            Log.v("user", "userValue: "+ user + ", " + user.getProfileImage() + ", " + user.getName());
-//                          //  binding.imageView.setImageURI(Uri.parse(user.getProfileImage()));
+//                          //  binding.imageViewIcon.setImageURI(Uri.parse(user.getProfileImage()));
 //                            Glide.with(UserSetupScreen.this)
 //                                    .load(user.getProfileImage())
 //                                    .placeholder(R.drawable.avatar)
-//                                    .into(binding.imageView);
+//                                    .into(binding.imageViewIcon);
 //                            binding.nameBox.setText(user.getName());
 //                        }
 //                    }
@@ -91,7 +91,7 @@ public class UserSetupScreen extends AppCompatActivity {
 
 
 
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
+        binding.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -226,7 +226,7 @@ public class UserSetupScreen extends AppCompatActivity {
                 });
 
 
-                binding.imageView.setImageURI(data.getData());
+                binding.imageViewIcon.setImageURI(data.getData());
                 selectedImage = data.getData();
             }
         }

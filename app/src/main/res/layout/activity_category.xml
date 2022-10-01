@@ -34,7 +34,7 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/arrow_back"
             android:fontFamily="@font/lato_bold"
-            android:gravity="top"
+            android:gravity="center"
             android:lineSpacingExtra="1sp"
             android:text="Select your category"
             android:textAppearance="@style/toolbar_title"
