@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.circle.databinding.ActivityProfileOtpLogin1Binding;
 import com.example.circle.databinding.ActivityProfileOtpLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +25,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class ProfileOTP_Login extends AppCompatActivity {
-    private ActivityProfileOtpLoginBinding binding;
+    private ActivityProfileOtpLogin1Binding binding;
     private FirebaseAuth mauth;
     private String mVerificationId;
     private Intent intent;
@@ -33,7 +34,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProfileOtpLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityProfileOtpLogin1Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         intent = getIntent();
@@ -81,15 +82,15 @@ public class ProfileOTP_Login extends AppCompatActivity {
             }
         });
 
-        binding.continueBtn.setOnClickListener(v -> {
-            String edit_otp = binding.otpBox.getText().toString();
-            if(edit_otp.isEmpty() || edit_otp.length() < 6)
-            {
-                binding.otpBox.setError("Enter valid code");
-                binding.otpBox.requestFocus();
-            }
-            verify_VerificationCode(edit_otp); // use the otp to verify and login.
-        });
+//        binding.continueBtn.setOnClickListener(v -> {
+//            String edit_otp = binding.otpBox.getText().toString();
+//            if(edit_otp.isEmpty() || edit_otp.length() < 6)
+//            {
+//                binding.otpBox.setError("Enter valid code");
+//                binding.otpBox.requestFocus();
+//            }
+//            verify_VerificationCode(edit_otp); // use the otp to verify and login.
+//        });
     }
 
     /**This function is used to verify the mobile number
