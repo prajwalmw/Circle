@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/category_toolbar"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/camera_user_profile" />
 
     </androidx.cardview.widget.CardView>
