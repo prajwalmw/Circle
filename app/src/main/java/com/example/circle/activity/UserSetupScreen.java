@@ -10,10 +10,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.circle.databinding.ActivityUserSetupScreenBinding;
 import com.example.circle.model.User;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,12 +36,21 @@ public class UserSetupScreen extends AppCompatActivity {
     Uri selectedImage;
     ProgressDialog dialog;
     User user;
+    private Intent intent;
+    private String category_value;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityUserSetupScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sessionManager = new SessionManager(this);
+        intent = getIntent();
+        if (intent != null) {
+            category_value = intent.getStringExtra("category");
+        }
 
         // changing status bar color
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -120,13 +131,24 @@ public class UserSetupScreen extends AppCompatActivity {
 
                                         database.getReference()
                                                 .child("users")
+                                                .child(category_value)
                                                 .child(uid)
                                                 .setValue(user)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         dialog.dismiss();
-                                                        Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
+                                                        sessionManager.setCategorySelected(category_value);
+                                                        String s = sessionManager.getCategorySelected();
+                                                        Intent intent = new Intent(UserSetupScreen.this, Chat_UserList.class);
+                                                        Log.v("Chat", "usersetup_session: " + s);
+                                                        Log.v("Chat", "user_setup_value: " + category_value);
+
+                                                        if (sessionManager.getCategorySelected() != null)
+                                                            intent.putExtra("category", s);
+                                                        else
+                                                            intent.putExtra("category", category_value);
+
                                                         startActivity(intent);
                                                         finish();
                                                     }
@@ -144,13 +166,19 @@ public class UserSetupScreen extends AppCompatActivity {
 
                     database.getReference()
                             .child("users")
+                            .child(category_value)
                             .child(uid)
                             .setValue(user)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
-                                    Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
+                                    Intent intent = new Intent(UserSetupScreen.this, Chat_UserList.class);
+                                    if (sessionManager.getCategorySelected() != null)
+                                        intent.putExtra("category", sessionManager.getCategorySelected());
+                                    else
+                                        intent.putExtra("category", category_value);
+
                                     startActivity(intent);
                                     finish();
                                 }
@@ -181,7 +209,9 @@ public class UserSetupScreen extends AppCompatActivity {
                                     String filePath = uri.toString();
                                     HashMap<String, Object> obj = new HashMap<>();
                                     obj.put("image", filePath);
-                                    database.getReference().child("users")
+                                    database.getReference()
+                                            .child("users")
+                                            .child(category_value)
                                             .child(FirebaseAuth.getInstance().getUid())
                                             .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override

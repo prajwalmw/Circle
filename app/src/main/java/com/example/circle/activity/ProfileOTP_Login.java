@@ -27,12 +27,19 @@ public class ProfileOTP_Login extends AppCompatActivity {
     private ActivityProfileOtpLoginBinding binding;
     private FirebaseAuth mauth;
     private String mVerificationId;
+    private Intent intent;
+    private String category_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileOtpLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        intent = getIntent();
+        if (intent != null) {
+            category_value = intent.getStringExtra("category");
+        }
 
         // changing status bar color
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -51,7 +58,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
         // OTP Login support is added.
         mauth = FirebaseAuth.getInstance();
 
-        // Checks if user is already logged in or not.
+        /*// Checks if user is already logged in or not.
         FirebaseUser user = mauth.getCurrentUser();
         Log.v("user", "user_: " + user);
         if (user != null) { // TODO: user != null
@@ -59,7 +66,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
         }
         else {
             //  startActivity(new Intent(ProfileOTP_Login.this, UserSetupScreen.class));
-        }
+        }*/
 
         binding.sendOtpBtn.setOnClickListener(v -> {
             String mobileString = binding.mobileNoBox.getText().toString().trim();
@@ -147,6 +154,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             // get id here and send that to main activity.
                             Intent intent = new Intent(ProfileOTP_Login.this, UserSetupScreen.class);
+                            intent.putExtra("category", category_value);
                             startActivity(intent);
                         }
                         else {

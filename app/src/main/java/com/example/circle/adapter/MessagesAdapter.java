@@ -30,22 +30,21 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     Context context;
     ArrayList<Message> messages;
-
     final int ITEM_SENT = 1;
     final int ITEM_RECEIVE = 2;
-
     String senderRoom;
     String receiverRoom;
-
     FirebaseRemoteConfig remoteConfig;
+    String category_value;
 
     public MessagesAdapter(Context context, ArrayList<Message> messages,
-                           String senderRoom, String receiverRoom) {
+                           String senderRoom, String receiverRoom, String category_value) {
         remoteConfig = FirebaseRemoteConfig.getInstance();
         this.context = context;
         this.messages = messages;
         this.senderRoom = senderRoom;
         this.receiverRoom = receiverRoom;
+        this.category_value = category_value;
     }
 
     @NonNull
@@ -108,12 +107,14 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
             FirebaseDatabase.getInstance().getReference()
                     .child("chats")
+                    .child(category_value)
                     .child(senderRoom)
                     .child("messages")
                     .child(message.getMessageId()).setValue(message);
 
             FirebaseDatabase.getInstance().getReference()
                     .child("chats")
+                    .child(category_value)
                     .child(receiverRoom)
                     .child("messages")
                     .child(message.getMessageId()).setValue(message);
@@ -188,12 +189,14 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                             message.setFeeling(-1);
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(senderRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(message);
 
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(receiverRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(message);
@@ -206,6 +209,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(senderRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(null);
@@ -278,12 +282,14 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                             message.setFeeling(-1);
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(senderRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(message);
 
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(receiverRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(message);
@@ -296,6 +302,7 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                         public void onClick(View v) {
                             FirebaseDatabase.getInstance().getReference()
                                     .child("chats")
+                                    .child(category_value)
                                     .child(senderRoom)
                                     .child("messages")
                                     .child(message.getMessageId()).setValue(null);

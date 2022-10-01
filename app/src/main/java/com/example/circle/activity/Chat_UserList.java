@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.circle.R;
 import com.example.circle.adapter.UsersAdapter;
@@ -29,6 +32,9 @@ public class Chat_UserList extends AppCompatActivity {
     ActivityChatUserListBinding binding;
     static final String currentId = FirebaseAuth.getInstance().getUid();
     public static final String TAG = Chat_UserList.class.getSimpleName();
+    private Intent intent;
+    private String category_value;
+    private TextView no_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +42,33 @@ public class Chat_UserList extends AppCompatActivity {
         binding = ActivityChatUserListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        intent = getIntent();
+        if (intent != null) {
+            category_value = intent.getStringExtra("category");
+            Log.v("Chat", "chatuserlist: " + category_value);
+        }
+
         database = FirebaseDatabase.getInstance();
         users = new ArrayList<>();
-        usersAdapter = new UsersAdapter(this, users);
+        if (users.size() <= 0)
+            binding.noData.setVisibility(View.VISIBLE);
+        else
+            binding.noData.setVisibility(View.GONE);
+
+        usersAdapter = new UsersAdapter(this, users, category_value);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.recyclerView.setAdapter(usersAdapter);
+
 
         /**
          * Reading all the users that exists...and here itself checking if the user is blocked by
          * someone than that someone shouldnt show up here...
          */
-        database.getReference().child("users").addValueEventListener(new ValueEventListener() {
+        database.getReference()
+                .child("users")
+                .child(category_value)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 users.clear();
@@ -63,11 +84,16 @@ public class Chat_UserList extends AppCompatActivity {
                         // now check in chat branch if this ID is present or not.
                         // read chat branch for the ID is present than read block key for true value based on this make the users list.
 
-                        database.getReference().child("chats").child(otherBlockMe).child("block").addValueEventListener(new ValueEventListener() {
+                        database.getReference().child("chats").child(category_value)
+                                .child(otherBlockMe).child("block").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (!snapshot.exists()) {
                                     users.add(user);
+                                    if (users.size() <= 0)
+                                        binding.noData.setVisibility(View.VISIBLE);
+                                    else
+                                        binding.noData.setVisibility(View.GONE);
                                     usersAdapter.notifyDataSetChanged();
                                     return;
                                 }
@@ -80,6 +106,10 @@ public class Chat_UserList extends AppCompatActivity {
                                     } else {
                                         user.setIsblocked(false);
                                         users.add(user); // ie. this user has not blocked me on his end.
+                                        if (users.size() <= 0)
+                                            binding.noData.setVisibility(View.VISIBLE);
+                                        else
+                                            binding.noData.setVisibility(View.GONE);
                                     }
                                 }
                             }
@@ -98,7 +128,7 @@ public class Chat_UserList extends AppCompatActivity {
 
                         // now check in chat branch if this ID is present or not.
                         // read chat branch for the ID is present than read block key for true value based on this make the users list.
-                        database.getReference().child("chats").child(meBlock).child("block").addValueEventListener(new ValueEventListener() {
+                        database.getReference().child("chats").child(category_value).child(meBlock).child("block").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Boolean block = snapshot.getValue(Boolean.class);

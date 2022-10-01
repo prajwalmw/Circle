@@ -29,10 +29,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
     Context context;
     ArrayList<User> users;
+    String category_value;
 
-    public UsersAdapter(Context context, ArrayList<User> users) {
+    public UsersAdapter(Context context, ArrayList<User> users, String category_value) {
         this.context = context;
         this.users = users;
+        this.category_value = category_value;
     }
 
     @NonNull
@@ -52,6 +54,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
         FirebaseDatabase.getInstance().getReference()
                 .child("chats")
+                .child(category_value)
                 .child(senderRoom)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -98,6 +101,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
                 intent.putExtra("uid", user.getUid());
                 intent.putExtra("token", user.getToken());
                 intent.putExtra("block", user.isIsblocked());
+                intent.putExtra("category", category_value);
                 context.startActivity(intent);
             }
         });

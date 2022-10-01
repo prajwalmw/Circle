@@ -2,6 +2,7 @@ package com.example.circle.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.circle.R;
 import com.example.circle.activity.Chat_UserList;
+import com.example.circle.activity.ProfileOTP_Login;
 import com.example.circle.model.CategoryModel;
 
 import java.util.ArrayList;
@@ -43,7 +45,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             holder.title.setText(model.getTitle());
 
             holder.relativeLayout.setOnClickListener(v -> {
-                Intent i = new Intent(context, Chat_UserList.class);
+//                Intent i = new Intent(context, Chat_UserList.class);
+                Intent i = new Intent(context, ProfileOTP_Login.class);
+                i.putExtra("category", model.getTitle());
+                Log.v("Chat", "category_adapter: " + model.getTitle());
                 context.startActivity(i);
             });
         }
