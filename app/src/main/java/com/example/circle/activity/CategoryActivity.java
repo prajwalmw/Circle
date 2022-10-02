@@ -19,6 +19,7 @@ import com.example.circle.utilities.SessionManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +82,12 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
                 checkedValues = new ArrayList<>();
                 checkedValues = adapter.getCheckedValues();
                 Log.v("Category", "checkedvalues: " + checkedValues.size());
-                Intent i = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
+                Intent intent = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
+                Bundle args = new Bundle();
+                args.putSerializable("category_list", (Serializable) checkedValues);
+                intent.putExtra("BUNDLE",args);
               //  i.putExtra("category", model.getTitle());
-                startActivity(i);
+                startActivity(intent);
 
             }
 

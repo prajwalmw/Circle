@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ProfileOTP_Login extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
     private FirebaseAuth mauth;
     private String mVerificationId;
     private Intent intent;
-    private String category_value;
+    private List<String> categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,10 @@ public class ProfileOTP_Login extends AppCompatActivity {
 
         intent = getIntent();
         if (intent != null) {
-            category_value = intent.getStringExtra("category");
+            Bundle args = intent.getBundleExtra("BUNDLE");
+            categoryList = (List<String>) args.getSerializable("category_list");
+            Log.v("Category", "checkedvalues: " + categoryList.size());
+
         }
 
         // changing status bar color
@@ -155,7 +159,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             // get id here and send that to main activity.
                             Intent intent = new Intent(ProfileOTP_Login.this, UserSetupScreen.class);
-                            intent.putExtra("category", category_value);
+                          //  intent.putExtra("category", category_value);
                             startActivity(intent);
                         }
                         else {
