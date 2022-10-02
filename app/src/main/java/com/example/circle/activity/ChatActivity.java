@@ -147,6 +147,14 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        if (block)
+            binding.blockBtn.setText("Unblock");
+        else
+            binding.blockBtn.setText("Block");
+
+        binding.blockBtn.setOnClickListener(v -> {
+            blockUser();
+        });
 
         database.getReference().child("presence").child(receiverUid)
                 .addValueEventListener(new ValueEventListener() {
@@ -322,7 +330,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+      //  getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 //        getSupportActionBar().setTitle(name);
 //
@@ -487,7 +495,7 @@ public class ChatActivity extends AppCompatActivity {
         database.getReference().child("presence").child(currentId).setValue("Offline");
     }
 
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chat_menu, menu);
         if (block)
@@ -513,7 +521,7 @@ public class ChatActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+*/
     private void blockUser() {
         if (messages.size() > 0) {
             HashMap<String, Object> block_key = new HashMap<>();

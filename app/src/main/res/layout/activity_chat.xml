@@ -16,7 +16,7 @@
         android:layout_marginEnd="14dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         >
 
         <ImageButton
@@ -44,16 +44,19 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/profile"
             android:fontFamily="@font/lato_bold"
-            android:gravity="center"
             android:layout_centerVertical="true"
             android:lineSpacingExtra="1sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Prajwal Waingankar"
             android:textAppearance="@style/toolbar_title"
             android:textColor="@null"
             android:textSize="@null"
+            android:layout_marginEnd="20dp"
             android:translationY="-0.28sp" />
 
         <TextView
+            android:id="@+id/blockBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -76,13 +79,16 @@
 
 
     <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_toStartOf="@+id/sendBtn"
             android:background="@drawable/chat_message_box"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="24dp"
             android:layout_marginBottom="24dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
             <EditText
