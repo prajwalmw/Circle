@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,12 @@ public class Chat_UserList extends AppCompatActivity {
         binding = ActivityChatUserListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // changing status bar color
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+
         intent = getIntent();
         if (intent != null) {
             category_value = intent.getStringExtra("category");
@@ -55,6 +63,7 @@ public class Chat_UserList extends AppCompatActivity {
         else
             binding.noData.setVisibility(View.GONE);
 
+        binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
         usersAdapter = new UsersAdapter(this, users, category_value);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
