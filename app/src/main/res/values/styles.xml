@@ -67,4 +67,9 @@
         </item>
     </style>
 
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/color_primary</item>
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+
 </resources>

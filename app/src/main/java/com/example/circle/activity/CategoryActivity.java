@@ -9,10 +9,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.circle.R;
 import com.example.circle.adapter.CategoryAdapter;
 import com.example.circle.model.CategoryModel;
+import com.example.circle.utilities.CheckboxSelected;
 import com.example.circle.utilities.SessionManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,12 +22,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements CheckboxSelected {
     RecyclerView recyclerview_category;
     CategoryAdapter adapter;
     private List<CategoryModel> modelList;
     private FirebaseAuth mauth;
     private SessionManager sessionManager;
+    private TextView join_txtview;
+    private List<String> checkedValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,27 @@ public class CategoryActivity extends AppCompatActivity {
         modelList.add(new CategoryModel(getDrawable(R.drawable.camera_large_icon), "Photography and Life"));
 
         recyclerview_category = findViewById(R.id.recyclerview_category);
+        join_txtview = findViewById(R.id.join_txtview);
         adapter = new CategoryAdapter(this, modelList);
         recyclerview_category.setAdapter(adapter);
+
+        join_txtview.setOnClickListener(v -> {
+            if (adapter != null) {
+                checkedValues = new ArrayList<>();
+                checkedValues = adapter.getCheckedValues();
+                Log.v("Category", "checkedvalues: " + checkedValues.size());
+                Intent i = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
+              //  i.putExtra("category", model.getTitle());
+                startActivity(i);
+
+            }
+
+        });
+
+    }
+
+    @Override
+    public void getSelectedCheckboxes(List<String> selectedList) {
+
     }
 }

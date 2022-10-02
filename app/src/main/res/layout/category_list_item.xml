@@ -11,6 +11,7 @@
             android:id="@+id/image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginStart="5dp"
             android:src="@drawable/sport_large_icon"/>
 
     <TextView
@@ -25,4 +26,14 @@
         android:text="Dating"
         android:textSize="14sp"
         android:translationY="-1.39sp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkboxItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:selectAllOnFocus="true"
+        style="@style/Widget.App.CheckBox"
+        android:layout_marginEnd="24dp" />
 </RelativeLayout>
