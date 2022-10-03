@@ -15,7 +15,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/camera_user_profile"
-        android:foreground="@color/fade_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
