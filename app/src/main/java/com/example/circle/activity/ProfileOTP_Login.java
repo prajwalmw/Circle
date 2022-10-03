@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.circle.databinding.ActivityProfileOtpLogin1Binding;
 import com.example.circle.databinding.ActivityProfileOtpLoginBinding;
+import com.example.circle.model.CategoryModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -22,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +33,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
     private FirebaseAuth mauth;
     private String mVerificationId;
     private Intent intent;
-    private List<String> categoryList;
+    private List<CategoryModel> categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
         intent = getIntent();
         if (intent != null) {
             Bundle args = intent.getBundleExtra("BUNDLE");
-            categoryList = (List<String>) args.getSerializable("category_list");
+            categoryList = (List<CategoryModel>) args.getSerializable("category_list");
             Log.v("Category", "checkedvalues: " + categoryList.size());
 
         }
@@ -159,7 +162,10 @@ public class ProfileOTP_Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             // get id here and send that to main activity.
                             Intent intent = new Intent(ProfileOTP_Login.this, UserSetupScreen.class);
-                          //  intent.putExtra("category", category_value);
+//                            intent.putExtra("category", category_value);
+                            Bundle args = new Bundle();
+                            args.putSerializable("category_list", (Serializable) categoryList);
+                            intent.putExtra("BUNDLE",args);
                             startActivity(intent);
                         }
                         else {

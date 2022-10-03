@@ -20,13 +20,14 @@ import com.example.circle.activity.ProfileOTP_Login;
 import com.example.circle.model.CategoryModel;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHolder> {
     private Context context;
     private List<CategoryModel> modelList;
-    private List<String> checkedValues;
+    private List<CategoryModel> checkedValues;
 
     public CategoryAdapter(Context context, List<CategoryModel> modelList) {
         this.context = context;
@@ -45,7 +46,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     public void onBindViewHolder(@NonNull CategoryAdapter.MyHolder holder, int position) {
         CategoryModel model = modelList.get(position);
         if (model != null) {
-            holder.image.setImageDrawable(model.getIcon());
+            int id = model.getIcon();
+            holder.image.setImageDrawable(context.getDrawable(id));
             holder.title.setText(model.getTitle());
 
 //            holder.relativeLayout.setOnClickListener(v -> {
@@ -64,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         return modelList.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
+    public class MyHolder extends RecyclerView.ViewHolder implements Serializable{
         TextView title;
         ImageView image;
         MaterialCheckBox checkBox;
@@ -89,11 +91,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     if (isChecked) {
-                        checkedValues.add(modelList.get(getAdapterPosition()).getTitle());
+                        checkedValues.add(new CategoryModel(
+                                modelList.get(getAdapterPosition()).getIcon(),
+                                modelList.get(getAdapterPosition()).getTitle()));
                         relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
                     }
                     else {
-                        checkedValues.remove(modelList.get(getAdapterPosition()).getTitle());
+                        checkedValues.remove(new CategoryModel(
+                                modelList.get(getAdapterPosition()).getIcon(),
+                                modelList.get(getAdapterPosition()).getTitle()));
                         relativeLayout.setBackgroundColor(context.getColor(R.color.white));
                     }
                 }
@@ -101,7 +107,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         }
     }
 
-    public List<String> getCheckedValues() {
+    public List<CategoryModel> getCheckedValues() {
         return checkedValues;
     }
 }

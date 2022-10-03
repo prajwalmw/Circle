@@ -23,14 +23,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryActivity extends AppCompatActivity implements CheckboxSelected {
+public class CategoryActivity extends AppCompatActivity implements CheckboxSelected, Serializable {
     RecyclerView recyclerview_category;
     CategoryAdapter adapter;
     private List<CategoryModel> modelList;
     private FirebaseAuth mauth;
     private SessionManager sessionManager;
     private TextView join_txtview;
-    private List<String> checkedValues;
+    private List<CategoryModel> checkedValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,15 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
         // Checks if user is already logged in or not.
         mauth = FirebaseAuth.getInstance();
         FirebaseUser user = mauth.getCurrentUser();
+
         Log.v("user", "user_: " + user);
         if (user != null) { // TODO: user != null
-            Intent intent = new Intent(this, Chat_UserList.class);
-            intent.putExtra("category", sessionManager.getCategorySelected());
+            Intent intent = new Intent(this, MyCommunity.class);
+          //  intent.putExtra("category", sessionManager.getCategorySelected());
+            Bundle args = new Bundle();
+            args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+            intent.putExtra("BUNDLE",args);
+
             Log.v("Chat", "categoryactv: " + sessionManager.getCategorySelected());
             startActivity(intent);
             finish();
@@ -61,16 +66,16 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
         }
 
         modelList = new ArrayList<>();
-        modelList.add(new CategoryModel(getDrawable(R.drawable.sport_large_icon), "Sports and Fitness"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.travel_large_icon), "Travel and Adventure"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.food_large_icon), "Food Enthusiast"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.technology_large_icon), "Technology and Future"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.business_large_icon), "Business and Startup"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.stockmarket_large_icon), "Stock Market World"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.fun_large_icon), "Fun and Games"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.dance_large_icon), "Dance Mania"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.music_large_icon), "Music and Masti"));
-        modelList.add(new CategoryModel(getDrawable(R.drawable.camera_large_icon), "Photography and Life"));
+        modelList.add(new CategoryModel(R.drawable.sport_large_icon, "Sports and Fitness"));
+        modelList.add(new CategoryModel(R.drawable.travel_large_icon, "Travel and Adventure"));
+        modelList.add(new CategoryModel(R.drawable.food_large_icon, "Food Enthusiast"));
+        modelList.add(new CategoryModel(R.drawable.technology_large_icon, "Technology and Future"));
+        modelList.add(new CategoryModel(R.drawable.business_large_icon, "Business and Startup"));
+        modelList.add(new CategoryModel(R.drawable.stockmarket_large_icon, "Stock Market World"));
+        modelList.add(new CategoryModel(R.drawable.fun_large_icon, "Fun and Games"));
+        modelList.add(new CategoryModel(R.drawable.dance_large_icon, "Dance Mania"));
+        modelList.add(new CategoryModel(R.drawable.music_large_icon, "Music and Masti"));
+        modelList.add(new CategoryModel(R.drawable.camera_large_icon, "Photography and Life"));
 
         recyclerview_category = findViewById(R.id.recyclerview_category);
         join_txtview = findViewById(R.id.join_txtview);
@@ -82,11 +87,11 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
                 checkedValues = new ArrayList<>();
                 checkedValues = adapter.getCheckedValues();
                 Log.v("Category", "checkedvalues: " + checkedValues.size());
+
                 Intent intent = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
                 Bundle args = new Bundle();
                 args.putSerializable("category_list", (Serializable) checkedValues);
                 intent.putExtra("BUNDLE",args);
-              //  i.putExtra("category", model.getTitle());
                 startActivity(intent);
 
             }

@@ -103,7 +103,10 @@ public class Chat_UserList extends AppCompatActivity {
                                         binding.noData.setVisibility(View.VISIBLE);
                                     else
                                         binding.noData.setVisibility(View.GONE);
+
+                                    binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
                                     usersAdapter.notifyDataSetChanged();
+
                                     return;
                                 }
 
@@ -119,6 +122,8 @@ public class Chat_UserList extends AppCompatActivity {
                                             binding.noData.setVisibility(View.VISIBLE);
                                         else
                                             binding.noData.setVisibility(View.GONE);
+
+                                        binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
                                     }
                                 }
                             }

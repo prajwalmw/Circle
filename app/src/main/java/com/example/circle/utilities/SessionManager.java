@@ -2,6 +2,14 @@ package com.example.circle.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.example.circle.model.CategoryModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class SessionManager {
     private SharedPreferences pref;
@@ -24,6 +32,24 @@ public class SessionManager {
     public void setCategorySelected(String categorySelected) {
         editor.putString(CATEGORY_SELECTED, categorySelected);
         editor.commit();
+    }
+
+    public void saveArrayList(List<CategoryModel> list, String key){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        editor.putString(key, json);
+        editor.apply();
+
+    }
+
+    public List<CategoryModel> getArrayList(String key){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        String json = pref.getString(key, null);
+        Type type = new TypeToken<List<CategoryModel>>() {}.getType();
+        return gson.fromJson(json, type);
     }
 
 }
