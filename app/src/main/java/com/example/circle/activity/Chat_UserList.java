@@ -18,13 +18,16 @@ import com.example.circle.R;
 import com.example.circle.adapter.UsersAdapter;
 import com.example.circle.databinding.ActivityChatUserListBinding;
 import com.example.circle.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Chat_UserList extends AppCompatActivity {
     FirebaseDatabase database;
@@ -57,6 +60,25 @@ public class Chat_UserList extends AppCompatActivity {
         }
 
         database = FirebaseDatabase.getInstance();
+        /**
+         * need to upate token else notific wont show up as it requires token.
+         */
+        FirebaseMessaging.getInstance()
+                .getToken()
+                .addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String token) {
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("token", token);
+                        database.getReference()
+                                .child("users")
+                                .child(category_value)
+                                .child(FirebaseAuth.getInstance().getUid())
+                                .updateChildren(map);
+                        //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
         users = new ArrayList<>();
         if (users.size() <= 0)
             binding.noData.setVisibility(View.VISIBLE);

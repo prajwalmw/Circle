@@ -12,7 +12,12 @@ import android.view.View;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.ActivityMyCommunityBinding;
 import com.example.circle.model.CategoryModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MyCommunity extends AppCompatActivity {
@@ -20,6 +25,7 @@ public class MyCommunity extends AppCompatActivity {
     private Intent intent;
     private ActivityMyCommunityBinding binding;
     private MyCommunityAdapter adapter;
+    FirebaseDatabase database;
 
 
     @Override

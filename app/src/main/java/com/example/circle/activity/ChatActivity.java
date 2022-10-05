@@ -359,7 +359,7 @@ public class ChatActivity extends AppCompatActivity {
                     , new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    // Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -392,6 +392,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         } catch (Exception ex) {
+            Log.v("hi", "hii: " + ex);
 
         }
 
