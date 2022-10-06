@@ -211,6 +211,7 @@ public class ChatActivity extends AppCompatActivity {
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             Message message = snapshot1.getValue(Message.class);
                             message.setMessageId(snapshot1.getKey());
+                            message.setTimestamp(message.getTimestamp());
                             messages.add(message);
                         }
 

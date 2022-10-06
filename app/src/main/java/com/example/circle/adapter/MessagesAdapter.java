@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MessagesAdapter extends RecyclerView.Adapter {
 
@@ -84,6 +86,8 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                 R.drawable.ic_fb_angry
         };
 
+
+
         ReactionsConfig config = new ReactionsConfigBuilder(context)
                 .withReactions(reactions)
                 .build();
@@ -140,6 +144,12 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             }
 
             viewHolder.binding.message.setText(message.getMessage());
+
+            //show time in message item
+            long time = message.getTimestamp();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm"); // HH for 24 and hh for 12
+            viewHolder.binding.timeTxtview.setText(dateFormat.format(new Date(time)));
+            //end
 
             if(message.getFeeling() >= 0) {
                 viewHolder.binding.feeling.setImageResource(reactions[message.getFeeling()]);
@@ -242,6 +252,12 @@ public class MessagesAdapter extends RecyclerView.Adapter {
                         .into(viewHolder.binding.image);
             }
             viewHolder.binding.message.setText(message.getMessage());
+
+            //show time in message item
+            long time = message.getTimestamp();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm"); // HH for 24 and hh for 12
+            viewHolder.binding.timeTxtview.setText(dateFormat.format(new Date(time)));
+            //end
 
             if(message.getFeeling() >= 0) {
                 //message.setFeeling(reactions[message.getFeeling()]);
