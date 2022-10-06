@@ -151,6 +151,7 @@ public class ChatActivity extends AppCompatActivity {
                 .placeholder(R.drawable.avatar)
                 .into(binding.profile);
 
+        // arrow back click
         binding.imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

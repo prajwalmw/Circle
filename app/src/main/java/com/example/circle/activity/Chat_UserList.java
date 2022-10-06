@@ -67,7 +67,16 @@ public class Chat_UserList extends AppCompatActivity {
         else
             binding.noData.setVisibility(View.GONE);
 
-        binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
+        binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
+
+        // arrow back click
+        binding.arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         usersAdapter = new UsersAdapter(this, users, category_value);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -108,7 +117,7 @@ public class Chat_UserList extends AppCompatActivity {
                                     else
                                         binding.noData.setVisibility(View.GONE);
 
-                                    binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
+                                    binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
                                     usersAdapter.notifyDataSetChanged();
 
                                     return;
@@ -127,7 +136,7 @@ public class Chat_UserList extends AppCompatActivity {
                                         else
                                             binding.noData.setVisibility(View.GONE);
 
-                                        binding.toolbarTitle.setText("Your Circle(" + users.size() + ")");
+                                        binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
                                     }
                                 }
                             }
