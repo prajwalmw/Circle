@@ -77,4 +77,10 @@ public class MyCommunity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+    }
 }

@@ -34,6 +34,7 @@ import com.example.circle.adapter.MessagesAdapter;
 import com.example.circle.databinding.ActivityChatBinding;
 import com.example.circle.model.Message;
 import com.example.circle.model.User;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,6 +76,7 @@ public class ChatActivity extends AppCompatActivity {
     String s_name, s_token, s_image, s_uid, category_value;
     boolean block = false;
     private Intent intent;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class ChatActivity extends AppCompatActivity {
             category_value = intent.getStringExtra("category");
         }
 
+        sessionManager = new SessionManager(this);
         // changing status bar color
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -583,5 +587,17 @@ public class ChatActivity extends AppCompatActivity {
                 binding.recyclerView.scrollToPosition(adapter.getItemCount()-1);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MyCommunity.class);
+        Bundle args = new Bundle();
+        args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+        intent.putExtra("BUNDLE",args);
+
+        startActivity(intent);
+        finish();
     }
 }
