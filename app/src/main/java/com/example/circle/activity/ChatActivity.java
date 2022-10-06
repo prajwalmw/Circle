@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -87,6 +88,12 @@ public class ChatActivity extends AppCompatActivity {
         intent = getIntent();
         if (intent != null) {
             category_value = intent.getStringExtra("category");
+        }
+
+        // changing status bar color
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.WHITE);
         }
 
         // Set BackgroundDrawable
@@ -349,6 +356,7 @@ public class ChatActivity extends AppCompatActivity {
             data.put("token", sender_user.getToken());
             data.put("image", sender_user.getProfileImage());
             data.put("uid", sender_user.getUid());
+            data.put("category", category_value);
             data.put("activity", "ChatActivity");
 
             JSONObject notificationData = new JSONObject();
@@ -359,7 +367,7 @@ public class ChatActivity extends AppCompatActivity {
                     , new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                     Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
+                  //   Toast.makeText(ChatActivity.this, "success", Toast.LENGTH_SHORT).show();
                 }
             }, new Response.ErrorListener() {
                 @Override

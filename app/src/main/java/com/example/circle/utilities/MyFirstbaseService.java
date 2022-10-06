@@ -56,13 +56,15 @@ public class MyFirstbaseService extends FirebaseMessagingService {
         String token = data.get("token");
         String image = data.get("image");
         String uid = data.get("uid");
+        String category = data.get("category");
         String activity = data.get("activity");
-        sendNotification(title, body, token, image, uid, activity);
+        sendNotification(title, body, token, image, uid, activity, category);
         Log.v("fcm", "fcm_value: Title: "+ title + "\n, Message: " + body + "\n, Toke: " + token + "\n, Image: " + image);
 
     }
 
-    private void sendNotification(String title, String messageBody, String token, String image, String uid, String activity) {
+    private void sendNotification(String title, String messageBody, String token,
+                                  String image, String uid, String activity, String category) {
         Intent intent = null;
         if(activity.equalsIgnoreCase("ChatActivity")) {
             intent = new Intent(this, ChatActivity.class);
@@ -70,6 +72,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
             intent.putExtra("token",token);
             intent.putExtra("image",image);
             intent.putExtra("uid",uid);
+            intent.putExtra("category",category);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         else {
@@ -78,6 +81,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
             intent.putExtra("token",token);
             intent.putExtra("image",image);
             intent.putExtra("uid",uid);
+            intent.putExtra("category",category);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
 

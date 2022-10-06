@@ -64,7 +64,6 @@
             android:layout_centerVertical="true"
             android:text="Block"
             android:padding="5dp"
-            android:layout_marginEnd="10dp"
             android:textColor="@color/red"
             android:fontFamily="@font/lato_bold"/>
     </RelativeLayout>
