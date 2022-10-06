@@ -50,5 +50,31 @@ public class MyCommunity extends AppCompatActivity {
         adapter = new MyCommunityAdapter(this, categoryList);
         binding.recyclerviewCategory.setAdapter(adapter);
 
+        if (categoryList.size() > 0) {
+            for (int i = 0; i < categoryList.size(); i++) {
+                String category_title = categoryList.get(i).getTitle();
+                database = FirebaseDatabase.getInstance();
+                /**
+                 * need to upate token else notific wont show up as it requires token.
+                 */
+                FirebaseMessaging.getInstance()
+                        .getToken()
+                        .addOnSuccessListener(new OnSuccessListener<String>() {
+                            @Override
+                            public void onSuccess(String token) {
+                                HashMap<String, Object> map = new HashMap<>();
+                                map.put("token", token);
+                                database.getReference()
+                                        .child("users")
+                                        .child(category_title)
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .updateChildren(map);
+                                //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+        }
+
     }
 }

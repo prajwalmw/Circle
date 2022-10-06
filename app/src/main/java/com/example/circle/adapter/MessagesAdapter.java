@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
 import com.example.circle.databinding.DeleteDialogBinding;
+import com.example.circle.databinding.ItemReceive1Binding;
 import com.example.circle.databinding.ItemReceiveBinding;
+import com.example.circle.databinding.ItemSent1Binding;
 import com.example.circle.databinding.ItemSentBinding;
 import com.example.circle.model.Message;
 import com.github.pgreze.reactions.ReactionPopup;
@@ -332,20 +334,20 @@ public class MessagesAdapter extends RecyclerView.Adapter {
 
     public class SentViewHolder extends RecyclerView.ViewHolder {
 
-        ItemSentBinding binding;
+        ItemSent1Binding binding;
         public SentViewHolder(@NonNull View itemView) {
             super(itemView);
-            binding = ItemSentBinding.bind(itemView);
+            binding = ItemSent1Binding.bind(itemView);
         }
     }
 
     public class ReceiverViewHolder extends RecyclerView.ViewHolder {
 
-        ItemReceiveBinding binding;
+        ItemReceive1Binding binding;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
-            binding = ItemReceiveBinding.bind(itemView);
+            binding = ItemReceive1Binding.bind(itemView);
         }
     }
 

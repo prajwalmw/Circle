@@ -60,24 +60,6 @@ public class Chat_UserList extends AppCompatActivity {
         }
 
         database = FirebaseDatabase.getInstance();
-        /**
-         * need to upate token else notific wont show up as it requires token.
-         */
-        FirebaseMessaging.getInstance()
-                .getToken()
-                .addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String token) {
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("token", token);
-                        database.getReference()
-                                .child("users")
-                                .child(category_value)
-                                .child(FirebaseAuth.getInstance().getUid())
-                                .updateChildren(map);
-                        //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         users = new ArrayList<>();
         if (users.size() <= 0)
