@@ -155,7 +155,16 @@ public class ChatActivity extends AppCompatActivity {
         binding.imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
+                boolean notification = getIntent().getBooleanExtra("notification", false);
+                if (notification) {
+                    Intent intent = new Intent(ChatActivity.this, Chat_UserList.class);
+                    intent.putExtra("category",category_value);
+                    startActivity(intent);
+                }
+                else {
+                    finish();
+                }
             }
         });
 
@@ -594,12 +603,19 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, MyCommunity.class);
-        Bundle args = new Bundle();
-        args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
-        intent.putExtra("BUNDLE",args);
 
-        startActivity(intent);
-        finish();
+//        Bundle args = new Bundle();
+//        args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+
+        boolean notification = getIntent().getBooleanExtra("notification", false);
+        if (notification) {
+            Intent intent = new Intent(this, Chat_UserList.class);
+            intent.putExtra("category",category_value);
+            intent.putExtra("notification",notification);
+            startActivity(intent);
+        }
+        else {
+            finish();
+        }
     }
 }

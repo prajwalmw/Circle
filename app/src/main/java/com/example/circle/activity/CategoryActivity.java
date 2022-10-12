@@ -72,6 +72,7 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
         modelList.add(new CategoryModel(R.drawable.technology_large_icon, "Technology and Future"));
         modelList.add(new CategoryModel(R.drawable.business_large_icon, "Business and Startup"));
         modelList.add(new CategoryModel(R.drawable.stockmarket_large_icon, "Stock Market World"));
+        modelList.add(new CategoryModel(R.drawable.senior_citizen_icon, "Senior Citizens Garden"));
         modelList.add(new CategoryModel(R.drawable.fun_large_icon, "Fun and Games"));
         modelList.add(new CategoryModel(R.drawable.dance_large_icon, "Dance Mania"));
         modelList.add(new CategoryModel(R.drawable.music_large_icon, "Music and Masti"));

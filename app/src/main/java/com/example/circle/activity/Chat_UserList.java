@@ -207,4 +207,10 @@ public class Chat_UserList extends AppCompatActivity {
         super.onPause();
         database.getReference().child("presence").child(currentId).setValue("Offline");
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

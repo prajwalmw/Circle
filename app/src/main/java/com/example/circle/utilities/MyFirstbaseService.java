@@ -73,6 +73,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
             intent.putExtra("image",image);
             intent.putExtra("uid",uid);
             intent.putExtra("category",category);
+            intent.putExtra("notification", true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         else {
@@ -82,6 +83,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
             intent.putExtra("image",image);
             intent.putExtra("uid",uid);
             intent.putExtra("category",category);
+            intent.putExtra("notification", true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
 
