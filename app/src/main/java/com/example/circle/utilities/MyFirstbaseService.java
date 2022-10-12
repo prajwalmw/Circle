@@ -130,6 +130,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setSubText(category)
 //                        .setStyle(
 //                                new NotificationCompat.BigPictureStyle().bigPicture(bitmap))
                         .setLargeIcon(getCircularBitmap(bitmap)) // Todo: #crash: MyFirstbaseService.java line 127 bitmap null
