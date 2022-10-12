@@ -55,40 +55,40 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
         String senderRoom = senderId + user.getUid();
 
-      //  for (int i = 0; i < category_value.size(); i++) {
-      //      String category = category_value.get(i);
+        //  for (int i = 0; i < category_value.size(); i++) {
+        //      String category = category_value.get(i);
 
-            FirebaseDatabase.getInstance().getReference()
-                    .child("chats")
-                    .child(category_value)
-                    .child(senderRoom)
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                String lastMsg = snapshot.child("lastMsg").getValue(String.class);
-                                long time = snapshot.child("lastMsgTime").getValue(Long.class);
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-                                holder.binding.msgTime.setText(dateFormat.format(new Date(time)));
-                                //  holder.binding.msgTime.setTextColor(context.getResources().getColor(R.color.black));
+        FirebaseDatabase.getInstance().getReference()
+                .child("chats")
+                .child(category_value)
+                .child(senderRoom)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String lastMsg = snapshot.child("lastMsg").getValue(String.class);
+                            long time = snapshot.child("lastMsgTime").getValue(Long.class);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                            holder.binding.msgTime.setText(dateFormat.format(new Date(time)));
+                            //  holder.binding.msgTime.setTextColor(context.getResources().getColor(R.color.black));
 
-                                if (user.isIsblocked()) {
-                                    holder.binding.lastMsg.setText(Html.fromHtml("<b>You have blocked this user!</b>"));
-                                    holder.binding.lastMsg.setTextColor(context.getColor(R.color.red));
-                                } else
-                                    holder.binding.lastMsg.setText(lastMsg);
+                            if (user.isIsblocked()) {
+                                holder.binding.lastMsg.setText(Html.fromHtml("<b>You have blocked this user!</b>"));
+                                holder.binding.lastMsg.setTextColor(context.getColor(R.color.red));
+                            } else
+                                holder.binding.lastMsg.setText(lastMsg);
 
-                            } else {
-                                holder.binding.lastMsg.setText("Tap to chat");
-                            }
+                        } else {
+                            holder.binding.lastMsg.setText("Tap to chat");
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-      //  }
+                    }
+                });
+        //  }
 
 
         holder.binding.username.setText(user.getName());

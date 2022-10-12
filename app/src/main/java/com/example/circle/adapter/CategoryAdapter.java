@@ -66,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         return modelList.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder implements Serializable{
+    public class MyHolder extends RecyclerView.ViewHolder implements Serializable {
         TextView title;
         ImageView image;
         MaterialCheckBox checkBox;
@@ -95,8 +95,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                                 modelList.get(getAdapterPosition()).getIcon(),
                                 modelList.get(getAdapterPosition()).getTitle()));
                         relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
-                    }
-                    else {
+                    } else {
                         checkedValues.remove(new CategoryModel(
                                 modelList.get(getAdapterPosition()).getIcon(),
                                 modelList.get(getAdapterPosition()).getTitle()));

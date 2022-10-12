@@ -9,6 +9,7 @@
     android:paddingTop="10dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:backgroundTint="@color/dark_fade_color"
     android:background="?selectableItemBackground">
 
     <de.hdodenhof.circleimageview.CircleImageView
