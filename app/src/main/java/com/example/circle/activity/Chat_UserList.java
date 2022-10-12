@@ -38,8 +38,7 @@ public class Chat_UserList extends AppCompatActivity {
     static final String currentId = FirebaseAuth.getInstance().getUid();
     public static final String TAG = Chat_UserList.class.getSimpleName();
     private Intent intent;
-    private String category_value;
-    private TextView no_data;
+    private String category_value, grpchat_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +56,17 @@ public class Chat_UserList extends AppCompatActivity {
         if (intent != null) {
             category_value = intent.getStringExtra("category");
             Log.v("Chat", "chatuserlist: " + category_value);
+            grpchat_title = "#Circle - " + category_value;
+            binding.groupChatRow.username.setText(grpchat_title);
         }
 
         database = FirebaseDatabase.getInstance();
 
         users = new ArrayList<>();
-        if (users.size() <= 0)
-            binding.noData.setVisibility(View.VISIBLE);
-        else
-            binding.noData.setVisibility(View.GONE);
+//        if (users.size() <= 0)
+//            binding.noData.setVisibility(View.VISIBLE);
+//        else
+//            binding.noData.setVisibility(View.GONE);
 
         binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
 
@@ -76,6 +77,39 @@ public class Chat_UserList extends AppCompatActivity {
                 finish();
             }
         });
+
+        // options menu - start
+        // Group Chat -- Public Chat
+        binding.groupChatRow.grpchatParent.setOnClickListener(v -> {
+            Intent intent = new Intent(Chat_UserList.this, GroupChatActivity.class);
+//            intent.putExtra("name", user.getName());
+//            intent.putExtra("image", user.getProfileImage());
+//            intent.putExtra("uid", user.getUid());
+//            intent.putExtra("token", user.getToken());
+//            intent.putExtra("block", user.isIsblocked());
+
+            intent.putExtra("name", grpchat_title);
+            intent.putExtra("category", category_value);
+            startActivity(intent);
+        });
+
+       /* binding.threedotsTxtview.setOnClickListener(v -> {
+            if (binding.filterFramelayout.getVisibility() == View.VISIBLE)
+                binding.filterFramelayout.setVisibility(View.GONE);
+            else {
+                binding.filterFramelayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.optionsMenu.subCategory.setOnClickListener(v -> {
+
+        });
+
+        binding.optionsMenu.createGroup.setOnClickListener(v -> {
+            startActivity(new Intent(Chat_UserList.this, GroupChatActivity.class));
+        });*/
+        // options menu - end
+
 
         usersAdapter = new UsersAdapter(this, users, category_value);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

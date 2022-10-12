@@ -50,6 +50,23 @@ public class MyCommunity extends AppCompatActivity {
         adapter = new MyCommunityAdapter(this, categoryList);
         binding.recyclerviewCategory.setAdapter(adapter);
 
+      /*  binding.threedotsTxtview.setOnClickListener(v -> {
+            if (binding.filterFramelayout.getVisibility() == View.VISIBLE)
+                binding.filterFramelayout.setVisibility(View.GONE);
+            else {
+                binding.filterFramelayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.optionsMenu.subCategory.setOnClickListener(v -> {
+
+        });
+
+        binding.optionsMenu.createGroup.setOnClickListener(v -> {
+            startActivity(new Intent(MyCommunity.this, GroupChatActivity.class));
+        });
+*/
+
         if (categoryList.size() > 0) {
             for (int i = 0; i < categoryList.size(); i++) {
                 String category_title = categoryList.get(i).getTitle();

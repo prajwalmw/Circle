@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/category_toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="24dp"
@@ -42,25 +42,26 @@
             android:textColor="@null"
             android:textSize="@null"
             android:translationY="-0.28sp" />
-
-        <TextView
-            android:id="@+id/join_txtview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@null"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="Join"
-            android:visibility="gone"
-            android:textColor="@color/color_icons"
-            android:textSize="16sp" />
-
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/threedots_txtview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:gravity="center"
+        android:text="Join"
+        android:background="@null"
+        android:src="@drawable/three_dots"
+        android:paddingHorizontal="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignEnd="@+id/category_toolbar"
+        android:textSize="16sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_category"
@@ -74,6 +75,22 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/mycommunity_list_item"/>
 
+
+    <FrameLayout
+        android:id="@+id/filter_framelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+        <include
+            android:id="@+id/options_menu"
+            layout="@layout/options_menu_dialog" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>
