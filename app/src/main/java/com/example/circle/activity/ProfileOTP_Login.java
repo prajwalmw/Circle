@@ -1,6 +1,7 @@
 package com.example.circle.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,14 +9,19 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.circle.R;
 import com.example.circle.databinding.ActivityProfileOtpLogin1Binding;
 import com.example.circle.databinding.ActivityProfileOtpLoginBinding;
 import com.example.circle.model.CategoryModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +40,8 @@ public class ProfileOTP_Login extends AppCompatActivity {
     private String mVerificationId;
     private Intent intent;
     private List<CategoryModel> categoryList;
+    private MaterialAlertDialogBuilder builder;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +92,9 @@ public class ProfileOTP_Login extends AppCompatActivity {
                 return;
             }
             else {
+                binding.mobileNoBox.setError(null);
                 //getting mobile number from user entered flow and passing it to verification
+                showDialog(); // shows the loading dialog
                 phone_verification(mobileString);
             }
         });
@@ -118,6 +128,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
             new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 @Override
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
                     //Getting the code sent by SMS
                     String code = phoneAuthCredential.getSmsCode();
 
@@ -126,6 +137,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                     //so user has to manually enter the code
                     if (code != null) {
                         binding.otpBox.setText(code);
+
                         //verifying the code
                         verify_VerificationCode(code);
                     }
@@ -133,6 +145,8 @@ public class ProfileOTP_Login extends AppCompatActivity {
 
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
+                    // here in onsuccess -> dismiss the Dialog box.
+                    dismissDialog();
                     Toast.makeText(ProfileOTP_Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
@@ -154,12 +168,19 @@ public class ProfileOTP_Login extends AppCompatActivity {
         signInWithPhoneAuthCredential(credential);
     }
 
+    /**
+     * Verifying otp and if success moving the user to next screen.
+     * @param mcredential
+     */
     private void signInWithPhoneAuthCredential(PhoneAuthCredential mcredential) {
         mauth.signInWithCredential(mcredential).addOnCompleteListener(this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            // here in onsuccess -> dismiss the Dialog box.
+                            dismissDialog();
+
                             // get id here and send that to main activity.
                             Intent intent = new Intent(ProfileOTP_Login.this, UserSetupScreen.class);
 //                            intent.putExtra("category", category_value);
@@ -169,10 +190,36 @@ public class ProfileOTP_Login extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
+                            // here in onsuccess -> dismiss the Dialog box.
+                            dismissDialog();
                             Toast.makeText(ProfileOTP_Login.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }});
     }
 
+
+    public void showDialog() {
+        builder = new MaterialAlertDialogBuilder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View customLayout = inflater.inflate(R.layout.dialog_layout, null);
+        ImageView imageView = customLayout.findViewById(R.id.icon);
+        imageView.animate().rotation(3600).setDuration(20000).start();  // icon rotating
+        builder.setView(customLayout)
+//                .setPositiveButton("Ok", /* listener = */ null)
+//                .setNegativeButton("Cancel", /* listener = */ null)
+                .setCancelable(false);
+
+        dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_corner_bg); // show rounded corner for the dialog
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);   // dim backgroun
+        int width = getResources().getDimensionPixelSize(R.dimen.internet_dialog_width);    // set width to your dialog.
+
+        dialog.getWindow().setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+
+    public void dismissDialog() {
+        dialog.dismiss();
+    }
 
 }
