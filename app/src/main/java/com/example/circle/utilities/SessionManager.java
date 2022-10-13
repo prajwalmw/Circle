@@ -18,11 +18,21 @@ public class SessionManager {
     private int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "Circle";
     private static final String CATEGORY_SELECTED = "CATEGORY_SELECTED";
+    private static final String LOGGED_IN_USERNAME = "LOGGED_IN_USERNAME";
 
     public SessionManager(Context context) {
         this.context = context;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+    }
+
+    public String getLoggedInUsername() {
+        return pref.getString(LOGGED_IN_USERNAME, "");
+    }
+
+    public void setLoggedInUsername(String username) {
+        editor.putString(LOGGED_IN_USERNAME, username);
+        editor.commit();
     }
 
     public String getCategorySelected() {

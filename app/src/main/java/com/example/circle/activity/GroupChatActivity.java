@@ -13,11 +13,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.circle.R;
 import com.example.circle.adapter.GroupMessagesAdapter;
 import com.example.circle.databinding.ActivityGroupChatBinding;
 import com.example.circle.model.Message;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,6 +48,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private String category_value, grpchat_title;
     ProgressDialog dialog;
     String senderUid;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class GroupChatActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.WHITE);
         }
+
+        sessionManager = new SessionManager(this);
 
 //        getSupportActionBar().setTitle("Group Chat");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,6 +80,7 @@ public class GroupChatActivity extends AppCompatActivity {
             category_value = intent.getStringExtra("category");
             grpchat_title = intent.getStringExtra("name");  // toolbar title
             Log.v("Chat", "chatuserlist: " + category_value);
+            binding.name.setText(grpchat_title);
         }
 
 
@@ -82,6 +88,7 @@ public class GroupChatActivity extends AppCompatActivity {
         adapter = new GroupMessagesAdapter(this, messages);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setAdapter(adapter);
+        scrollToLatestItem(); // scroll recyclerview to latest item
 
         database.getReference()
                 .child("public")
@@ -96,6 +103,7 @@ public class GroupChatActivity extends AppCompatActivity {
                             messages.add(message);
                         }
 
+                        scrollToLatestItem(); // scroll recyclerview to latest item
                         adapter.notifyDataSetChanged();
                     }
 
@@ -108,10 +116,21 @@ public class GroupChatActivity extends AppCompatActivity {
         binding.sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                scrollToLatestItem(); // scroll recyclerview to latest item
+
                 String messageTxt = binding.messageBox.getText().toString();
 
+//                if (sessionManager.getLoggedInUsername() != null)   // fetching logged-in users name to display and storing in setter.
+//                    message.setLoggedin_username(sessionManager.getLoggedInUsername());
+
                 Date date = new Date();
-                Message message = new Message(messageTxt, senderUid, date.getTime());
+                Message message = new Message(messageTxt, senderUid, date.getTime(), sessionManager.getLoggedInUsername());
                 binding.messageBox.setText("");
 
                 database.getReference()
@@ -157,7 +176,7 @@ public class GroupChatActivity extends AppCompatActivity {
                                         String messageTxt = binding.messageBox.getText().toString();
 
                                         Date date = new Date();
-                                        Message message = new Message(messageTxt, senderUid, date.getTime());
+                                        Message message = new Message(messageTxt, senderUid, date.getTime(), sessionManager.getLoggedInUsername());
                                         message.setMessage("photo");
                                         message.setImageUrl(filePath);
                                         binding.messageBox.setText("");
@@ -178,6 +197,15 @@ public class GroupChatActivity extends AppCompatActivity {
         }
     }
 
+    private void scrollToLatestItem() {
+        binding.recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                // Call smooth scroll
+                binding.recyclerView.scrollToPosition(adapter.getItemCount()-1);
+            }
+        });
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

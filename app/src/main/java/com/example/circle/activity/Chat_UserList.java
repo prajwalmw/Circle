@@ -69,6 +69,21 @@ public class Chat_UserList extends AppCompatActivity {
 //            binding.noData.setVisibility(View.GONE);
 
         binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
+        if (category_value.contains("Sports")) {
+            binding.toolbarTitle.setTextColor(getColor(R.color.theme_red_sports));
+            binding.arrowBack.getDrawable().setTint(getColor(R.color.theme_red_sports));
+
+            binding.groupChatRow.username.setTextColor(getColor(R.color.theme_red_sports));
+            binding.groupChatRow.publicChatMsg.setTextColor(getColor(R.color.theme_red_sports));
+
+        }
+        else {
+            binding.toolbarTitle.setTextColor(getColor(R.color.color_primary_dark));
+            binding.arrowBack.getDrawable().setTint(getColor(R.color.color_primary_dark));
+
+            binding.groupChatRow.username.setTextColor(getColor(R.color.color_primary_dark));
+            binding.groupChatRow.publicChatMsg.setTextColor(getColor(R.color.color_primary_dark));
+        }
 
         // arrow back click
         binding.arrowBack.setOnClickListener(new View.OnClickListener() {

@@ -133,6 +133,9 @@ public class UserSetupScreen extends AppCompatActivity {
                                         String uid = auth.getUid();
                                         String phone = auth.getCurrentUser().getPhoneNumber();
                                         String name = binding.nameBox.getText().toString();
+                                        String n = sessionManager.getLoggedInUsername();
+                                        if (sessionManager.getLoggedInUsername().equalsIgnoreCase("")) // Adding username who logged-in into the session manager.
+                                            sessionManager.setLoggedInUsername(name);
 
                                         User user = new User(uid, name, phone, imageUrl);
                                         sessionManager.saveArrayList(categoryList, "my_community"); // store value
@@ -197,7 +200,11 @@ public class UserSetupScreen extends AppCompatActivity {
                     String uid = auth.getUid();
                     String phone = auth.getCurrentUser().getPhoneNumber();
 
+                    String n = sessionManager.getLoggedInUsername();
                     User user = new User(uid, name, phone, "No Image");
+                    if (sessionManager.getLoggedInUsername().equalsIgnoreCase(""))
+                        sessionManager.setLoggedInUsername(name);   // Adding username who logged-in into the session manager.
+
 
                     for (int i = 0; i < categoryList.size(); i++) {
                         String category = categoryList.get(i).getTitle();

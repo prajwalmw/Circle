@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="#Circle - Sports and Fitness"
-        android:textColor="@color/theme_red"
+        android:textColor="@color/theme_red_sports"
         android:textSize="16sp"
         android:lineSpacingExtra="3sp"
         android:fontFamily="@font/lato_bold"
@@ -35,27 +35,28 @@
         app:layout_constraintTop_toTopOf="@+id/profile" />
 
     <TextView
-        android:id="@+id/lastMsg"
+        android:id="@+id/public_chat_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap to chat"
+        android:text="[Public Community Group]"
         android:textSize="14sp"
-        android:textColor="@color/color_primary"
+        android:textColor="@color/theme_light_red_sports"
         app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="@id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <TextView
-        android:id="@+id/msgTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text=""
-        tools:text="12:05 PM"
-        android:textColor="@color/color_icons"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/msgTime"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:text=""-->
+<!--        tools:text="12:05 PM"-->
+<!--        android:textColor="@color/color_icons"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <View
         android:id="@+id/view4"

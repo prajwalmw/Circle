@@ -136,6 +136,7 @@ public class GroupMessagesAdapter extends RecyclerView.Adapter {
                     });
 
             viewHolder.binding.message.setText(message.getMessage());
+            viewHolder.binding.name.setText(message.getLoggedin_username());
 
             if(message.getFeeling() >= 0) {
                 viewHolder.binding.feeling.setImageResource(reactions[message.getFeeling()]);
@@ -233,6 +234,7 @@ public class GroupMessagesAdapter extends RecyclerView.Adapter {
                         }
                     });
             viewHolder.binding.message.setText(message.getMessage());
+            viewHolder.binding.name.setText(message.getLoggedin_username());
 
             if(message.getFeeling() >= 0) {
                 //message.setFeeling(reactions[message.getFeeling()]);

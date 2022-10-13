@@ -11,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/sent_drawable"
+        android:padding="5dp"
         android:orientation="vertical"
+        android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,7 +21,12 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:text="Test User"
+            android:textColor="@color/text_color"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -27,7 +34,8 @@
             android:id="@+id/view7"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#83303030" />
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/fade_color" />
 
         <ImageView
             android:id="@+id/image"
@@ -42,11 +50,12 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:text="TextView"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/light_text_color"
+            android:text="Hello guys Prajwal here, Hope you all are doing well!"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -54,7 +63,8 @@
         android:id="@+id/feeling"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:visibility="invisible"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"

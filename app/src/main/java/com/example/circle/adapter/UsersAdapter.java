@@ -51,6 +51,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
     public void onBindViewHolder(@NonNull UsersViewHolder holder, int position) {
         User user = users.get(position);
 
+        if (category_value.contains("Sports")) {
+            holder.binding.lastMsg.setTextColor(context.getColor(R.color.theme_red_sports));
+            holder.binding.username.setTextColor(context.getColor(R.color.theme_dark_red_sports));
+        }
+        else {
+            holder.binding.lastMsg.setTextColor(context.getColor(R.color.color_primary_dark));
+            holder.binding.username.setTextColor(context.getColor(R.color.color_primary_dark));
+        }
+
         String senderId = FirebaseAuth.getInstance().getUid();
 
         String senderRoom = senderId + user.getUid();

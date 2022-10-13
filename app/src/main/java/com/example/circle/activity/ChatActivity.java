@@ -94,6 +94,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         sessionManager = new SessionManager(this);
+
         // changing status bar color
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -185,10 +186,10 @@ public class ChatActivity extends AppCompatActivity {
                             String status = snapshot.getValue(String.class);
                             if (!status.isEmpty()) {
                                 if (status.equals("Offline")) {
-                                 //   binding.status.setVisibility(View.GONE);
+                                    binding.status.setVisibility(View.GONE);
                                 } else {
-                                  //  binding.status.setText(status);
-                                  //  binding.status.setVisibility(View.VISIBLE);
+                                    binding.status.setText(status);
+                                    binding.status.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
@@ -265,6 +266,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
                 scrollToLatestItem(); // scroll recyclerview to latest item
+
                 String messageTxt = binding.messageBox.getText().toString();
 
                 Date date = new Date();

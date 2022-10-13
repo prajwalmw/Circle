@@ -20,6 +20,8 @@
     <color name="hint_color">#B0ADBE</color>
 
     <!--Color Psychology-->
-    <color name="theme_red">#9b0000</color>
+    <color name="theme_red_sports">#d50000</color>
+    <color name="theme_dark_red_sports">#9b0000</color>
+    <color name="theme_light_red_sports">#ff5131</color>
 
 </resources>
