@@ -35,7 +35,7 @@
             android:layout_marginVertical="5dp"
             android:layout_toEndOf="@+id/imageView2"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/circle_written_logo" />
+            android:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/name"

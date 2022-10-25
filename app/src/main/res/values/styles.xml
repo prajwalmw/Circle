@@ -72,4 +72,15 @@
         <item name="colorAccent">@color/color_primary_light</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.ReceiveImage" parent="">
+        <item name="cornerSizeBottomRight">12%</item>
+        <item name="cornerSizeBottomLeft">12%</item>
+        <item name="cornerSizeTopRight">12%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.SentImage" parent="">
+        <item name="cornerSizeBottomRight">14%</item>
+        <item name="cornerSizeBottomLeft">14%</item>
+        <item name="cornerSizeTopLeft">14%</item>
+    </style>
 </resources>

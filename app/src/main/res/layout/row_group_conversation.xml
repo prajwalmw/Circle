@@ -16,7 +16,8 @@
         android:id="@+id/profile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/circle_written_logo"
+        android:src="@mipmap/ic_launcher_round"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
