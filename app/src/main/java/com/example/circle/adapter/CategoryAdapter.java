@@ -91,14 +91,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     if (isChecked) {
-                        checkedValues.add(new CategoryModel(
-                                modelList.get(getAdapterPosition()).getIcon(),
-                                modelList.get(getAdapterPosition()).getTitle()));
+                        checkedValues.add(modelList.get(getAdapterPosition()));
                         relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
                     } else {
-                        checkedValues.remove(new CategoryModel(
-                                modelList.get(getAdapterPosition()).getIcon(),
-                                modelList.get(getAdapterPosition()).getTitle()));
+                        checkedValues.remove(modelList.get(getAdapterPosition()));
                         relativeLayout.setBackgroundColor(context.getColor(R.color.white));
                     }
                 }
