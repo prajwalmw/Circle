@@ -84,9 +84,21 @@
         android:textSize="@null"
         android:gravity="center" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_below="@+id/category_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/search_bar"
+        app:queryHint="search users"
+        app:iconifiedByDefault="false"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
+        />
+
     <include layout="@layout/row_group_conversation"
         android:id="@+id/group_chat_row"
-        android:layout_below="@+id/category_toolbar"
+        android:layout_below="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"/>

@@ -2,6 +2,7 @@ package com.example.circle.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Chat_UserList extends AppCompatActivity {
     FirebaseDatabase database;
@@ -97,12 +99,6 @@ public class Chat_UserList extends AppCompatActivity {
         // Group Chat -- Public Chat
         binding.groupChatRow.grpchatParent.setOnClickListener(v -> {
             Intent intent = new Intent(Chat_UserList.this, GroupChatActivity.class);
-//            intent.putExtra("name", user.getName());
-//            intent.putExtra("image", user.getProfileImage());
-//            intent.putExtra("uid", user.getUid());
-//            intent.putExtra("token", user.getToken());
-//            intent.putExtra("block", user.isIsblocked());
-
             intent.putExtra("name", grpchat_title);
             intent.putExtra("category", category_value);
             startActivity(intent);
@@ -136,6 +132,20 @@ public class Chat_UserList extends AppCompatActivity {
         else
             binding.noData.setVisibility(View.GONE);
 
+        // search view - start
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchOperation(newText);
+                return true;
+            }
+        });
+        // search view - end
 
         /**
          * Reading all the users that exists...and here itself checking if the user is blocked by
@@ -248,6 +258,40 @@ public class Chat_UserList extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void searchOperation(String newText) {
+        ArrayList<User> userList = new ArrayList<>();
+        userList.addAll(users);
+
+        if (!newText.isEmpty()) {
+            userList.clear();
+            for (User user : users) {
+                if (user.getName().toLowerCase().contains(newText.toLowerCase())) {
+                    userList.add(user);
+                    usersAdapter = new UsersAdapter(Chat_UserList.this, userList, category_value);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_UserList.this);
+                    layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    binding.recyclerView.setAdapter(usersAdapter);
+                }
+                else {
+                }
+            }
+
+            if (users.size() <= 0) {
+                binding.noData.setVisibility(View.VISIBLE);
+                binding.noData.setText("No user found with this name.");
+            }
+            else
+                binding.noData.setVisibility(View.GONE);
+
+        }
+        else {
+            usersAdapter = new UsersAdapter(Chat_UserList.this, users, category_value);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(Chat_UserList.this);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            binding.recyclerView.setAdapter(usersAdapter);
+        }
     }
 
     @Override
