@@ -49,16 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             int id = model.getIcon();
             holder.image.setImageDrawable(context.getDrawable(id));
             holder.title.setText(model.getTitle());
-
-//            holder.relativeLayout.setOnClickListener(v -> {
-////                Intent i = new Intent(context, Chat_UserList.class);
-//                Intent i = new Intent(context, ProfileOTP_Login.class);
-//                i.putExtra("category", model.getTitle());
-//                Log.v("Chat", "category_adapter: " + model.getTitle());
-//                context.startActivity(i);
-//            });
         }
-
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.example.circle.model.CategoryModel;
+import com.example.circle.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,6 +19,7 @@ public class SessionManager {
     private int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "Circle";
     private static final String CATEGORY_SELECTED = "CATEGORY_SELECTED";
+    private static final String USER_MODEL = "USER_MODEL";
     private static final String LOGGED_IN_USERNAME = "LOGGED_IN_USERNAME";
 
     public SessionManager(Context context) {
@@ -43,6 +45,22 @@ public class SessionManager {
         editor.putString(CATEGORY_SELECTED, categorySelected);
         editor.commit();
     }
+
+    public User getUserModel(String key) {
+        Gson gson = new Gson();
+        String json = pref.getString(key, null);
+        Type type = new TypeToken<User>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void setUserModel(User usermodel, String key) {
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(usermodel);
+        editor.putString(key, json);
+        editor.apply();
+    }
+
 
     public void saveArrayList(List<CategoryModel> list, String key){
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);

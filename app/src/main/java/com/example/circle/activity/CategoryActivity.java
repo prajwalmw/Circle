@@ -16,8 +16,10 @@ import com.example.circle.adapter.CategoryAdapter;
 import com.example.circle.model.CategoryModel;
 import com.example.circle.utilities.CheckboxSelected;
 import com.example.circle.utilities.SessionManager;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +32,10 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
     private FirebaseAuth mauth;
     private SessionManager sessionManager;
     private TextView join_txtview;
-    private List<CategoryModel> checkedValues;
+    private List<CategoryModel> checkedValues = new ArrayList<>();;
+    private boolean update = false;
+    FirebaseDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +50,33 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
 
         setTitle("Select your Category");
         sessionManager = new SessionManager(this);
+        database = FirebaseDatabase.getInstance();
         // Checks if user is already logged in or not.
         mauth = FirebaseAuth.getInstance();
         FirebaseUser user = mauth.getCurrentUser();
 
         Log.v("user", "user_: " + user);
         if (user != null) { // TODO: user != null
-            Intent intent = new Intent(this, MyCommunity.class);
-          //  intent.putExtra("category", sessionManager.getCategorySelected());
-            Bundle args = new Bundle();
-            args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
-            intent.putExtra("BUNDLE",args);
+            Intent i = getIntent();
+            if (i.getExtras() == null) { // ie. user is already logged in and just opening up the app.
+                Intent intent = new Intent(this, MyCommunity.class);
+                //  intent.putExtra("category", sessionManager.getCategorySelected());
+                Bundle args = new Bundle();
+                args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+                intent.putExtra("BUNDLE", args);
 
-            Log.v("Chat", "categoryactv: " + sessionManager.getCategorySelected());
-            startActivity(intent);
-            finish();
+                Log.v("Chat", "categoryactv: " + sessionManager.getCategorySelected());
+                startActivity(intent);
+                finish();
+            }
+            else {  // ie. user is already logged in and wants to update the list of category again.
+                update = i.getBooleanExtra("screen", false);
+                Bundle args = i.getBundleExtra("BUNDLE");
+                checkedValues = (List<CategoryModel>) args.getSerializable("category_list");
+                Log.v("Category", "checkedvalues: " + checkedValues.size());
+            }
         }
-        else {
-            //  startActivity(new Intent(ProfileOTP_Login.this, UserSetupScreen.class));
-        }
+
 
         modelList = new ArrayList<>();
         modelList.add(new CategoryModel(R.drawable.sport_large_icon, "Sports and Fitness"));
@@ -85,19 +98,49 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
 
         join_txtview.setOnClickListener(v -> {
             if (adapter != null) {
-                checkedValues = new ArrayList<>();
                 checkedValues = adapter.getCheckedValues();
                 Log.v("Category", "checkedvalues: " + checkedValues.size());
 
-                Intent intent = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
-                Bundle args = new Bundle();
-                args.putSerializable("category_list", (Serializable) checkedValues);
-                intent.putExtra("BUNDLE",args);
-                startActivity(intent);
+                Intent intent;
+                if (update) { // ie. user wants to edit the category list.
+                    setLoggedInUserDetails(checkedValues);
+                }
+                else { // ie. fresh user selecting category.
+                    intent = new Intent(CategoryActivity.this, ProfileOTP_Login.class);
+                    Bundle args = new Bundle();
+                    args.putSerializable("category_list", (Serializable) checkedValues);
+                    intent.putExtra("BUNDLE", args);
+                    startActivity(intent);
+                }
+
 
             }
-
         });
+    }
+
+    private void setLoggedInUserDetails(List<CategoryModel> checkedValues) {
+        for (int i = 0; i < checkedValues.size(); i++) {
+            String category = checkedValues.get(i).getTitle();
+
+            database.getReference()
+                    .child("users")
+                    .child(category)
+                    .child(FirebaseAuth.getInstance().getUid())
+                    .setValue(sessionManager.getUserModel("loggedIn_UserModel"))
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            sessionManager.saveArrayList(checkedValues, "my_community"); // store value
+
+                            Intent intent = new Intent(CategoryActivity.this, MyCommunity.class);
+                            Bundle args = new Bundle();
+                            args.putSerializable("category_list", (Serializable) checkedValues);
+                            intent.putExtra("BUNDLE", args);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+        }
 
     }
 

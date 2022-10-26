@@ -138,6 +138,7 @@ public class UserSetupScreen extends AppCompatActivity {
                                             sessionManager.setLoggedInUsername(name);
 
                                         User user = new User(uid, name, phone, imageUrl);
+                                        sessionManager.setUserModel(user, "loggedIn_UserModel");
                                         sessionManager.saveArrayList(categoryList, "my_community"); // store value
 
                                         for (int i = 0; i < categoryList.size(); i++) {
@@ -202,6 +203,7 @@ public class UserSetupScreen extends AppCompatActivity {
 
                     String n = sessionManager.getLoggedInUsername();
                     User user = new User(uid, name, phone, "No Image");
+                    sessionManager.setUserModel(user, "loggedIn_UserModel");
                     if (sessionManager.getLoggedInUsername().equalsIgnoreCase(""))
                         sessionManager.setLoggedInUsername(name);   // Adding username who logged-in into the session manager.
 

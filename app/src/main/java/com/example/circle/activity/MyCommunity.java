@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +50,17 @@ public class MyCommunity extends AppCompatActivity {
 
         adapter = new MyCommunityAdapter(this, categoryList);
         binding.recyclerviewCategory.setAdapter(adapter);
+
+        binding.manageList.setOnClickListener(v -> {
+            Intent intent = new Intent(MyCommunity.this, CategoryActivity.class);
+            intent.putExtra("screen", true);
+
+            Bundle args = new Bundle();
+            args.putSerializable("category_list", (Serializable) categoryList);
+            intent.putExtra("BUNDLE", args);
+
+            startActivity(intent);
+        });
 
       /*  binding.threedotsTxtview.setOnClickListener(v -> {
             if (binding.filterFramelayout.getVisibility() == View.VISIBLE)
@@ -90,7 +102,6 @@ public class MyCommunity extends AppCompatActivity {
                             }
                         });
             }
-
         }
 
     }

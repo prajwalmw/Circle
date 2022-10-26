@@ -203,7 +203,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View customLayout = inflater.inflate(R.layout.dialog_layout, null);
         ImageView imageView = customLayout.findViewById(R.id.icon);
-        imageView.animate().rotation(3600).setDuration(20000).start();  // icon rotating
+        imageView.animate().rotation(3600).setDuration(60000).start();  // icon rotating
         builder.setView(customLayout)
 //                .setPositiveButton("Ok", /* listener = */ null)
 //                .setNegativeButton("Cancel", /* listener = */ null)
