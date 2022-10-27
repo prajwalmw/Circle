@@ -55,7 +55,7 @@ public class Chat_UserList extends AppCompatActivity {
         }
 
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
             category_value = intent.getStringExtra("category");
             Log.v("Chat", "chatuserlist: " + category_value);
             grpchat_title = "#Circle - " + category_value;

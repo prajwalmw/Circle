@@ -28,7 +28,6 @@ public class MyCommunity extends AppCompatActivity {
     private MyCommunityAdapter adapter;
     FirebaseDatabase database;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,7 @@ public class MyCommunity extends AppCompatActivity {
         }
 
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
             Log.v("Category", "checkedvalues: " + categoryList.size());

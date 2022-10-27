@@ -76,7 +76,7 @@ public class GroupChatActivity extends AppCompatActivity {
         dialog.setCancelable(false);
 
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
             category_value = intent.getStringExtra("category");
             grpchat_title = intent.getStringExtra("name");  // toolbar title
             Log.v("Chat", "chatuserlist: " + category_value);
@@ -141,7 +141,7 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
-        binding.attachment.setOnClickListener(new View.OnClickListener() {
+        binding.camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

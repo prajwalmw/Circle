@@ -52,7 +52,7 @@ public class UserSetupScreen extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
           //  category_value = intent.getStringExtra("category");
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
@@ -141,38 +141,57 @@ public class UserSetupScreen extends AppCompatActivity {
                                         sessionManager.setUserModel(user, "loggedIn_UserModel");
                                         sessionManager.saveArrayList(categoryList, "my_community"); // store value
 
-                                        for (int i = 0; i < categoryList.size(); i++) {
-                                            String category = categoryList.get(i).getTitle();
+                                        if (categoryList != null) {
+                                            for (int i = 0; i < categoryList.size(); i++) {
+                                                String category = categoryList.get(i).getTitle();
 
-                                            database.getReference()
+                                                database.getReference()
+                                                        .child("users")
+                                                        .child(category)
+                                                        .child(uid)
+                                                        .setValue(user)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                dialog.dismiss();
+                                                                sessionManager.setCategorySelected(category);
+
+                                                            }
+                                                        });
+                                            }
+                                        }
+                                        else {
+                                            // todo: testing
+                                          /*  database.getReference()
                                                     .child("users")
-                                                    .child(category)
+                                                    .child("circle_default")
                                                     .child(uid)
                                                     .setValue(user)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
                                                             dialog.dismiss();
-                                                            sessionManager.setCategorySelected(category);
+                                                         //   sessionManager.setCategorySelected(category);
 
                                                         }
-                                                    });
+                                                    });*/
+
                                         }
 
                                         //outside of for-loop
 
                                      //   String s = sessionManager.getCategorySelected();
-                                        Intent intent = new Intent(UserSetupScreen.this, MyCommunity.class);
-                                      //  Log.v("Chat", "usersetup_session: " + s);
+                                        Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
+                                        Bundle args = new Bundle();
+
+                                        //  Log.v("Chat", "usersetup_session: " + s);
                                         Log.v("Chat", "user_setup_value: " + categoryList);
 
                                         if (sessionManager.getArrayList("my_community") != null) {
-                                            Bundle args = new Bundle();
                                             args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
                                             intent.putExtra("BUNDLE",args);
                                         }
                                         else {
-                                            Bundle args = new Bundle();
                                             args.putSerializable("category_list", (Serializable) categoryList);
                                             intent.putExtra("BUNDLE",args);
                                         }
@@ -208,40 +227,77 @@ public class UserSetupScreen extends AppCompatActivity {
                         sessionManager.setLoggedInUsername(name);   // Adding username who logged-in into the session manager.
 
 
-                    for (int i = 0; i < categoryList.size(); i++) {
-                        String category = categoryList.get(i).getTitle();
+                    if (categoryList != null) {
+                        for (int i = 0; i < categoryList.size(); i++) {
+                            String category = categoryList.get(i).getTitle();
 
-                        database.getReference()
-                                .child("users")
-                                .child(category)
-                                .child(uid)
-                                .setValue(user)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        dialog.dismiss();
-                                        Intent intent = new Intent(UserSetupScreen.this, MyCommunity.class);
+                            database.getReference()
+                                    .child("users")
+                                    .child(category)
+                                    .child(uid)
+                                    .setValue(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialog.dismiss();
+                                            Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
 //                                        if (sessionManager.getCategorySelected() != null)
 //                                            intent.putExtra("category", sessionManager.getCategorySelected());
 //                                        else
 //                                            intent.putExtra("category", category);
 
-                                        if (sessionManager.getArrayList("my_community") != null) {
-                                            Bundle args = new Bundle();
-                                            args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
-                                            intent.putExtra("BUNDLE",args);
-                                        }
-                                        else {
-                                            Bundle args = new Bundle();
-                                            args.putSerializable("category_list", (Serializable) categoryList);
-                                            intent.putExtra("BUNDLE",args);
-                                        }
+                                            if (sessionManager.getArrayList("my_community") != null) {
+                                                Bundle args = new Bundle();
+                                                args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+                                                intent.putExtra("BUNDLE", args);
+                                            } else {
+                                                Bundle args = new Bundle();
+                                                args.putSerializable("category_list", (Serializable) categoryList);
+                                                intent.putExtra("BUNDLE", args);
+                                            }
 
 
-                                        startActivity(intent);
-                                        finish();
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                        }
+                    }
+                    else {
+                        // no category selected
+                        dialog.dismiss();
+                        Intent intent = new Intent(UserSetupScreen.this, CategoryActivity.class);
+//                                        if (sessionManager.getCategorySelected() != null)
+//                                            intent.putExtra("category", sessionManager.getCategorySelected());
+//                                        else
+//                                            intent.putExtra("category", category);
+
+                        if (sessionManager.getArrayList("my_community") != null) {
+                            Bundle args = new Bundle();
+                            args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+                            intent.putExtra("BUNDLE", args);
+                        } else {
+                            Bundle args = new Bundle();
+                            args.putSerializable("category_list", (Serializable) categoryList);
+                            intent.putExtra("BUNDLE", args);
+                        }
+
+
+                        startActivity(intent);
+                        finish();
+/*
+                        database.getReference()
+                                .child("users")
+                                .child("circle_default")
+                                .child(uid)
+                                .setValue(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
                                     }
                                 });
+*/
                     }
 
                 }
@@ -271,12 +327,28 @@ public class UserSetupScreen extends AppCompatActivity {
                                     HashMap<String, Object> obj = new HashMap<>();
                                     obj.put("image", filePath);
 
-                                    for (int i = 0; i < categoryList.size(); i++) {
-                                        String category = categoryList.get(i).getTitle();
+                                    if (categoryList != null) {
+                                        for (int i = 0; i < categoryList.size(); i++) {
+                                            String category = categoryList.get(i).getTitle();
 
+                                            database.getReference()
+                                                    .child("users")
+                                                    .child(category)
+                                                    .child(FirebaseAuth.getInstance().getUid())
+                                                    .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                    else {
+                                        // ie. no category selected yet. so add default category
+/*
                                         database.getReference()
                                                 .child("users")
-                                                .child(category)
+                                                .child("circle_default")
                                                 .child(FirebaseAuth.getInstance().getUid())
                                                 .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
@@ -284,6 +356,7 @@ public class UserSetupScreen extends AppCompatActivity {
 
                                                     }
                                                 });
+*/
                                     }
 
                                 }

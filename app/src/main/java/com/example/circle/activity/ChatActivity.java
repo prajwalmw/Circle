@@ -89,7 +89,7 @@ public class ChatActivity extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor("#005005"));
 
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
             category_value = intent.getStringExtra("category");
         }
 
@@ -316,7 +316,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        binding.attachment.setOnClickListener(new View.OnClickListener() {
+        binding.camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

@@ -19,6 +19,7 @@ import com.example.circle.R;
 import com.example.circle.databinding.ActivityProfileOtpLogin1Binding;
 import com.example.circle.databinding.ActivityProfileOtpLoginBinding;
 import com.example.circle.model.CategoryModel;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,6 +44,11 @@ public class ProfileOTP_Login extends AppCompatActivity {
     private List<CategoryModel> categoryList;
     private MaterialAlertDialogBuilder builder;
     private AlertDialog dialog;
+    FirebaseDatabase database;
+    private SessionManager sessionManager;
+    private boolean update = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +57,10 @@ public class ProfileOTP_Login extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         intent = getIntent();
-        if (intent != null) {
+        if (intent.getExtras() != null) {
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
             Log.v("Category", "checkedvalues: " + categoryList.size());
-
         }
 
         // changing status bar color
@@ -62,6 +68,60 @@ public class ProfileOTP_Login extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.WHITE);
         }
+
+        // loggin - checking - start
+        sessionManager = new SessionManager(this);
+        database = FirebaseDatabase.getInstance();
+        // Checks if user is already logged in or not.
+        mauth = FirebaseAuth.getInstance();
+        FirebaseUser user = mauth.getCurrentUser();
+
+        Log.v("user", "user_: " + user);
+        if (user != null) { // TODO: user != null
+            Intent i = getIntent();
+            if (i.getExtras() == null) { // ie. user is already logged in and just opening up the app.
+                Intent intent = new Intent(this, MyCommunity.class);
+                intent.putExtra("app_open", "app_open");
+                Bundle args = new Bundle();
+                args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+                intent.putExtra("BUNDLE", args);
+
+                Log.v("Chat", "categoryactv: " + sessionManager.getCategorySelected());
+                startActivity(intent);
+                finish();
+            }
+            else {  // ie. user is already logged in and wants to update the list of category again.
+               /* update = i.getBooleanExtra("screen", false);
+                Bundle args = i.getBundleExtra("BUNDLE");
+                checkedValues = (List<CategoryModel>) args.getSerializable("category_list");
+                Log.v("Category", "checkedvalues: " + checkedValues.size());*/
+            }
+        }
+
+        //loggedin - check end
+/*
+        if (user != null) { // TODO: user != null
+            Intent i = getIntent();
+            if (i.getExtras() == null) { // ie. user is already logged in and just opening up the app.
+                Intent intent = new Intent(this, MyCommunity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("category_list", (Serializable) sessionManager.getArrayList("my_community"));
+                intent.putExtra("BUNDLE", args);
+
+                Log.v("Chat", "categoryactv: " + sessionManager.getCategorySelected());
+                startActivity(intent);
+                finish();
+            }
+            else {  // ie. user is already logged in and wants to update the list of category again.
+                update = i.getBooleanExtra("screen", false);
+                Bundle args = i.getBundleExtra("BUNDLE");
+                checkedValues = (List<CategoryModel>) args.getSerializable("category_list");
+                Log.v("Category", "checkedvalues: " + checkedValues.size());
+            }
+        }
+*/
+
+        // loggin checking - end
 
         // Ads initialize only once.
         // TODO: Ads uncomment later and setup as well.
@@ -97,17 +157,20 @@ public class ProfileOTP_Login extends AppCompatActivity {
                 showDialog(); // shows the loading dialog
                 phone_verification(mobileString);
             }
+
         });
 
-//        binding.continueBtn.setOnClickListener(v -> {
-//            String edit_otp = binding.otpBox.getText().toString();
-//            if(edit_otp.isEmpty() || edit_otp.length() < 6)
-//            {
-//                binding.otpBox.setError("Enter valid code");
-//                binding.otpBox.requestFocus();
-//            }
-//            verify_VerificationCode(edit_otp); // use the otp to verify and login.
-//        });
+/*
+        binding.continueBtn.setOnClickListener(v -> {
+            String edit_otp = binding.otpBox.getText().toString();
+            if(edit_otp.isEmpty() || edit_otp.length() < 6)
+            {
+                binding.otpBox.setError("Enter valid code");
+                binding.otpBox.requestFocus();
+            }
+            verify_VerificationCode(edit_otp); // use the otp to verify and login.
+        });
+*/
     }
 
     /**This function is used to verify the mobile number
@@ -154,6 +217,8 @@ public class ProfileOTP_Login extends AppCompatActivity {
                 public void onCodeSent(@NonNull String verificationId,
                                        @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     mVerificationId = verificationId; // type: String
+                    verify_VerificationCode("123456");
+
                 }
 
             };
@@ -184,9 +249,9 @@ public class ProfileOTP_Login extends AppCompatActivity {
                             // get id here and send that to main activity.
                             Intent intent = new Intent(ProfileOTP_Login.this, UserSetupScreen.class);
 //                            intent.putExtra("category", category_value);
-                            Bundle args = new Bundle();
+                           /* Bundle args = new Bundle();
                             args.putSerializable("category_list", (Serializable) categoryList);
-                            intent.putExtra("BUNDLE",args);
+                            intent.putExtra("BUNDLE",args);*/
                             startActivity(intent);
                         }
                         else {
