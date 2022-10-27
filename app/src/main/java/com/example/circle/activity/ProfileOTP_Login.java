@@ -217,7 +217,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                 public void onCodeSent(@NonNull String verificationId,
                                        @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     mVerificationId = verificationId; // type: String
-                    verify_VerificationCode("123456");
+                    verify_VerificationCode("123456");  // todo: remove this line later as its just for testing...
 
                 }
 
