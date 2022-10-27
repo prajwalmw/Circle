@@ -96,9 +96,30 @@
         android:layout_marginBottom="10dp"
         />
 
+    <ImageButton
+        android:id="@+id/add_status_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/circle_written_logo"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/search_view"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/statusList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:orientation="horizontal"
+        app:reverseLayout="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/add_status_btn"
+        android:layout_below="@+id/search_view"
+        />
+
     <include layout="@layout/row_group_conversation"
         android:id="@+id/group_chat_row"
-        android:layout_below="@+id/search_view"
+        android:layout_below="@+id/statusList"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"/>
@@ -112,14 +133,6 @@
         android:layout_below="@+id/group_chat_row"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_conversation" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/statusList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        />
 
     <View
         android:id="@+id/view3"

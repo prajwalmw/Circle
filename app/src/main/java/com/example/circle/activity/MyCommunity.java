@@ -12,6 +12,7 @@ import android.view.View;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.ActivityMyCommunityBinding;
 import com.example.circle.model.CategoryModel;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +28,8 @@ public class MyCommunity extends AppCompatActivity {
     private ActivityMyCommunityBinding binding;
     private MyCommunityAdapter adapter;
     FirebaseDatabase database;
+    private SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,18 @@ public class MyCommunity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.WHITE);
         }
+        sessionManager = new SessionManager(this);
 
         intent = getIntent();
         if (intent.getExtras() != null) {
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
-            Log.v("Category", "checkedvalues: " + categoryList.size());
+        }
+
+        if (categoryList == null) {
+            if (sessionManager.getArrayList("my_community") != null) {
+                categoryList = sessionManager.getArrayList("my_community");
+            }
         }
 
         adapter = new MyCommunityAdapter(this, categoryList);
