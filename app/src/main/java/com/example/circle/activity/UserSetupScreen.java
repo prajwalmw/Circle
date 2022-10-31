@@ -139,8 +139,9 @@ public class UserSetupScreen extends AppCompatActivity {
 
                                         User user = new User(uid, name, phone, imageUrl);
                                         sessionManager.setUserModel(user, "loggedIn_UserModel");
-                                        sessionManager.saveArrayList(categoryList, "my_community"); // store value
+                                     //   sessionManager.saveArrayList(categoryList, "my_community"); // store value
 
+/*
                                         if (categoryList != null) {
                                             for (int i = 0; i < categoryList.size(); i++) {
                                                 String category = categoryList.get(i).getTitle();
@@ -160,7 +161,8 @@ public class UserSetupScreen extends AppCompatActivity {
                                                         });
                                             }
                                         }
-                                        else {
+*/
+                                      //  else {
                                             // todo: testing
                                           /*  database.getReference()
                                                     .child("users")
@@ -176,7 +178,7 @@ public class UserSetupScreen extends AppCompatActivity {
                                                         }
                                                     });*/
 
-                                        }
+                                    //    }
 
                                         //outside of for-loop
 

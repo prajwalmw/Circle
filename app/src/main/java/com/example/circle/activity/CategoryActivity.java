@@ -113,6 +113,8 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
                 }
                 else { // ie. fresh user selecting category.
                     User user = sessionManager.getUserModel("loggedIn_UserModel");
+                    sessionManager.saveArrayList(checkedValues, "my_community"); // store value
+
                     for (int i = 0; i < checkedValues.size(); i++) {
                         String category = checkedValues.get(i).getTitle();
 

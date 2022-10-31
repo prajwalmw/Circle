@@ -87,7 +87,7 @@ public class MyCommunity extends AppCompatActivity {
         });
 */
 
-        if (categoryList.size() > 0) {
+        if (categoryList != null) {
             for (int i = 0; i < categoryList.size(); i++) {
                 String category_title = categoryList.get(i).getTitle();
                 database = FirebaseDatabase.getInstance();
