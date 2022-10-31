@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.example.circle.R;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.ActivityMyCommunityBinding;
 import com.example.circle.model.CategoryModel;
@@ -49,6 +51,10 @@ public class MyCommunity extends AppCompatActivity {
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
         }
+
+        Glide.with(this).load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
+                .placeholder(R.drawable.avatar)
+                .into(binding.profileImgIcon);
 
         if (categoryList == null) {
             if (sessionManager.getArrayList("my_community") != null) {

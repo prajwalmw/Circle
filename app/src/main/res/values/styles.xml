@@ -5,7 +5,7 @@
 
     <style name="toolbar_title">
         <item name="android:textSize">
-            18sp
+            22sp
         </item>
         <item name="android:textColor">
             @color/color_primary_dark
@@ -82,5 +82,12 @@
         <item name="cornerSizeBottomRight">14%</item>
         <item name="cornerSizeBottomLeft">14%</item>
         <item name="cornerSizeTopLeft">14%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+
+
     </style>
 </resources>
