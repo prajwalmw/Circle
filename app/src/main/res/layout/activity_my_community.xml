@@ -40,7 +40,7 @@
             android:text="Circle"
             android:textAppearance="@style/toolbar_title"
             android:textColor="@null"
-            android:textSize="@null"
+            android:textSize="34sp"
             />
 
         <TextView

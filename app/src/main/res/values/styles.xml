@@ -5,7 +5,7 @@
 
     <style name="toolbar_title">
         <item name="android:textSize">
-            22sp
+            18sp
         </item>
         <item name="android:textColor">
             @color/color_primary_dark
