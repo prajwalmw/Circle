@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:text="[Public Community Group]"
         android:textSize="14sp"
+        android:layout_marginStart="20dp"
         android:textColor="@color/theme_light_red_sports"
         app:layout_constraintStart_toStartOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="@id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
 <!--    <TextView-->
