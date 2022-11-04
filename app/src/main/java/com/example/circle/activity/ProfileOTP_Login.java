@@ -257,7 +257,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                         else {
                             // here in onsuccess -> dismiss the Dialog box.
                             dismissDialog();
-                            Toast.makeText(ProfileOTP_Login.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileOTP_Login.this, "Something went wrong: " + task.getResult().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }});
     }

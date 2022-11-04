@@ -182,8 +182,9 @@ public class Chat_UserList extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         users.clear();
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                            user = snapshot1.getValue(User.class);
-                            if (!user.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                            User user = snapshot1.getValue(User.class);
+                            String cuuid = FirebaseAuth.getInstance().getUid();
+                            if (!user.getUid().equals(cuuid)) {
                                 // now logic of Display only those users that are not blocked and hv not blocked me as well.
 
                                 //2. Other user has blocked me so now he should nt be seen in my lists ie. dont add that user in my list.

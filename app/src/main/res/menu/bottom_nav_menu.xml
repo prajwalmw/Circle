@@ -11,6 +11,6 @@
         android:id="@+id/page_2"
         android:icon="@drawable/icon_explore"
         android:iconTint="@color/white"
-        android:title="Explore"/>
+        android:title="Status"/>
 
 </menu>

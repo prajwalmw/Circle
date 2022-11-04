@@ -49,6 +49,27 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             int id = model.getIcon();
             holder.image.setImageDrawable(context.getDrawable(id));
             holder.title.setText(model.getTitle());
+
+         /*   holder.relativeLayout.setOnClickListener(v -> {
+                if (holder.checkBox.isChecked())
+                    holder.checkBox.setChecked(false);
+                else
+                    holder.checkBox.setChecked(true);
+            });*/
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        checkedValues.add(modelList.get(holder.getAdapterPosition()));
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
+                    } else {
+                        checkedValues.remove(modelList.get(holder.getAdapterPosition()));
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));
+                    }
+                }
+            });
+
         }
     }
 
@@ -70,26 +91,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             image = itemView.findViewById(R.id.image);
             checkBox = itemView.findViewById(R.id.checkboxItem);
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
-
-            relativeLayout.setOnClickListener(v -> {
-                if (checkBox.isChecked())
-                    checkBox.setChecked(false);
-                else
-                    checkBox.setChecked(true);
-            });
-
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked) {
-                        checkedValues.add(modelList.get(getAdapterPosition()));
-                        relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
-                    } else {
-                        checkedValues.remove(modelList.get(getAdapterPosition()));
-                        relativeLayout.setBackgroundColor(context.getColor(R.color.white));
-                    }
-                }
-            });
         }
     }
 
