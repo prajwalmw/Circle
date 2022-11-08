@@ -13,7 +13,7 @@
         android:id="@+id/nav_status"
         android:icon="@drawable/icon_explore"
         android:iconTint="@color/white"
-        android:title="Status"
+        android:title="Top 10"
         app:showAsAction="ifRoom"/>
 
 </menu>

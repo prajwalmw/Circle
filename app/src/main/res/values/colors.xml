@@ -23,5 +23,11 @@
     <color name="theme_red_sports">#d50000</color>
     <color name="theme_dark_red_sports">#9b0000</color>
     <color name="theme_light_red_sports">#ff5131</color>
+    <color name="leader_head_color">#88226F</color>
+    <color name="leader_body_color">#FFFFFF</color>
+
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
 
 </resources>
