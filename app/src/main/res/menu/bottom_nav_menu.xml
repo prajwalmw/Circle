@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/nav_home"
         android:icon="@drawable/icon_home"
         android:iconTint="@color/white"
-        android:title="Home"/>
+        android:title="Home"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/nav_status"
         android:icon="@drawable/icon_explore"
         android:iconTint="@color/white"
-        android:title="Status"/>
+        android:title="Status"
+        app:showAsAction="ifRoom"/>
 
 </menu>

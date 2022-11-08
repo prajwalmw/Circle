@@ -1,13 +1,20 @@
 package com.example.circle.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
@@ -16,6 +23,8 @@ import com.example.circle.databinding.ActivityMyCommunityBinding;
 import com.example.circle.model.CategoryModel;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -52,9 +61,20 @@ public class MyCommunity extends AppCompatActivity {
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
         }
 
-        Glide.with(this).load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
+        // bottom nav bar - start
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_status)
+                .build();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupWithNavController(binding.bottomnavbar, navController);
+        // bottom nav bar - end
+
+       /* Glide.with(this).load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
                 .placeholder(R.drawable.avatar)
-                .into(binding.profileImgIcon);
+                .into(binding.profileImgIcon);*/
 
         if (categoryList == null) {
             if (sessionManager.getArrayList("my_community") != null) {
@@ -63,8 +83,9 @@ public class MyCommunity extends AppCompatActivity {
         }
 
         adapter = new MyCommunityAdapter(this, categoryList);
-        binding.recyclerviewCategory.setAdapter(adapter);
+     //   binding.recyclerviewCategory.setAdapter(adapter);
 
+/*
         binding.manageList.setOnClickListener(v -> {
             Intent intent = new Intent(MyCommunity.this, CategoryActivity.class);
             intent.putExtra("screen", true);
@@ -75,6 +96,7 @@ public class MyCommunity extends AppCompatActivity {
 
             startActivity(intent);
         });
+*/
 
       /*  binding.threedotsTxtview.setOnClickListener(v -> {
             if (binding.filterFramelayout.getVisibility() == View.VISIBLE)

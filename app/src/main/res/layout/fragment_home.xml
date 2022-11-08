@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/category_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        >
+
+        <ImageButton
+            android:id="@+id/arrow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_right"
+            android:visibility="gone"
+            android:background="@null"/>
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/arrow_back"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:lineSpacingExtra="1sp"
+            android:text="Circle"
+            android:textAppearance="@style/toolbar_title"
+            android:textColor="@null"
+            android:textSize="34sp"
+            />
+
+        <TextView
+            android:id="@+id/manage_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textAllCaps="false"
+            android:textColor="@color/teal_200"
+            android:fontFamily="@font/lato_bold"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:text="Manage" />
+
+        <!--
+                <ImageButton
+                    android:id="@+id/threedots_txtview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="visible"
+                    tools:visibility="visible"
+                    android:gravity="center"
+                    android:text="Join"
+                    android:background="@null"
+                    android:src="@drawable/three_dots"
+                    android:paddingHorizontal="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp" />
+        -->
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_img_icon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleImageView"
+            app:srcCompat="@drawable/avatar"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        tools:itemCount="4"
+        android:layout_below="@+id/category_toolbar"
+        android:scrollbarThumbVertical="@color/color_primary"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/mycommunity_list_item"/>
+</RelativeLayout>
