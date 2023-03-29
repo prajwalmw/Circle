@@ -48,18 +48,50 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/threedots_txtview"
-            android:src="@drawable/refresh_icon_svg" />
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/status_add_icon"
+            app:tint="@color/color_primary_dark" />
 
         <ImageButton
             android:id="@+id/threedots_txtview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:visibility="gone"
             android:src="@drawable/three_dots"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
+<!--    Toolbar end -->
+
+    <TextView
+        android:id="@+id/trending_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trending"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_below="@+id/category_toolbar"
+        android:textAppearance="@style/we_will_sen"
+        android:textSize="16sp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contentRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:reverseLayout="true"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/trending_txt"
+        />
+
+    <!--New UI End-->
+
+
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -74,7 +106,6 @@
         android:layout_height="wrap_content"
         android:text="No user available in this group"
         android:visibility="gone"
-        tools:visibility="visible"
         android:layout_marginTop="12dp"
         android:paddingTop="10dp"
         android:layout_below="@+id/group_chat_row"
@@ -92,6 +123,7 @@
         android:background="@drawable/search_bar"
         app:queryHint="search users"
         app:iconifiedByDefault="false"
+        android:visibility="gone"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
         />
@@ -122,6 +154,7 @@
         android:id="@+id/group_chat_row"
         android:layout_below="@+id/search_view"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"/>
 
@@ -130,6 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="10"
+        android:visibility="gone"
         android:layout_marginHorizontal="10dp"
         android:layout_below="@+id/group_chat_row"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

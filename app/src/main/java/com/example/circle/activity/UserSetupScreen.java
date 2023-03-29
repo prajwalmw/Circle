@@ -38,7 +38,6 @@ public class UserSetupScreen extends AppCompatActivity {
     FirebaseStorage storage;
     Uri selectedImage;
     ProgressDialog dialog;
-    User user;
     private Intent intent;
     private String category_value;
     private SessionManager sessionManager;

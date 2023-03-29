@@ -15,12 +15,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.circle.R;
+import com.example.circle.adapter.ContentAdapter;
 import com.example.circle.adapter.TopStatusAdapter;
 import com.example.circle.adapter.UsersAdapter;
 import com.example.circle.databinding.ActivityChatUserListBinding;
+import com.example.circle.model.ContentModel;
 import com.example.circle.model.Status;
 import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
@@ -32,7 +33,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -40,7 +40,6 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class Chat_UserList extends AppCompatActivity {
     FirebaseDatabase database;
@@ -53,6 +52,11 @@ public class Chat_UserList extends AppCompatActivity {
     private Intent intent;
     private String category_value, grpchat_title;
     TopStatusAdapter statusAdapter;
+    
+    // content
+    private ContentAdapter contentAdapter;
+    private ArrayList<ContentModel> contentList;
+    
     ArrayList<UserStatus> userStatuses;
     private User user;
 
@@ -82,6 +86,13 @@ public class Chat_UserList extends AppCompatActivity {
 
         users = new ArrayList<>();
         userStatuses = new ArrayList<>();
+        contentList = new ArrayList<>();
+        contentList.add(new ContentModel("img", "This is title 1", "10 Likes"));
+        contentList.add(new ContentModel("img", "This is title 2", "20 Likes"));
+        contentList.add(new ContentModel("img", "This is title 3", "30 Likes"));
+        contentList.add(new ContentModel("img", "This is title 4", "40 Likes"));
+        contentList.add(new ContentModel("img", "This is title 5", "50 Likes"));
+        contentList.add(new ContentModel("img", "This is title 6", "60 Likes"));
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Uploading Image...");
@@ -138,9 +149,17 @@ public class Chat_UserList extends AppCompatActivity {
         });*/
         // options menu - end
 
+        // content - start
+        contentAdapter = new ContentAdapter(this, contentList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        binding.contentRecycler.setLayoutManager(layoutManager);
+        binding.contentRecycler.setAdapter(contentAdapter);
+        // content - end
+        
         // status - start
         statusAdapter = new TopStatusAdapter(this, userStatuses);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.statusList.setLayoutManager(layoutManager);
         binding.statusList.setAdapter(statusAdapter);
