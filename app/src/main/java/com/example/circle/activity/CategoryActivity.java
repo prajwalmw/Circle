@@ -79,10 +79,10 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
             }
         }*/
 
-        Intent manage_intent = getIntent();
+       /* Intent manage_intent = getIntent();
         update = manage_intent.getBooleanExtra("screen", false);
         Bundle manage_args = manage_intent.getBundleExtra("BUNDLE");
-        checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");
+        checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");*/
 
 
         modelList = new ArrayList<>();
@@ -144,6 +144,7 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
                     Bundle args = new Bundle();
                     args.putSerializable("category_list", (Serializable) checkedValues);
                     intent.putExtra("BUNDLE", args);
+                    intent.putExtra("FROM_CATEGORY_SCREEN", true);
                     startActivity(intent);
                 }
 

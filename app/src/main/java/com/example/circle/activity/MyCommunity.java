@@ -77,12 +77,15 @@ public class MyCommunity extends AppCompatActivity {
                 .into(binding.profileImgIcon);*/
 
         if (categoryList == null) {
+            startActivity(new Intent(this, CategoryActivity.class));
+
             if (sessionManager.getArrayList("my_community") != null) {
                 categoryList = sessionManager.getArrayList("my_community");
             }
         }
+        else
+            adapter = new MyCommunityAdapter(this, categoryList);
 
-        adapter = new MyCommunityAdapter(this, categoryList);
      //   binding.recyclerviewCategory.setAdapter(adapter);
 
 /*

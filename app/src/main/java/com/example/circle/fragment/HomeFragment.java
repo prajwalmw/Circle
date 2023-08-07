@@ -1,5 +1,6 @@
 package com.example.circle.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
+import com.example.circle.activity.CategoryActivity;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.FragmentHomeBinding;
 import com.example.circle.model.CategoryModel;
@@ -56,6 +58,8 @@ public class HomeFragment extends Fragment {
         sessionManager = new SessionManager(getActivity());
 
         if (categoryList == null) {
+          //  startActivity(new Intent(this.getActivity(), CategoryActivity.class));
+
             if (sessionManager.getArrayList("my_community") != null) {
                 categoryList = sessionManager.getArrayList("my_community");
             }
@@ -65,10 +69,11 @@ public class HomeFragment extends Fragment {
                 .placeholder(R.drawable.avatar)
                 .into(binding.profileImgIcon);
 
-        adapter = new MyCommunityAdapter(getActivity(), categoryList);
-        binding.recyclerviewCategory.setAdapter(adapter);
 
         if (categoryList != null) {
+            adapter = new MyCommunityAdapter(getActivity(), categoryList);
+            binding.recyclerviewCategory.setAdapter(adapter);
+
             for (int i = 0; i < categoryList.size(); i++) {
                 String category_title = categoryList.get(i).getTitle();
                 database = FirebaseDatabase.getInstance();
