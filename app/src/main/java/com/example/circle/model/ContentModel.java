@@ -12,6 +12,10 @@ public class ContentModel {
         this.contentHeartCount = contentHeartCount;
     }
 
+    public ContentModel() {
+    }
+
+
     public String getContentImageUrl() {
         return contentImageUrl;
     }

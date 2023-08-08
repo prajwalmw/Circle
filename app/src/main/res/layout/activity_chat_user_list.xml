@@ -43,7 +43,7 @@
             android:translationY="-0.28sp" />
 
         <ImageButton
-            android:id="@+id/refreshbtn"
+            android:id="@+id/captureImgBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -53,11 +53,22 @@
             app:tint="@color/color_primary_dark" />
 
         <ImageButton
+            android:id="@+id/chatBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/chat_icon"
+            android:layout_toStartOf="@+id/captureImgBtn"
+            app:tint="@color/color_primary_dark" />
+
+        <ImageButton
             android:id="@+id/threedots_txtview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:visibility="gone"
+            tools:visibility="visible"
             android:src="@drawable/three_dots"
             android:layout_alignParentEnd="true" />
 
@@ -124,6 +135,7 @@
         app:queryHint="search users"
         app:iconifiedByDefault="false"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
         />
@@ -155,6 +167,7 @@
         android:layout_below="@+id/search_view"
         android:layout_width="match_parent"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"/>
 
@@ -164,6 +177,7 @@
         android:layout_height="match_parent"
         tools:itemCount="10"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginHorizontal="10dp"
         android:layout_below="@+id/group_chat_row"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

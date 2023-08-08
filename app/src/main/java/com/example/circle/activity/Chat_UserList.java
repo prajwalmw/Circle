@@ -25,6 +25,7 @@ import com.example.circle.model.ContentModel;
 import com.example.circle.model.Status;
 import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +44,8 @@ import java.util.HashMap;
 
 public class Chat_UserList extends AppCompatActivity {
     FirebaseDatabase database;
+    FirebaseStorage storage;
+    StorageReference reference;
     ArrayList<User> users;
     UsersAdapter usersAdapter;
     ProgressDialog dialog;
@@ -52,6 +55,7 @@ public class Chat_UserList extends AppCompatActivity {
     private Intent intent;
     private String category_value, grpchat_title;
     TopStatusAdapter statusAdapter;
+    SessionManager sessionManager;
     
     // content
     private ContentAdapter contentAdapter;
@@ -59,6 +63,8 @@ public class Chat_UserList extends AppCompatActivity {
     
     ArrayList<UserStatus> userStatuses;
     private User user;
+    public static final int STATUS_CAPTURE = 75;
+    public static final int POST_CAPTURE = 99;
 
 
 
@@ -83,17 +89,54 @@ public class Chat_UserList extends AppCompatActivity {
         }
 
         database = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        sessionManager = new SessionManager(this);
 
         users = new ArrayList<>();
         userStatuses = new ArrayList<>();
         contentList = new ArrayList<>();
-        contentList.add(new ContentModel("img", "This is title 1", "10 Likes"));
+
+        database.getReference().child("post").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    contentList.clear();
+                    for(DataSnapshot storySnapshot : snapshot.getChildren()) {
+                        /*UserStatus status = new UserStatus();
+                        status.setName(storySnapshot.child("name").getValue(String.class));
+                        status.setProfileImage(storySnapshot.child("profileImage").getValue(String.class));
+                        status.setLastUpdated(storySnapshot.child("lastUpdated").getValue(Long.class));*/   // todo: 8th aug check later if requir uncomment.
+
+//                        ArrayList<Status> statuses = new ArrayList<>();
+
+                        for(DataSnapshot statusSnapshot : storySnapshot.child("imagesPath").getChildren()) {
+                           // Status sampleStatus = statusSnapshot.getValue(Status.class);
+                            ContentModel contentModel = statusSnapshot.getValue(ContentModel.class);
+                            contentList.add(contentModel);
+                        }
+
+                      //  status.setStatuses(statuses);
+                      //  userStatuses.add(status);
+                    }
+
+                    if (contentAdapter != null)
+                        contentAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+      /*  contentList.add(new ContentModel("img", "This is title 1", "10 Likes"));
         contentList.add(new ContentModel("img", "This is title 2", "20 Likes"));
         contentList.add(new ContentModel("img", "This is title 3", "30 Likes"));
         contentList.add(new ContentModel("img", "This is title 4", "40 Likes"));
         contentList.add(new ContentModel("img", "This is title 5", "50 Likes"));
         contentList.add(new ContentModel("img", "This is title 6", "60 Likes"));
-
+*/
         dialog = new ProgressDialog(this);
         dialog.setMessage("Uploading Image...");
         dialog.setCancelable(false);
@@ -337,11 +380,16 @@ public class Chat_UserList extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 75);
+            startActivityForResult(intent, STATUS_CAPTURE);
         });
         // status - end
 
-
+        binding.captureImgBtn.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, POST_CAPTURE);
+        });
 
     }
 
@@ -405,48 +453,81 @@ public class Chat_UserList extends AppCompatActivity {
         if(data != null) {
             if(data.getData() != null) {
                 dialog.show();
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                Date date = new Date();
-                StorageReference reference = storage.getReference().child("status").child(date.getTime() + "");
 
-                reference.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()) {
-                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    UserStatus userStatus = new UserStatus();
-                                    userStatus.setName(user.getName());
-                                    userStatus.setProfileImage(user.getProfileImage());
-                                    userStatus.setLastUpdated(date.getTime());
+                if (requestCode == STATUS_CAPTURE && resultCode == RESULT_OK) {
+                    image_upload(data, STATUS_CAPTURE);
+                }
+                else if (requestCode == POST_CAPTURE && resultCode == RESULT_OK) {
+                    image_upload(data, POST_CAPTURE);
+                }
 
-                                    HashMap<String, Object> obj = new HashMap<>();
-                                    obj.put("name", userStatus.getName());
-                                    obj.put("profileImage", userStatus.getProfileImage());
-                                    obj.put("lastUpdated", userStatus.getLastUpdated());
-
-                                    String imageUrl = uri.toString();
-                                    Status status = new Status(imageUrl, userStatus.getLastUpdated());
-
-                                    database.getReference()
-                                            .child("stories")
-                                            .child(FirebaseAuth.getInstance().getUid())
-                                            .updateChildren(obj);
-
-                                    database.getReference().child("stories")
-                                            .child(FirebaseAuth.getInstance().getUid())
-                                            .child("statuses")
-                                            .push()
-                                            .setValue(status);
-
-                                    dialog.dismiss();
-                                }
-                            });
-                        }
-                    }
-                });
             }
+            //
         }
+    }
+
+    private void image_upload(@NonNull Intent data, int requestCode) {
+      //  FirebaseStorage storage = FirebaseStorage.getInstance();
+        Date date = new Date();
+
+        if (requestCode == STATUS_CAPTURE)
+            reference = storage.getReference().child("status").child(date.getTime() + "");
+        else if (requestCode == POST_CAPTURE)
+            reference = storage.getReference().child("post").child(date.getTime() + "");
+        reference.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()) {
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            // userslist has all the userslist now check the current userid if it is present in the userslist.
+                            User user = sessionManager.getUserModel("loggedIn_UserModel");
+                            UserStatus userStatus = new UserStatus();
+                            userStatus.setName(user.getName());
+                            userStatus.setProfileImage(user.getProfileImage());
+                            userStatus.setLastUpdated(date.getTime());
+
+                            HashMap<String, Object> obj = new HashMap<>();
+                            obj.put("name", userStatus.getName());
+                            obj.put("profileImage", userStatus.getProfileImage());
+                            obj.put("lastUpdated", userStatus.getLastUpdated());
+
+                            String imageUrl = uri.toString();
+                          //  Status status = new Status(imageUrl, userStatus.getLastUpdated());
+                            ContentModel contentModel = new ContentModel(imageUrl, "This is first image", "100");
+
+                            if (requestCode == STATUS_CAPTURE) {
+                                database.getReference()
+                                        .child("stories")
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .updateChildren(obj);
+
+                                database.getReference().child("stories")
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .child("imagesPath")
+                                        .push()
+                                        .setValue(contentModel);
+                            }
+                            else if (requestCode == POST_CAPTURE) {
+                                database.getReference()
+                                        .child("post")
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .updateChildren(obj);
+
+                                database.getReference().child("post")
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .child("imagesPath")
+                                        .push()
+                                        .setValue(contentModel);
+
+                            }
+
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }
+        });
     }
 }

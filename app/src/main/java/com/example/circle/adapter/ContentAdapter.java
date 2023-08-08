@@ -1,31 +1,22 @@
 package com.example.circle.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
-import com.example.circle.activity.ChatActivity;
-import com.example.circle.databinding.RowConversationBinding;
 import com.example.circle.model.ContentModel;
-import com.example.circle.model.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentViewHolder> {
 
@@ -51,12 +42,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.contentLikeCount.setText(contentModel.getContentHeartCount());
-
-/*
-        Glide.with(context).load(user.getProfileImage())
+        Glide.with(context)
+                .asBitmap()
+                .load(contentModel.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
-                .into(holder.binding.profile);
-*/
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(holder.content_imageview);
 
 /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,11 +73,13 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
         TextView contentTitle, contentLikeCount;
+        ImageView content_imageview;
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             contentTitle = itemView.findViewById(R.id.content_title);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
+            content_imageview = itemView.findViewById(R.id.content_imageview);
         }
     }
 
