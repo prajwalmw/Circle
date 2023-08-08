@@ -96,7 +96,10 @@ public class Chat_UserList extends AppCompatActivity {
         userStatuses = new ArrayList<>();
         contentList = new ArrayList<>();
 
-        database.getReference().child("post").addValueEventListener(new ValueEventListener() {
+        database.getReference()
+                .child("post")
+                .child(category_value)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -473,7 +476,7 @@ public class Chat_UserList extends AppCompatActivity {
         if (requestCode == STATUS_CAPTURE)
             reference = storage.getReference().child("status").child(date.getTime() + "");
         else if (requestCode == POST_CAPTURE)
-            reference = storage.getReference().child("post").child(date.getTime() + "");
+            reference = storage.getReference().child("post").child(category_value).child(date.getTime() + "");
         reference.putFile(data.getData()).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -512,10 +515,13 @@ public class Chat_UserList extends AppCompatActivity {
                             else if (requestCode == POST_CAPTURE) {
                                 database.getReference()
                                         .child("post")
+                                        .child(category_value)
                                         .child(FirebaseAuth.getInstance().getUid())
                                         .updateChildren(obj);
 
-                                database.getReference().child("post")
+                                database.getReference()
+                                        .child("post")
+                                        .child(category_value)
                                         .child(FirebaseAuth.getInstance().getUid())
                                         .child("imagesPath")
                                         .push()

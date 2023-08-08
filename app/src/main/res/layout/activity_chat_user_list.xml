@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trending"
-        android:layout_marginTop="12dp"
+        android:layout_marginVertical="12dp"
         android:layout_marginStart="24dp"
         android:layout_below="@+id/category_toolbar"
         android:textAppearance="@style/we_will_sen"
