@@ -284,6 +284,7 @@ public class ChatActivity extends AppCompatActivity {
                         .child("chats")
                         .child(category_value)
                         .child(senderRoom).updateChildren(lastMsgObj); // Updating the values...
+
                 database.getReference()
                         .child("chats")
                         .child(category_value)

@@ -1,9 +1,6 @@
 package com.example.circle.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +24,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     Context context;
     ArrayList<ContentModel> contentList;
     String category_value;
+    ContentAdapter.OnItemClick itemClick;
 
-    public ContentAdapter(Context context, ArrayList<ContentModel> contentList) {
+    public ContentAdapter(Context context, ArrayList<ContentModel> contentList, ContentAdapter.OnItemClick itemClick) {
         this.context = context;
         this.contentList = contentList;
+        this.itemClick = itemClick;
     }
 
     @NonNull
@@ -91,13 +90,19 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 if (like_btn.getTag().equals("0")) {
                     like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
                     like_btn.setTag("1");
+                    itemClick.onclick(true, contentList.get(getAdapterPosition()));
                 }
                 else {
                     like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
                     like_btn.setTag("0");
+                    itemClick.onclick(false, contentList.get(getAdapterPosition()));
                 }
             });
         }
+    }
+
+    public interface OnItemClick {
+        public void onclick(boolean isLiked, ContentModel contentModel);
     }
 
 }

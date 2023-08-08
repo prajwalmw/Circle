@@ -2,11 +2,15 @@ package com.example.circle.model;
 
 public class ContentModel {
 
+    private String userID;
+    private String uuid;
     private String contentImageUrl;
     private String contenTitle;
     private String contentHeartCount;
 
-    public ContentModel(String contentImageUrl, String contenTitle, String contentHeartCount) {
+    public ContentModel(String userID, String uuid, String contentImageUrl, String contenTitle, String contentHeartCount) {
+        this.userID = userID;
+        this.uuid = uuid;
         this.contentImageUrl = contentImageUrl;
         this.contenTitle = contenTitle;
         this.contentHeartCount = contentHeartCount;
@@ -38,5 +42,13 @@ public class ContentModel {
 
     public void setContentHeartCount(String contentHeartCount) {
         this.contentHeartCount = contentHeartCount;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 }

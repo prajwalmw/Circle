@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class PostDetailsActivity extends AppCompatActivity {
     ActivityPostDetailsBinding binding;
@@ -112,9 +113,9 @@ public class PostDetailsActivity extends AppCompatActivity {
                             obj.put("lastUpdated", userStatus.getLastUpdated());
 
                             String imageUrl = uri.toString();
-                            ContentModel contentModel = new ContentModel(imageUrl,
-                                    binding.descriptionInput.getText().toString().trim(),
-                                    0 + " Likes");
+                            ContentModel contentModel = new ContentModel(   // adding values...
+                                    FirebaseAuth.getInstance().getUid(), UUID.randomUUID().toString(), imageUrl,
+                                    binding.descriptionInput.getText().toString().trim(), 0 + " Likes");
 
                             if (requestCode == STATUS_CAPTURE) {
                                 database.getReference()

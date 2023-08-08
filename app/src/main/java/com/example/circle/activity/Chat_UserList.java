@@ -27,9 +27,6 @@ import com.example.circle.model.Status;
 import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
 import com.example.circle.utilities.SessionManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,10 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Chat_UserList extends AppCompatActivity {
@@ -198,7 +193,12 @@ public class Chat_UserList extends AppCompatActivity {
         // options menu - end
 
         // content - start
-        contentAdapter = new ContentAdapter(this, contentList);
+        contentAdapter = new ContentAdapter(this, contentList, new ContentAdapter.OnItemClick() {
+            @Override
+            public void onclick(boolean isLiked, ContentModel contentModel) {
+                plus_minus_heartCount(isLiked, contentModel);
+            }
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.contentRecycler.setLayoutManager(layoutManager);
@@ -398,6 +398,61 @@ public class Chat_UserList extends AppCompatActivity {
 
     }
 
+    private void plus_minus_heartCount(boolean isLiked, ContentModel contentModel) {
+
+        if (isLiked) {
+            updateHeartDBCount(contentModel, isLiked);
+        }
+        else {
+            updateHeartDBCount(contentModel, isLiked);
+        }
+
+        contentAdapter.notifyDataSetChanged();
+
+
+    }
+
+    private void updateHeartDBCount(ContentModel contentModel, boolean isLiked) {
+        database.getReference("post")
+                .child(category_value)
+                .child(contentModel.getUserID())
+                .child("imagesPath")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                        for (DataSnapshot data : snapshot1.getChildren()) {
+                            ContentModel mod = data.getValue(ContentModel.class);
+
+                            String heartCount[] = mod.getContentHeartCount().split(" Likes");
+                            int count = Integer.parseInt(heartCount[0]);
+
+                            HashMap<String, Object> obj = new HashMap<>();
+                            if (isLiked){
+                                count = count + 1;
+                                obj.put("contentHeartCount", count + " Likes");   // mod
+                            }
+                            else {
+                                count = count - 1;
+                                obj.put("contentHeartCount", count + " Likes");   // mod
+                            }
+
+                            database.getReference()
+                                    .child("post")
+                                    .child(category_value)
+                                    .child(contentModel.getUserID())
+                                    .child("imagesPath")
+                                    .child(data.getKey())
+                                    .updateChildren(obj);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });}
+
     private void searchOperation(String newText) {
         ArrayList<User> userList = new ArrayList<>();
         userList.addAll(users);
@@ -489,6 +544,7 @@ public class Chat_UserList extends AppCompatActivity {
         }
     }
 
+/*
     private void image_upload(@NonNull Intent data, int requestCode) {
       //  FirebaseStorage storage = FirebaseStorage.getInstance();
         Date date = new Date();
@@ -518,7 +574,7 @@ public class Chat_UserList extends AppCompatActivity {
 
                             String imageUrl = uri.toString();
                           //  Status status = new Status(imageUrl, userStatus.getLastUpdated());
-                            ContentModel contentModel = new ContentModel(imageUrl, "This is first image", "100 Likes");
+                            ContentModel contentModel = new ContentModel(UUID.randomUUID().toString(), imageUrl, "This is first image", "100 Likes");
 
                             if (requestCode == STATUS_CAPTURE) {
                                 database.getReference()
@@ -556,4 +612,5 @@ public class Chat_UserList extends AppCompatActivity {
             }
         });
     }
+*/
 }
