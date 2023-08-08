@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.circle.R;
 import com.example.circle.adapter.ContentAdapter;
@@ -65,6 +66,7 @@ public class Chat_UserList extends AppCompatActivity {
     private User user;
     public static final int STATUS_CAPTURE = 75;
     public static final int POST_CAPTURE = 99;
+    public static final int SHARE_REQUEST_CODE = 98;
 
 
 
@@ -455,13 +457,31 @@ public class Chat_UserList extends AppCompatActivity {
 
         if(data != null) {
             if(data.getData() != null) {
-                dialog.show();
+              //  dialog.show();
+
+                if (requestCode == SHARE_REQUEST_CODE) {
+                    boolean success = data.getBooleanExtra("SUCCESS", false);
+                    if (success)
+                        Toast.makeText(this, "Post uploaded successfully!", Toast.LENGTH_SHORT).show();
+                }
 
                 if (requestCode == STATUS_CAPTURE && resultCode == RESULT_OK) {
-                    image_upload(data, STATUS_CAPTURE);
+                    Uri d = data.getData();
+                    Log.d(TAG, "onActivityResult: status capture " + d);
+                    Intent i = new Intent(new Intent(Chat_UserList.this, PostDetailsActivity.class));
+                    i.putExtra("URI", data.getData().toString());
+                    i.putExtra("CAPTURE_REQUEST_CODE", STATUS_CAPTURE);
+                    i.putExtra("category_value", category_value);
+                    startActivityForResult(i, SHARE_REQUEST_CODE);
                 }
                 else if (requestCode == POST_CAPTURE && resultCode == RESULT_OK) {
-                    image_upload(data, POST_CAPTURE);
+                    Uri d = data.getData();
+                    Log.d(TAG, "onActivityResult: status capture " + d);
+                    Intent i = new Intent(new Intent(Chat_UserList.this, PostDetailsActivity.class));
+                    i.putExtra("URI", data.getData().toString());
+                    i.putExtra("CAPTURE_REQUEST_CODE", POST_CAPTURE);
+                    i.putExtra("category_value", category_value);
+                    startActivityForResult(i, SHARE_REQUEST_CODE);
                 }
 
             }
@@ -529,7 +549,7 @@ public class Chat_UserList extends AppCompatActivity {
 
                             }
 
-                            dialog.dismiss();
+                          //  dialog.dismiss();
                         }
                     });
                 }
