@@ -495,7 +495,7 @@ public class Chat_UserList extends AppCompatActivity {
 
                             String imageUrl = uri.toString();
                           //  Status status = new Status(imageUrl, userStatus.getLastUpdated());
-                            ContentModel contentModel = new ContentModel(imageUrl, "This is first image", "100");
+                            ContentModel contentModel = new ContentModel(imageUrl, "This is first image", "100 Likes");
 
                             if (requestCode == STATUS_CAPTURE) {
                                 database.getReference()

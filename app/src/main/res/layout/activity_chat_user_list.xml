@@ -68,7 +68,6 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:visibility="gone"
-            tools:visibility="visible"
             android:src="@drawable/three_dots"
             android:layout_alignParentEnd="true" />
 
@@ -93,11 +92,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="10dp"
         app:reverseLayout="true"
-        android:layout_marginBottom="20dp"
         android:layout_below="@+id/trending_txt"
+        tools:listitem="@layout/content_listitem"
         />
 
     <!--New UI End-->
@@ -135,7 +132,6 @@
         app:queryHint="search users"
         app:iconifiedByDefault="false"
         android:visibility="gone"
-        tools:visibility="visible"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
         />
@@ -167,7 +163,6 @@
         android:layout_below="@+id/search_view"
         android:layout_width="match_parent"
         android:visibility="gone"
-        tools:visibility="visible"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"/>
 
@@ -177,7 +172,6 @@
         android:layout_height="match_parent"
         tools:itemCount="10"
         android:visibility="gone"
-        tools:visibility="visible"
         android:layout_marginHorizontal="10dp"
         android:layout_below="@+id/group_chat_row"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

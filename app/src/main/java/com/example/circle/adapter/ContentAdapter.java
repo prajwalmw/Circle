@@ -1,9 +1,13 @@
 package com.example.circle.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,12 +78,25 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     public class ContentViewHolder extends RecyclerView.ViewHolder {
         TextView contentTitle, contentLikeCount;
         ImageView content_imageview;
+        ImageButton like_btn;
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             contentTitle = itemView.findViewById(R.id.content_title);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
+            like_btn = itemView.findViewById(R.id.like_btn);
+
+            like_btn.setOnClickListener(v -> {
+                if (like_btn.getTag().equals("0")) {
+                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
+                    like_btn.setTag("1");
+                }
+                else {
+                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
+                    like_btn.setTag("0");
+                }
+            });
         }
     }
 
