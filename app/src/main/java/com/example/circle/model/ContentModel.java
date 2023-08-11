@@ -6,9 +6,9 @@ public class ContentModel {
     private String uuid;
     private String contentImageUrl;
     private String contenTitle;
-    private String contentHeartCount;
+    private int contentHeartCount;
 
-    public ContentModel(String userID, String uuid, String contentImageUrl, String contenTitle, String contentHeartCount) {
+    public ContentModel(String userID, String uuid, String contentImageUrl, String contenTitle, int contentHeartCount) {
         this.userID = userID;
         this.uuid = uuid;
         this.contentImageUrl = contentImageUrl;
@@ -36,11 +36,11 @@ public class ContentModel {
         this.contenTitle = contenTitle;
     }
 
-    public String getContentHeartCount() {
+    public int getContentHeartCount() {
         return contentHeartCount;
     }
 
-    public void setContentHeartCount(String contentHeartCount) {
+    public void setContentHeartCount(int contentHeartCount) {
         this.contentHeartCount = contentHeartCount;
     }
 

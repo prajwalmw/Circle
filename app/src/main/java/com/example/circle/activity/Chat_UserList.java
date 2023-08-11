@@ -36,6 +36,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Chat_UserList extends AppCompatActivity {
@@ -130,13 +132,6 @@ public class Chat_UserList extends AppCompatActivity {
             }
         });
 
-      /*  contentList.add(new ContentModel("img", "This is title 1", "10 Likes"));
-        contentList.add(new ContentModel("img", "This is title 2", "20 Likes"));
-        contentList.add(new ContentModel("img", "This is title 3", "30 Likes"));
-        contentList.add(new ContentModel("img", "This is title 4", "40 Likes"));
-        contentList.add(new ContentModel("img", "This is title 5", "50 Likes"));
-        contentList.add(new ContentModel("img", "This is title 6", "60 Likes"));
-*/
         dialog = new ProgressDialog(this);
         dialog.setMessage("Uploading Image...");
         dialog.setCancelable(false);
@@ -423,27 +418,27 @@ public class Chat_UserList extends AppCompatActivity {
                         for (DataSnapshot data : snapshot1.getChildren()) {
                             ContentModel mod = data.getValue(ContentModel.class);
 
-                            String heartCount[] = mod.getContentHeartCount().split(" Likes");
-                            int count = Integer.parseInt(heartCount[0]);
+                            if (mod.getUuid() == contentModel.getUuid()) {  // this makes sure that only the clicked item's heart count is updated.
+                                int count = mod.getContentHeartCount();
 
-                            HashMap<String, Object> obj = new HashMap<>();
-                            if (isLiked){
-                                count = count + 1;
-                                obj.put("contentHeartCount", count + " Likes");   // mod
+                                HashMap<String, Object> obj = new HashMap<>();
+                                if (isLiked){
+                                    count = count + 1;
+                                    obj.put("contentHeartCount", count);   // mod
+                                }
+                                else {
+                                    count = count - 1;
+                                    obj.put("contentHeartCount", count);   // mod
+                                }
+
+                                database.getReference()
+                                        .child("post")
+                                        .child(category_value)
+                                        .child(contentModel.getUserID())
+                                        .child("imagesPath")
+                                        .child(data.getKey())
+                                        .updateChildren(obj);
                             }
-                            else {
-                                count = count - 1;
-                                obj.put("contentHeartCount", count + " Likes");   // mod
-                            }
-
-                            database.getReference()
-                                    .child("post")
-                                    .child(category_value)
-                                    .child(contentModel.getUserID())
-                                    .child("imagesPath")
-                                    .child(data.getKey())
-                                    .updateChildren(obj);
-
                         }
                     }
 

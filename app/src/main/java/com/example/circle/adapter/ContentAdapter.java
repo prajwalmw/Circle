@@ -18,6 +18,8 @@ import com.example.circle.R;
 import com.example.circle.model.ContentModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentViewHolder> {
 
@@ -41,10 +43,21 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
     @Override
     public void onBindViewHolder(@NonNull ContentViewHolder holder, int position) {
+        // heart count - contentList - sort as per desc of heart count.
+        Collections.sort(contentList, new Comparator<ContentModel>() {
+            @Override
+            public int compare(ContentModel model_1, ContentModel model_2) {
+                return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+            }
+        });
+        // end
+
         ContentModel contentModel = contentList.get(position);
+        if (contentModel.getContentHeartCount() > 0)
+            holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
 
         holder.contentTitle.setText(contentModel.getContenTitle());
-        holder.contentLikeCount.setText(contentModel.getContentHeartCount());
+        holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
         Glide.with(context)
                 .asBitmap()
                 .load(contentModel.getContentImageUrl())

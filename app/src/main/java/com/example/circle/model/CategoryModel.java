@@ -10,6 +10,9 @@ public class CategoryModel implements Serializable{
     private int icon;
     private String title;
 
+    public CategoryModel() {
+    }
+
     public CategoryModel(int icon, String title) {
         this.icon = icon;
         this.title = title;

@@ -93,31 +93,48 @@
                 android:background="@null"
                 />
 
-        <TextView
-            android:id="@+id/content_like_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/cornered_edge_box"
-            android:elevation="2dp"
-            android:fontFamily="@font/lato_bold"
-            android:padding="5dp"
-            android:text="10 Likes"
-            android:textColor="@color/theme_red_sports"
-            android:layout_toEndOf="@+id/like_btn"
-            android:layout_below="@+id/content_imageview"
-            android:textSize="12sp"
-            />
+            <LinearLayout
+                android:id="@+id/linear_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toEndOf="@+id/like_btn"
+                android:layout_below="@+id/content_imageview"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/cornered_edge_box"
+                android:elevation="2dp"
+                android:fontFamily="@font/lato_bold"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/content_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@color/theme_red_sports"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/likes_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Likes"
+                    android:textColor="@color/theme_red_sports"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
 
         <TextView
             android:id="@+id/content_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:layout_alignStart="@id/content_like_count"
+            android:layout_alignStart="@id/linear_heart"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:layout_below="@+id/content_like_count"
+            android:layout_below="@+id/linear_heart"
             android:background="@drawable/cornered_edge_box"
             android:elevation="2dp"
             android:fontFamily="@font/lato_bold"
