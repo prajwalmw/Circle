@@ -57,6 +57,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
 
         holder.contentTitle.setText(contentModel.getContenTitle());
+        holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
         Glide.with(context)
                 .asBitmap()
@@ -64,6 +65,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(holder.content_imageview);
+        Glide.with(context)
+                .asBitmap()
+                .load(contentModel.getUserProfile())
+                .placeholder(R.drawable.avatar)
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(holder.profile_img_icon);
 
 /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,15 +95,17 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount;
-        ImageView content_imageview;
+        TextView contentTitle, contentLikeCount, post_username;
+        ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             contentTitle = itemView.findViewById(R.id.content_title);
+            post_username = itemView.findViewById(R.id.post_username);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
+            profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
             like_btn = itemView.findViewById(R.id.like_btn);
 
             like_btn.setOnClickListener(v -> {

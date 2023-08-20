@@ -418,7 +418,7 @@ public class Chat_UserList extends AppCompatActivity {
                         for (DataSnapshot data : snapshot1.getChildren()) {
                             ContentModel mod = data.getValue(ContentModel.class);
 
-                            if (mod.getUuid() == contentModel.getUuid()) {  // this makes sure that only the clicked item's heart count is updated.
+                            if (mod.getUuid().equalsIgnoreCase(contentModel.getUuid())) {  // this makes sure that only the clicked item's heart count is updated.
                                 int count = mod.getContentHeartCount();
 
                                 HashMap<String, Object> obj = new HashMap<>();
