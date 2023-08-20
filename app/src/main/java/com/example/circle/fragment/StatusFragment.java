@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavAction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +74,9 @@ public class StatusFragment extends Fragment {
         contentModelArrayList = new ArrayList<>();
         contentRemoveList = new ArrayList<>();
 
+        binding.backbtn.setOnClickListener(v -> {
+            Navigation.findNavController(v).popBackStack();
+        });
         adapter = new LeaderboardAdapter(getActivity(), contentModelArrayList, top3ContentList, new OnItemClickListener() {
             @Override
             public void onItemClick() {
@@ -194,8 +199,6 @@ public class StatusFragment extends Fragment {
 //        if (contentModelArrayList.size() > 3) {
 //
 //        }
-
-
 
 
 }

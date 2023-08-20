@@ -68,8 +68,10 @@ public class MyCommunity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_status)
                 .build();
 
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.bottomnavbar, navController);
+
         // bottom nav bar - end
 
        /* Glide.with(this).load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
@@ -147,7 +149,10 @@ public class MyCommunity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0)
+            super.onBackPressed();
+        else
+            getSupportFragmentManager().popBackStack();
     }
 }
