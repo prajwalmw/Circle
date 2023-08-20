@@ -1,7 +1,10 @@
 package com.example.circle.fragment;
 
+import static com.example.circle.activity.Chat_UserList.TAG;
+
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,6 +21,7 @@ import com.example.circle.R;
 import com.example.circle.adapter.LeaderboardAdapter;
 import com.example.circle.databinding.FragmentStatusBinding;
 import com.example.circle.model.ContentModel;
+import com.example.circle.utilities.OnItemClickListener;
 import com.example.circle.utilities.SessionManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class StatusFragment extends Fragment {
     private FragmentStatusBinding binding;
@@ -35,7 +41,8 @@ public class StatusFragment extends Fragment {
     FirebaseDatabase database;
     FirebaseStorage storage;
     ArrayList<String> categoryTitleList;
-    ArrayList<ContentModel> contentModelArrayList;
+    ArrayList<ContentModel> contentModelArrayList, contentRemoveList;
+    HashSet<ContentModel> top3ContentList;
 
     @Nullable
     @Override
@@ -61,9 +68,20 @@ public class StatusFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
 
         categoryTitleList = new ArrayList<>();
+        top3ContentList = new HashSet<>();
         contentModelArrayList = new ArrayList<>();
+        contentRemoveList = new ArrayList<>();
 
-        adapter = new LeaderboardAdapter(getActivity());
+        adapter = new LeaderboardAdapter(getActivity(), contentModelArrayList, top3ContentList, new OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+
+            }
+        });
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.recyclerLeader.setLayoutManager(llm);
         binding.recyclerLeader.setAdapter(adapter);
 
         database.getReference("users")
@@ -93,12 +111,27 @@ public class StatusFragment extends Fragment {
 
                             for (DataSnapshot innerChildSnapShot : childSnapshot.child("imagesPath").getChildren()) {
                                 ContentModel contentModel = innerChildSnapShot.getValue(ContentModel.class);
-                                contentModelArrayList.add(contentModel);
+                                boolean isAdded = contentModelArrayList.add(contentModel);
+
+                                if (isAdded) {
+                                    // sort list in desc order of heart count.
+                                    contentModelArrayList = sortListInDescOrder(contentModelArrayList);
+                                    if (adapter != null && contentModelArrayList.size() > 3) {
+                                        top3ContentList.clear();
+                                        top3ContentList.add(contentModelArrayList.get(0));
+                                        top3ContentList.add(contentModelArrayList.get(1));
+                                        top3ContentList.add(contentModelArrayList.get(2));
+
+                                        ArrayList<ContentModel> topArrayList = new ArrayList<>();
+                                        topArrayList.addAll(top3ContentList);
+                                        topArrayList = sortListInDescOrder(topArrayList);
+                                        setTop3UIValues(topArrayList);
+
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
                             }
                         }
-
-                        // sort list in desc order of heart count.
-                        sortListInDescOrder(contentModelArrayList);
                     }
 
                     @Override
@@ -108,7 +141,43 @@ public class StatusFragment extends Fragment {
                 });
     }
 
-    private void sortListInDescOrder(ArrayList<ContentModel> contentModelArrayList) {
+    private void setTop3UIValues(ArrayList<ContentModel> top3ContentList) {
+        if (getActivity() == null || top3ContentList.size() == 0)
+            return;
+
+      //  if (rank == 0) {
+            binding.firstLikes.setText(top3ContentList.get(0).getContentHeartCount() + "+");
+            binding.firstNameTxt.setText(top3ContentList.get(0).getUserName());
+            Glide.with(getActivity())
+                    .asBitmap()
+                    .load(top3ContentList.get(0).getContentImageUrl())
+                    .placeholder(R.drawable.avatar)
+                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(binding.img1);
+     //   }
+     //   else if (rank == 1) {
+            binding.secondLikes.setText(top3ContentList.get(1).getContentHeartCount() + "+");
+        binding.secondNameTxt2.setText(top3ContentList.get(1).getUserName());
+        Glide.with(getActivity())
+                    .asBitmap()
+                    .load(top3ContentList.get(1).getContentImageUrl())
+                    .placeholder(R.drawable.avatar)
+                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(binding.img2);
+     //   }
+     //   else if (rank == 2) {
+            binding.thirdLikes.setText(top3ContentList.get(2).getContentHeartCount() + "+");
+        binding.thirdNameTxt3.setText(top3ContentList.get(2).getUserName());
+        Glide.with(getActivity())
+                    .asBitmap()
+                    .load(top3ContentList.get(2).getContentImageUrl())
+                    .placeholder(R.drawable.avatar)
+                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(binding.img3);
+      //  }
+    }
+
+    private ArrayList<ContentModel> sortListInDescOrder(ArrayList<ContentModel> contentModelArrayList) {
         // heart count - contentList - sort as per desc of heart count.
         Collections.sort(contentModelArrayList, new Comparator<ContentModel>() {
             @Override
@@ -116,35 +185,17 @@ public class StatusFragment extends Fragment {
                 return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
             }
         });
+
+        return contentModelArrayList;
+    }
         // end
 
-        // set values on UI.
-        binding.firstLikes.setText(contentModelArrayList.get(0).getContentHeartCount() + "+");
-        binding.secondLikes.setText(contentModelArrayList.get(1).getContentHeartCount() + "+");
-        binding.thirdLikes.setText(contentModelArrayList.get(2).getContentHeartCount() + "+");
+//        ArrayList<ContentModel> list2 = new ArrayList<>();
+//        if (contentModelArrayList.size() > 3) {
+//
+//        }
 
-        Glide.with(getActivity())
-                .asBitmap()
-                .load(contentModelArrayList.get(0).getContentImageUrl())
-                .placeholder(R.drawable.avatar)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                .into(binding.img1);
 
-        Glide.with(getActivity())
-                .asBitmap()
-                .load(contentModelArrayList.get(1).getContentImageUrl())
-                .placeholder(R.drawable.avatar)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                .into(binding.img2);
-
-        Glide.with(getActivity())
-                .asBitmap()
-                .load(contentModelArrayList.get(2).getContentImageUrl())
-                .placeholder(R.drawable.avatar)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                .into(binding.img3);
-
-    }
 
 
 }

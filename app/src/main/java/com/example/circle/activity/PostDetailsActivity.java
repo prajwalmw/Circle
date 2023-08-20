@@ -114,7 +114,7 @@ public class PostDetailsActivity extends AppCompatActivity {
 
                             String imageUrl = uri.toString();
                             ContentModel contentModel = new ContentModel(   // adding values...
-                                    FirebaseAuth.getInstance().getUid(), UUID.randomUUID().toString(), imageUrl,
+                                    FirebaseAuth.getInstance().getUid(), userStatus.getName(), userStatus.getProfileImage(), UUID.randomUUID().toString(), imageUrl,
                                     binding.descriptionInput.getText().toString().trim(), 0);
 
                             if (requestCode == STATUS_CAPTURE) {

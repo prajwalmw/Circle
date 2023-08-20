@@ -94,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/img1"
                     android:text="King K."
+                    android:maxLines="1"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -183,6 +184,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
+                        android:maxLines="1"
                         android:layout_marginTop="5dp"
                         android:text="Queen Q."
                         android:textColor="@color/silver"
@@ -261,6 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/img3"
                     android:text="Jack J."
+                    android:maxLines="1"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -308,7 +311,7 @@
                 android:layout_below="@+id/relative_top3_block">
 
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fillViewport="true"
@@ -325,12 +328,13 @@
                         android:id="@+id/recycler_leader"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/leaderboard_listitem"/>
 
                 </RelativeLayout>
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             </RelativeLayout>
 
