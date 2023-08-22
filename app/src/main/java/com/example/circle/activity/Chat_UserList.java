@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,6 +40,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class Chat_UserList extends AppCompatActivity {
     FirebaseDatabase database;
@@ -419,16 +423,26 @@ public class Chat_UserList extends AppCompatActivity {
                             ContentModel mod = data.getValue(ContentModel.class);
 
                             if (mod.getUuid().equalsIgnoreCase(contentModel.getUuid())) {  // this makes sure that only the clicked item's heart count is updated.
-                                int count = mod.getContentHeartCount();
 
+                                // Automic Server-Side Increments for Like/Unlike post.
                                 HashMap<String, Object> obj = new HashMap<>();
-                                if (isLiked){
-                                    count = count + 1;
-                                    obj.put("contentHeartCount", count);   // mod
+                                User user = sessionManager.getUserModel("loggedIn_UserModel");
+
+                                List<String> likedList;
+                                if (mod.getLikedBy() != null)
+                                     likedList = mod.getLikedBy();
+                                else
+                                    likedList = new ArrayList<>();
+
+                                if (likedList.contains(user.getUid())) { // ie. already liked by this user.
+                                    obj.put("contentHeartCount", ServerValue.increment(-1));   // than decrement like count as already liked.
+                                    likedList.remove(user.getUid());  // ie. since unliked than remove userId from list.
+                                    obj.put("likedBy", likedList);
                                 }
                                 else {
-                                    count = count - 1;
-                                    obj.put("contentHeartCount", count);   // mod
+                                    obj.put("contentHeartCount", ServerValue.increment(1));   // mod
+                                    likedList.add(user.getUid()); // ie. since liked than add this userId in arraylist.
+                                    obj.put("likedBy", likedList);
                                 }
 
                                 database.getReference()
@@ -438,6 +452,18 @@ public class Chat_UserList extends AppCompatActivity {
                                         .child("imagesPath")
                                         .child(data.getKey())
                                         .updateChildren(obj);
+
+                              /*  // Updating userIDs who like the post.
+                                Map<String, Object> updates = new HashMap<>();
+                                updates.put(mod.getUserID(), true);
+                                database.getReference()
+                                        .child("post")
+                                        .child(category_value)
+                                        .child(contentModel.getUserID())
+                                        .child("imagesPath")
+                                        .child(data.getKey())
+                                        .child("likedBy")
+                                        .updateChildren(updates);*/
                             }
                         }
                     }
@@ -446,7 +472,8 @@ public class Chat_UserList extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });}
+                });
+    }
 
     private void searchOperation(String newText) {
         ArrayList<User> userList = new ArrayList<>();

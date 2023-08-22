@@ -16,6 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
 import com.example.circle.model.ContentModel;
+import com.example.circle.model.User;
+import com.example.circle.utilities.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,11 +29,13 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     ArrayList<ContentModel> contentList;
     String category_value;
     ContentAdapter.OnItemClick itemClick;
+    SessionManager sessionManager;
 
     public ContentAdapter(Context context, ArrayList<ContentModel> contentList, ContentAdapter.OnItemClick itemClick) {
         this.context = context;
         this.contentList = contentList;
         this.itemClick = itemClick;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -109,16 +113,19 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             like_btn = itemView.findViewById(R.id.like_btn);
 
             like_btn.setOnClickListener(v -> {
-                if (like_btn.getTag().equals("0")) {
-                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
-                    like_btn.setTag("1");
-                    itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                User user = sessionManager.getUserModel("loggedIn_UserModel");
+
+                if (contentList.get(getAdapterPosition()).getLikedBy().contains(user.getUid())) {   // ie. already liked so here dislike.
+                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
+                    itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                    notifyDataSetChanged();
                 }
                 else {
-                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
-                    like_btn.setTag("0");
-                    itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
+                    itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                    notifyDataSetChanged();
                 }
+
             });
         }
     }

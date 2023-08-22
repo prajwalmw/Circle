@@ -1,5 +1,7 @@
 package com.example.circle.model;
 
+import java.util.List;
+
 public class ContentModel {
 
     private String userID;
@@ -9,6 +11,9 @@ public class ContentModel {
     private String contentImageUrl;
     private String contenTitle;
     private int contentHeartCount;
+  //  private likedBy likedBy;
+
+    private List<String> likedBy;
 
     public ContentModel(String userID,String userName,String userProfile, String uuid, String contentImageUrl, String contenTitle, int contentHeartCount) {
         this.userID = userID;
@@ -79,4 +84,45 @@ public class ContentModel {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
+    public List<String> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(List<String> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    //    public likedBy getLikedBy() {
+//        return likedBy;
+//    }
+//
+//    public void setLikedBy(likedBy likedBy) {
+//        this.likedBy = likedBy;
+//    }
+
+
+    /* public likedBy getLikedBy() {
+        return likedBy;
+    }
+
+    public void setlikedBy(likedBy likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public class likedBy {
+
+        public likedBy() {
+        }
+
+        private boolean userIDKey;
+
+        public boolean isUserIDKey() {
+            return userIDKey;
+        }
+
+        public void setUserIDKey(boolean userIDKey) {
+            this.userIDKey = userIDKey;
+        }
+    }*/
 }
