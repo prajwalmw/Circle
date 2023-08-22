@@ -99,7 +99,54 @@ public class Chat_UserList extends AppCompatActivity {
         userStatuses = new ArrayList<>();
         contentList = new ArrayList<>();
 
+        binding.refreshContent.setOnClickListener(v -> {
+            Collections.sort(contentList, new Comparator<ContentModel>() {
+                @Override
+                public int compare(ContentModel model_1, ContentModel model_2) {
+                    return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+                }
+            });
+
+            if (contentAdapter != null)
+                contentAdapter.notifyDataSetChanged();
+        });
+
+/*
         database.getReference()
+                .child("post")
+                .child(category_value)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()) {
+                                    for(DataSnapshot storySnapshot : snapshot.getChildren()) {
+
+                                        for(DataSnapshot statusSnapshot : storySnapshot.child("imagesPath").getChildren()) {
+
+                                            Collections.sort(contentList, new Comparator<ContentModel>() {
+                                                    @Override
+                                                    public int compare(ContentModel model_1, ContentModel model_2) {
+                                                        return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+                                                    }
+                                                });
+
+                                        }
+                                    }
+
+                                    if (contentAdapter != null)
+                                        contentAdapter.notifyDataSetChanged();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+*/
+
+    database.getReference()
                 .child("post")
                 .child(category_value)
                 .addValueEventListener(new ValueEventListener() {
@@ -124,6 +171,13 @@ public class Chat_UserList extends AppCompatActivity {
                       //  status.setStatuses(statuses);
                       //  userStatuses.add(status);
                     }
+
+                    Collections.sort(contentList, new Comparator<ContentModel>() {
+                        @Override
+                        public int compare(ContentModel model_1, ContentModel model_2) {
+                            return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+                        }
+                    });
 
                     if (contentAdapter != null)
                         contentAdapter.notifyDataSetChanged();
@@ -192,12 +246,6 @@ public class Chat_UserList extends AppCompatActivity {
         // options menu - end
 
         // content - start
-        Collections.sort(contentList, new Comparator<ContentModel>() {
-            @Override
-            public int compare(ContentModel model_1, ContentModel model_2) {
-                return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
-            }
-        });
 
         contentAdapter = new ContentAdapter(this, contentList, new ContentAdapter.OnItemClick() {
             @Override
