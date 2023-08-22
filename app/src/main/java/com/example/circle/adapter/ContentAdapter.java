@@ -22,6 +22,7 @@ import com.example.circle.utilities.SessionManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentViewHolder> {
 
@@ -30,12 +31,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     String category_value;
     ContentAdapter.OnItemClick itemClick;
     SessionManager sessionManager;
+    User user;
 
     public ContentAdapter(Context context, ArrayList<ContentModel> contentList, ContentAdapter.OnItemClick itemClick) {
         this.context = context;
         this.contentList = contentList;
         this.itemClick = itemClick;
         sessionManager = new SessionManager(context);
+        user = sessionManager.getUserModel("loggedIn_UserModel");
     }
 
     @NonNull
@@ -48,33 +51,47 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     @Override
     public void onBindViewHolder(@NonNull ContentViewHolder holder, int position) {
         // heart count - contentList - sort as per desc of heart count.
+/*
         Collections.sort(contentList, new Comparator<ContentModel>() {
             @Override
             public int compare(ContentModel model_1, ContentModel model_2) {
                 return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
             }
         });
+*/
         // end
 
         ContentModel contentModel = contentList.get(position);
-        if (contentModel.getContentHeartCount() > 0)
-            holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
 
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
+
         Glide.with(context)
                 .asBitmap()
                 .load(contentModel.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(holder.content_imageview);
+
         Glide.with(context)
                 .asBitmap()
                 .load(contentModel.getUserProfile())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(holder.profile_img_icon);
+
+        if (contentList.get(position).getLikedBy() != null)
+            holder.likedList = contentList.get(position).getLikedBy();
+        else
+            holder.likedList = new ArrayList<>();
+
+        if (holder.likedList.contains(user.getUid())) {
+            holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
+        }
+        else {
+            holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
+        }
 
 /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +119,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         TextView contentTitle, contentLikeCount, post_username;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
+        List<String> likedList;
+
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -112,21 +131,16 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
             like_btn = itemView.findViewById(R.id.like_btn);
 
-            like_btn.setOnClickListener(v -> {
-                User user = sessionManager.getUserModel("loggedIn_UserModel");
 
-                if (contentList.get(getAdapterPosition()).getLikedBy().contains(user.getUid())) {   // ie. already liked so here dislike.
-                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
+            like_btn.setOnClickListener(v -> {
+                if (likedList.contains(user.getUid())) {   // ie. already liked so here dislike.
                     itemClick.onclick(false, contentList.get(getAdapterPosition()));
-                    notifyDataSetChanged();
-                }
-                else {
-                    like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
+                } else {
                     itemClick.onclick(true, contentList.get(getAdapterPosition()));
-                    notifyDataSetChanged();
                 }
 
             });
+
         }
     }
 

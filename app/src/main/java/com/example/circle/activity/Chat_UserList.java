@@ -192,6 +192,13 @@ public class Chat_UserList extends AppCompatActivity {
         // options menu - end
 
         // content - start
+        Collections.sort(contentList, new Comparator<ContentModel>() {
+            @Override
+            public int compare(ContentModel model_1, ContentModel model_2) {
+                return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+            }
+        });
+
         contentAdapter = new ContentAdapter(this, contentList, new ContentAdapter.OnItemClick() {
             @Override
             public void onclick(boolean isLiked, ContentModel contentModel) {
