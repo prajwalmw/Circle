@@ -18,6 +18,7 @@ import com.example.circle.R;
 import com.example.circle.model.ContentModel;
 import com.example.circle.model.User;
 import com.example.circle.utilities.SessionManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,14 +32,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     String category_value;
     ContentAdapter.OnItemClick itemClick;
     SessionManager sessionManager;
-    User user;
+    String fID = FirebaseAuth.getInstance().getUid();
 
     public ContentAdapter(Context context, ArrayList<ContentModel> contentList, ContentAdapter.OnItemClick itemClick) {
         this.context = context;
         this.contentList = contentList;
         this.itemClick = itemClick;
         sessionManager = new SessionManager(context);
-        user = sessionManager.getUserModel("loggedIn_UserModel");
+     //   user = sessionManager.getUserModel("loggedIn_UserModel");
     }
 
     @NonNull
@@ -86,7 +87,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         else
             holder.likedList = new ArrayList<>();
 
-        if (holder.likedList.contains(user.getUid())) {
+        if (holder.likedList.contains(fID)) {
             holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_filled));
         }
         else {
@@ -131,14 +132,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
             like_btn = itemView.findViewById(R.id.like_btn);
 
-
             like_btn.setOnClickListener(v -> {
-                if (likedList.contains(user.getUid())) {   // ie. already liked so here dislike.
+                if (likedList.contains(fID)) {   // ie. already liked so here dislike.
                     itemClick.onclick(false, contentList.get(getAdapterPosition()));
-                } else {
+                } else
                     itemClick.onclick(true, contentList.get(getAdapterPosition()));
-                }
-
             });
 
         }
