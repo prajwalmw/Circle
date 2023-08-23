@@ -14,8 +14,11 @@ public class ContentModel {
   //  private likedBy likedBy;
 
     private List<String> likedBy;
+    private Long lastUpdatedAt;
 
-    public ContentModel(String userID,String userName,String userProfile, String uuid, String contentImageUrl, String contenTitle, int contentHeartCount) {
+    public ContentModel(String userID,String userName,String userProfile,
+                        String uuid, String contentImageUrl, String contenTitle,
+                        int contentHeartCount, long lastUpdatedAt) {
         this.userID = userID;
         this.userName = userName;
         this.userProfile = userProfile;
@@ -23,6 +26,7 @@ public class ContentModel {
         this.contentImageUrl = contentImageUrl;
         this.contenTitle = contenTitle;
         this.contentHeartCount = contentHeartCount;
+        this.lastUpdatedAt = lastUpdatedAt;
     }
 
     public ContentModel() {
@@ -125,4 +129,12 @@ public class ContentModel {
             this.userIDKey = userIDKey;
         }
     }*/
+
+    public Long getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(Long lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+    }
 }

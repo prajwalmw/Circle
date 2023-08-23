@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -27,6 +28,8 @@ import com.example.circle.model.Status;
 import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
 import com.example.circle.utilities.SessionManager;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -99,52 +102,36 @@ public class Chat_UserList extends AppCompatActivity {
         userStatuses = new ArrayList<>();
         contentList = new ArrayList<>();
 
-        binding.refreshContent.setOnClickListener(v -> {
-            Collections.sort(contentList, new Comparator<ContentModel>() {
-                @Override
-                public int compare(ContentModel model_1, ContentModel model_2) {
-                    return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+        if (binding.recentChip.isChecked()) {
+            binding.recentChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.color_primary_light)));
+        }
+        binding.chipGrp.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
+                if (group.getCheckedChipId() == R.id.trendingChip) {
+                    binding.recentChip.setChecked(false);
+                    binding.trendingChip.setChecked(true);
+                    if (binding.trendingChip.isChecked()) {
+                        binding.trendingChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.color_primary_light)));
+                        binding.recentChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                        sortByTrending();
+                        if (contentAdapter != null)
+                            contentAdapter.notifyDataSetChanged();
+                    }
                 }
-            });
-
-            if (contentAdapter != null)
-                contentAdapter.notifyDataSetChanged();
+                else if (group.getCheckedChipId() == R.id.recentChip){
+                    binding.recentChip.setChecked(true);
+                    binding.trendingChip.setChecked(false);
+                    if (binding.recentChip.isChecked()) {
+                        binding.recentChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.color_primary_light)));
+                        binding.trendingChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                        sortByRecent();
+                        if (contentAdapter != null)
+                            contentAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
         });
-
-/*
-        database.getReference()
-                .child("post")
-                .child(category_value)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.exists()) {
-                                    for(DataSnapshot storySnapshot : snapshot.getChildren()) {
-
-                                        for(DataSnapshot statusSnapshot : storySnapshot.child("imagesPath").getChildren()) {
-
-                                            Collections.sort(contentList, new Comparator<ContentModel>() {
-                                                    @Override
-                                                    public int compare(ContentModel model_1, ContentModel model_2) {
-                                                        return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
-                                                    }
-                                                });
-
-                                        }
-                                    }
-
-                                    if (contentAdapter != null)
-                                        contentAdapter.notifyDataSetChanged();
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-*/
 
     database.getReference()
                 .child("post")
@@ -165,20 +152,21 @@ public class Chat_UserList extends AppCompatActivity {
                         for(DataSnapshot statusSnapshot : storySnapshot.child("imagesPath").getChildren()) {
                            // Status sampleStatus = statusSnapshot.getValue(Status.class);
                             ContentModel contentModel = statusSnapshot.getValue(ContentModel.class);
-                            contentList.add(contentModel);
+                            contentList.add(0, contentModel);
                         }
 
                       //  status.setStatuses(statuses);
                       //  userStatuses.add(status);
                     }
 
-                    Collections.sort(contentList, new Comparator<ContentModel>() {
-                        @Override
-                        public int compare(ContentModel model_1, ContentModel model_2) {
-                            return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
-                        }
-                    });
+//                    Collections.sort(contentList, new Comparator<ContentModel>() {
+//                        @Override
+//                        public int compare(ContentModel model_1, ContentModel model_2) {
+//                            return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+//                        }
+//                    });
 
+                    sortByRecent();
                     if (contentAdapter != null)
                         contentAdapter.notifyDataSetChanged();
                 }
@@ -450,6 +438,24 @@ public class Chat_UserList extends AppCompatActivity {
             startActivityForResult(intent, POST_CAPTURE);
         });
 
+    }
+
+    private void sortByTrending() {
+        Collections.sort(contentList, new Comparator<ContentModel>() {
+            @Override
+            public int compare(ContentModel model_1, ContentModel model_2) {
+                return Integer.compare(model_2.getContentHeartCount(), model_1.getContentHeartCount());
+            }
+        });
+    }
+
+    private void sortByRecent() {
+        Collections.sort(contentList, new Comparator<ContentModel>() {
+            @Override
+            public int compare(ContentModel model_1, ContentModel model_2) {
+                return Long.compare(model_2.getLastUpdatedAt(), model_1.getLastUpdatedAt());
+            }
+        });
     }
 
     private void plus_minus_heartCount(boolean isLiked, ContentModel contentModel) {
