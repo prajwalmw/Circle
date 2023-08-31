@@ -17,4 +17,10 @@
         android:label="Status"
         tools:layout="@layout/fragment_status" />
 
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.circle.fragment.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>

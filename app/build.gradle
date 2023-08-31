@@ -75,6 +75,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.4.2'  // navigation graph
     implementation 'androidx.navigation:navigation-ui:2.4.2'    // navigation graph
 
+    // custom tablayout.
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+    //Optional: see how to use the utility.
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
 
 
 }

@@ -65,7 +65,7 @@ public class MyCommunity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_status)
+                R.id.nav_home, R.id.nav_status, R.id.nav_profile)
                 .build();
 
 

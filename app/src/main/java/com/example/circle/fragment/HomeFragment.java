@@ -1,20 +1,32 @@
 package com.example.circle.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
 import com.example.circle.activity.CategoryActivity;
+import com.example.circle.activity.Chat_UserList;
+import com.example.circle.activity.PostDetailsActivity;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.FragmentHomeBinding;
 import com.example.circle.model.CategoryModel;
@@ -23,7 +35,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +51,10 @@ public class HomeFragment extends Fragment {
     private List<CategoryModel> categoryList;
     FirebaseDatabase database;
     private SessionManager sessionManager;
+    public static final int STATUS_CAPTURE = 75;
+    public static final int POST_CAPTURE = 99;
+    public static final int SHARE_REQUEST_CODE = 98;
+    private Intent intent;
 
 
 
@@ -47,6 +69,65 @@ public class HomeFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().getWindow().setStatusBarColor(Color.WHITE);
         }
+
+        intent = getActivity().getIntent();
+        if (intent.getExtras() != null) {
+            Bundle args = intent.getBundleExtra("BUNDLE");
+            categoryList = (List<CategoryModel>) args.getSerializable("category_list");
+        }
+
+        FragmentPagerItems.Creator creator = null;
+        List<FragmentPagerItem> itemList = new ArrayList<>();
+        if (categoryList != null && categoryList.size() > 0) {
+            for (int i = 0; i < categoryList.size(); i++) {
+                String split[] = categoryList.get(i).getTitle().split(" ");
+                FragmentPagerItem fragmentPagerItem = FragmentPagerItem.of(split[0], PostFragment.class,
+                        new Bundler().putString("key", categoryList.get(i).getTitle()).get());
+                itemList.add(fragmentPagerItem);
+            }
+        }
+
+        FragmentPagerItems pagerItems = new FragmentPagerItems(getActivity());
+        pagerItems.addAll(itemList);
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getActivity().getSupportFragmentManager(), pagerItems);
+        binding.viewpager.setAdapter(adapter);
+
+        binding.viewpagertab.setCustomTabView(new SmartTabLayout.TabProvider() {
+            @Override
+            public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+                View itemView = inflater.inflate(R.layout.custom_tab_item, container, false);
+                TextView text = (TextView) itemView.findViewById(R.id.tabTitle);
+                text.setText(adapter.getPageTitle(position));
+                ImageView icon = (ImageView) itemView.findViewById(R.id.tabIcon);
+
+                if (adapter.getPageTitle(position).equals("Sports"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.sport_icon));
+                else if (adapter.getPageTitle(position).equals("Travel"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.travel_large_icon));
+                else if (adapter.getPageTitle(position).equals("FRIENDS"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.friends_icon));
+                else if (adapter.getPageTitle(position).equals("Foodie"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.food_new_icon));
+                else if (adapter.getPageTitle(position).equals("Career"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.career_icon));
+                else if (adapter.getPageTitle(position).equals("Tech"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.technology_large_icon));
+                else if (adapter.getPageTitle(position).equals("Comics"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.anime_icon));
+                else if (adapter.getPageTitle(position).equals("Business"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.business_large_icon));
+                else if (adapter.getPageTitle(position).equals("Memes"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.meme_icon));
+                else if (adapter.getPageTitle(position).equals("Stock"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.stockmarket_large_icon));
+
+                // todo: add rest
+
+                return itemView;
+            }
+        });
+        binding.viewpagertab.setViewPager(binding.viewpager);
 
         return root;
     }
@@ -104,5 +185,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
+
 
 }
