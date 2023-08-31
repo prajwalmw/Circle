@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="color_primary">#ce93d8</color>
     <color name="color_primary_light">#ffc4ff</color>
     <color name="color_primary_dark">#9c64a6</color>
@@ -29,5 +29,6 @@
     <color name="gold">#FFD700</color>
     <color name="silver">#C0C0C0</color>
     <color name="bronze">#CD7F32</color>
+
 
 </resources>

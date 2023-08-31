@@ -16,4 +16,10 @@
         android:title="Top 10"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/avatar"
+        android:title="Profile"
+        app:showAsAction="ifRoom"/>
+
 </menu>

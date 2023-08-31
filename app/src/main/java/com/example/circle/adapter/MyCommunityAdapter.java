@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.circle.R;
 import com.example.circle.activity.Chat_UserList;
 import com.example.circle.activity.MyCommunity;
+import com.example.circle.fragment.HomeFragment;
 import com.example.circle.model.CategoryModel;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class MyCommunityAdapter extends RecyclerView.Adapter<MyCommunityAdapter.
             image = itemView.findViewById(R.id.image);
 
             relativeLayout.setOnClickListener(v -> {
-                Intent intent = new Intent(context, Chat_UserList.class);
+                Intent intent = new Intent(context, HomeFragment.class);
                 intent.putExtra("category", categoryList.get(getAdapterPosition()).getTitle());
                 context.startActivity(intent);
             });
