@@ -41,6 +41,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +83,7 @@ public class HomeFragment extends Fragment {
         if (categoryList != null && categoryList.size() > 0) {
             for (int i = 0; i < categoryList.size(); i++) {
                 String split[] = categoryList.get(i).getTitle().split(" ");
-                FragmentPagerItem fragmentPagerItem = FragmentPagerItem.of(split[0], PostFragment.class,
+                FragmentPagerItem fragmentPagerItem = FragmentPagerItem.of(StringUtils.capitalize(split[0]), PostFragment.class,
                         new Bundler().putString("key", categoryList.get(i).getTitle()).get());
                 itemList.add(fragmentPagerItem);
             }
@@ -101,25 +103,25 @@ public class HomeFragment extends Fragment {
                 text.setText(adapter.getPageTitle(position));
                 ImageView icon = (ImageView) itemView.findViewById(R.id.tabIcon);
 
-                if (adapter.getPageTitle(position).equals("Sports"))
+                if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Sports"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.sport_icon));
-                else if (adapter.getPageTitle(position).equals("Travel"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Travel"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.travel_large_icon));
-                else if (adapter.getPageTitle(position).equals("FRIENDS"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("FRIENDS"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.friends_icon));
-                else if (adapter.getPageTitle(position).equals("Foodie"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Foodie"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.food_new_icon));
-                else if (adapter.getPageTitle(position).equals("Career"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Career"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.career_icon));
-                else if (adapter.getPageTitle(position).equals("Tech"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Tech"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.technology_large_icon));
-                else if (adapter.getPageTitle(position).equals("Comics"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Comics"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.anime_icon));
-                else if (adapter.getPageTitle(position).equals("Business"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Business"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.business_large_icon));
-                else if (adapter.getPageTitle(position).equals("Memes"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Memes"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.meme_icon));
-                else if (adapter.getPageTitle(position).equals("Stock"))
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Stock"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.stockmarket_large_icon));
 
                 // todo: add rest
