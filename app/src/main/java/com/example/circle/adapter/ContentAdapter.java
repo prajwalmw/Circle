@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
 import com.example.circle.model.ContentModel;
 import com.example.circle.model.User;
+import com.example.circle.utilities.DoubleClickEvent;
 import com.example.circle.utilities.SessionManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -137,6 +138,21 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                     itemClick.onclick(false, contentList.get(getAdapterPosition()));
                 } else
                     itemClick.onclick(true, contentList.get(getAdapterPosition()));
+            });
+
+            content_imageview.setOnClickListener(new DoubleClickEvent() {
+                @Override
+                public void onSingleClick(View v) {
+
+                }
+
+                @Override
+                public void onDoubleClick(View v) {
+                    if (likedList.contains(fID)) {   // ie. already liked so here dislike.
+                        itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                    } else
+                        itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                }
             });
 
         }
