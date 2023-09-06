@@ -10,11 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         >
 
         <ImageButton
@@ -38,7 +38,7 @@
             android:text="Circle"
             android:textAppearance="@style/toolbar_title"
             android:textColor="@null"
-            android:textSize="34sp"
+            android:textSize="30sp"
             />
 
         <TextView

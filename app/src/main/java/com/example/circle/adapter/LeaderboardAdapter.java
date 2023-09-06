@@ -47,13 +47,16 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         ContentModel model = contentModelArrayList.get(holder.getAdapterPosition());
         holder.rank.setText(String.valueOf(holder.getAdapterPosition() + 1));
         holder.rank_name.setText(model.getUserName());
+
         Glide.with(context)
                 .asBitmap()
                 .load(model.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(holder.rank_image);
+
         holder.rank_likes_count.setText(model.getContentHeartCount() + "+");
+        holder.rank_category.setText(model.getCategory_value());
 
     }
 
@@ -63,7 +66,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView rank, rank_name, rank_likes_count;
+        TextView rank, rank_name, rank_likes_count, rank_category;
         CircleImageView rank_image;
 
         public MyHolder(@NonNull View itemView) {
@@ -73,6 +76,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             rank_name = itemView.findViewById(R.id.rank_name);
             rank_likes_count = itemView.findViewById(R.id.rank_likes_count);
             rank_image = itemView.findViewById(R.id.rank_image);
+            rank_category = itemView.findViewById(R.id.rank_category);
         }
     }
 }

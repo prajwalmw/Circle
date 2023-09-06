@@ -68,6 +68,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
+        holder.post_category.setText(contentModel.getCategory_value());
 
         Glide.with(context)
                 .asBitmap()
@@ -118,7 +119,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount, post_username;
+        TextView contentTitle, contentLikeCount, post_username, post_category;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
@@ -127,6 +128,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             super(itemView);
 
             contentTitle = itemView.findViewById(R.id.content_title);
+            post_category = itemView.findViewById(R.id.post_category);
             post_username = itemView.findViewById(R.id.post_username);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);

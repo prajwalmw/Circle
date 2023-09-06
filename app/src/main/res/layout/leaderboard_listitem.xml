@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/light_text_color"
@@ -29,24 +30,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/rank">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/rank_image"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:padding="3dp"
                 android:src="@mipmap/ic_launcher" />
 
                             <com.devlomi.circularstatusview.CircularStatusView
                                 android:id="@+id/csv_rank"
-                                android:layout_width="44dp"
-                                android:layout_height="44dp"
+                                android:layout_width="54dp"
+                                android:layout_height="54dp"
                                 app:portion_color="@color/color_primary"
                                 app:portion_spacing="4dp"
                                 app:portion_width="2dp"
-                                app:portions_count="4" />
+                                app:portions_count="1" />
 
         </RelativeLayout>
 
@@ -56,13 +56,26 @@
             android:layout_height="wrap_content"
             android:text="Prajwal W."
             android:maxLines="1"
+            android:layout_marginTop="10dp"
             android:textColor="@color/light_text_color"
-            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/rank_layout"
             android:fontFamily="@font/lato_bold"
             android:layout_toStartOf="@+id/rank_linear"
             android:layout_marginEnd="20dp"
             android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/rank_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sports and Fitness"
+            android:layout_below="@id/rank_name"
+            android:layout_toEndOf="@+id/rank_layout"
+            android:layout_toStartOf="@+id/rank_linear"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/red"
+            android:textSize="10sp"/>
 
         <LinearLayout
             android:id="@+id/rank_linear"
