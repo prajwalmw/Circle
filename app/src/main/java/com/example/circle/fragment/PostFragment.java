@@ -128,7 +128,7 @@ public class PostFragment extends Fragment {
         binding.captureImgBtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
+            intent.setType("image/*, video/*");
             startActivityForResult(intent, POST_CAPTURE);
         });
 

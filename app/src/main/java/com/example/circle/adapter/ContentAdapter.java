@@ -9,6 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.Player;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.SimpleExoPlayer;
+import androidx.media3.ui.PlayerView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -70,6 +76,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
         holder.post_category.setText(contentModel.getCategory_value());
 
+        // Post - start
         Glide.with(context)
                 .asBitmap()
                 .load(contentModel.getContentImageUrl())
@@ -77,6 +84,18 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .centerCrop()
                 .into(holder.content_imageview);
+
+        ExoPlayer exoPlayerInstance = new ExoPlayer.Builder(context).build();
+        Player player = holder.playerView.getPlayer();
+        player = exoPlayerInstance;
+        MediaItem mediaItem = MediaItem.fromUri(link);
+        exoPlayerInstance.setMediaItem(mediaItem);
+        exoPlayerInstance.prepare();
+        // Start the playback.
+        if (exoPlayerInstance.getPlayWhenReady())
+            exoPlayerInstance.play();   // this will play only when user clicks on play button of the playerview.
+
+        // Post - End
 
         Glide.with(context)
                 .asBitmap()
@@ -126,6 +145,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         ImageButton like_btn;
         List<String> likedList;
         boolean isImageCropped = true;
+        PlayerView playerView;
 
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -135,6 +155,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             post_username = itemView.findViewById(R.id.post_username);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
+            playerView = itemView.findViewById(R.id.playerView);
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
             like_btn = itemView.findViewById(R.id.like_btn);
 
