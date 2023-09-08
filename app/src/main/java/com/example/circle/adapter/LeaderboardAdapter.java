@@ -53,6 +53,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
                 .load(model.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .circleCrop()
                 .into(holder.rank_image);
 
         holder.rank_likes_count.setText(model.getContentHeartCount() + "+");

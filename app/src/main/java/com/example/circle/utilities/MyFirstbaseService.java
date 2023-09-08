@@ -92,6 +92,7 @@ public class MyFirstbaseService extends FirebaseMessagingService {
             bitmap = Glide.with(this)
                     .asBitmap()
                     .load(image)
+                    .circleCrop()
                     .placeholder(R.drawable.avatar)
                     .submit()
                     .get();

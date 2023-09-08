@@ -75,6 +75,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 .load(contentModel.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .centerCrop()
                 .into(holder.content_imageview);
 
         Glide.with(context)
@@ -82,6 +83,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 .load(contentModel.getUserProfile())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .circleCrop()
                 .into(holder.profile_img_icon);
 
         if (contentList.get(position).getLikedBy() != null)
@@ -123,6 +125,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
+        boolean isImageCropped = true;
 
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,6 +148,26 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             content_imageview.setOnClickListener(new DoubleClickEvent() {
                 @Override
                 public void onSingleClick(View v) {
+                    if (isImageCropped) {
+                        isImageCropped = false;
+                        Glide.with(context)
+                                .asBitmap()
+                                .load(contentList.get(getAdapterPosition()).getContentImageUrl())
+                                .placeholder(R.drawable.avatar)
+                                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                                .fitCenter()
+                                .into(content_imageview);
+                    }
+                    else {
+                        isImageCropped = true;
+                        Glide.with(context)
+                                .asBitmap()
+                                .load(contentList.get(getAdapterPosition()).getContentImageUrl())
+                                .placeholder(R.drawable.avatar)
+                                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                                .centerCrop()
+                                .into(content_imageview);
+                    }
 
                 }
 
