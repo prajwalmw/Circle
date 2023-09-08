@@ -31,6 +31,7 @@ import com.example.circle.adapter.UsersAdapter;
 import com.example.circle.databinding.ActivityChatUserListBinding;
 import com.example.circle.databinding.FragmentHomeBinding;
 import com.example.circle.databinding.FragmentPostBinding;
+import com.example.circle.model.CategoryModel;
 import com.example.circle.model.ContentModel;
 import com.example.circle.model.Status;
 import com.example.circle.model.User;
@@ -53,14 +54,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostFragment#newInstance} factory method to
- * create an instance of getActivity() fragment.
- */
+
 public class PostFragment extends Fragment {
 
    private static final String ARG_PARAM1 = "key";
+   private static final String ARG_PARAM2 = "bundle";
     FirebaseDatabase database;
     FirebaseStorage storage;
     StorageReference reference;
@@ -72,11 +70,13 @@ public class PostFragment extends Fragment {
     public static final String TAG = Chat_UserList.class.getSimpleName();
     private Intent intent;
     private String category_value, grpchat_title;
+    private Bundle bundle;
     TopStatusAdapter statusAdapter;
     SessionManager sessionManager;
     // content
     private ContentAdapter contentAdapter;
     private ArrayList<ContentModel> contentList;
+    private List<CategoryModel> categoryList = new ArrayList<>();
     ArrayList<UserStatus> userStatuses;
     private User user;
     public static final int STATUS_CAPTURE = 75;
@@ -87,6 +87,7 @@ public class PostFragment extends Fragment {
         // Required empty public constructor
     }
 
+/*
     public static PostFragment newInstance(String param1, String param2) {
         PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
@@ -94,6 +95,7 @@ public class PostFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,12 +113,17 @@ public class PostFragment extends Fragment {
 
         if (getArguments() != null) {
             category_value = getArguments().getString(ARG_PARAM1);
+            bundle = getArguments().getBundle(ARG_PARAM2);
+            if (bundle != null)
+                categoryList = (List<CategoryModel>) bundle.getSerializable("category_list");
+            init();
+            fetchMyCommunity();
             codeLogic();
         }
 
     }
 
-    private void codeLogic() {
+    private void init() {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         sessionManager = new SessionManager(getActivity());
@@ -124,7 +131,18 @@ public class PostFragment extends Fragment {
         users = new ArrayList<>();
         userStatuses = new ArrayList<>();
         contentList = new ArrayList<>();
+    }
 
+    private void fetchMyCommunity() {
+        if (categoryList == null) {
+            if (sessionManager.getArrayList("my_community") != null) {
+                categoryList = sessionManager.getArrayList("my_community");
+                Log.d(TAG, "fetchMyCommunity: " + categoryList.toArray().toString() + " , " + String.valueOf(categoryList.size()));
+            }
+        }
+    }
+
+    private void codeLogic() {
         binding.captureImgBtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -176,14 +194,14 @@ public class PostFragment extends Fragment {
                         status.setName(storySnapshot.child("name").getValue(String.class));
                         status.setProfileImage(storySnapshot.child("profileImage").getValue(String.class));
                         status.setLastUpdated(storySnapshot.child("lastUpdated").getValue(Long.class));*/   // todo: 8th aug check later if requir uncomment.
-                                
+
                                 for(DataSnapshot statusSnapshot : storySnapshot.child("imagesPath").getChildren()) {
                                     // Status sampleStatus = statusSnapshot.getValue(Status.class);
                                     ContentModel contentModel = statusSnapshot.getValue(ContentModel.class);
                                     contentList.add(0, contentModel);
                                 }
                             }
-                            
+
                             sortByRecent();
                             if (contentAdapter != null)
                                 contentAdapter.notifyDataSetChanged();
@@ -200,7 +218,7 @@ public class PostFragment extends Fragment {
         dialog.setMessage("Uploading Image...");
         dialog.setCancelable(false);
 
-        binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
+      /*  binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
         if (category_value.contains("Sports")) {
             binding.toolbarTitle.setTextColor(getActivity().getColor(R.color.theme_red_sports));
             binding.arrowBack.getDrawable().setTint(getActivity().getColor(R.color.theme_red_sports));
@@ -216,7 +234,7 @@ public class PostFragment extends Fragment {
             binding.groupChatRow.username.setTextColor(getActivity().getColor(R.color.color_primary_dark));
             binding.groupChatRow.publicChatMsg.setTextColor(getActivity().getColor(R.color.color_primary_dark));
         }
-        
+        */
         //
         contentAdapter = new ContentAdapter(getActivity(), contentList, new ContentAdapter.OnItemClick() {
             @Override
@@ -252,6 +270,7 @@ public class PostFragment extends Fragment {
          * Reading all the users that exists...and here itself checking if the user is blocked by
          * someone than that someone shouldnt show up here...
          */
+/*
         database.getReference()
                 .child("users")
                 .child(category_value)
@@ -359,8 +378,10 @@ public class PostFragment extends Fragment {
 
                     }
                 });
+*/
 
         // status - start
+/*
         database.getReference().child("stories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -391,6 +412,7 @@ public class PostFragment extends Fragment {
 
             }
         });
+*/
 
     }
 

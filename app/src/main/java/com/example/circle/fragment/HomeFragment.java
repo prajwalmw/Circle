@@ -73,8 +73,9 @@ public class HomeFragment extends Fragment {
         }
 
         intent = getActivity().getIntent();
+        Bundle args = new Bundle();
         if (intent.getExtras() != null) {
-            Bundle args = intent.getBundleExtra("BUNDLE");
+            args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
         }
 
@@ -83,8 +84,15 @@ public class HomeFragment extends Fragment {
         if (categoryList != null && categoryList.size() > 0) {
             for (int i = 0; i < categoryList.size(); i++) {
                 String split[] = categoryList.get(i).getTitle().split(" ");
-                FragmentPagerItem fragmentPagerItem = FragmentPagerItem.of(StringUtils.capitalize(split[0]), PostFragment.class,
-                        new Bundler().putString("key", categoryList.get(i).getTitle()).get());
+                FragmentPagerItem fragmentPagerItem;
+                if (i == 0) {
+                    fragmentPagerItem = FragmentPagerItem.of("All", PostFragment.class,
+                            new Bundler().putString("key", "All").putBundle("bundle", args).get());
+                }
+                else {
+                    fragmentPagerItem = FragmentPagerItem.of(StringUtils.capitalize(split[0]), PostFragment.class,
+                            new Bundler().putString("key", categoryList.get(i).getTitle()).get());
+                }
                 itemList.add(fragmentPagerItem);
             }
         }
@@ -103,7 +111,10 @@ public class HomeFragment extends Fragment {
                 text.setText(adapter.getPageTitle(position));
                 ImageView icon = (ImageView) itemView.findViewById(R.id.tabIcon);
 
-                if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Sports"))
+
+                if (adapter.getPageTitle(position).toString().equalsIgnoreCase("All"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.select_all_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Sports"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.sport_icon));
                 else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Travel"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.travel_large_icon));
