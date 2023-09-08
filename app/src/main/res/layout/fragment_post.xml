@@ -105,7 +105,6 @@
                 android:textSize="10sp"
                 app:chipBackgroundColor="@color/white"
                 app:chipStrokeColor="@color/color_primary_dark"
-                app:chipStrokeWidth="1dp"
                 app:closeIconEnabled="true"
                 app:closeIconTint="@color/color_primary"
                 app:closeIconVisible="false" />
@@ -121,7 +120,6 @@
                 android:textSize="10sp"
                 app:chipBackgroundColor="@color/white"
                 app:chipStrokeColor="@color/color_primary_dark"
-                app:chipStrokeWidth="1dp"
                 app:closeIconEnabled="true"
                 app:closeIconTint="@color/color_primary"
                 app:closeIconVisible="false" />

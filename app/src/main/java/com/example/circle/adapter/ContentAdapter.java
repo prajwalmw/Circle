@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
 import com.example.circle.model.ContentModel;
 import com.example.circle.model.User;
+import com.example.circle.utilities.DoubleClickEvent;
 import com.example.circle.utilities.SessionManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -67,12 +68,14 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
+        holder.post_category.setText(contentModel.getCategory_value());
 
         Glide.with(context)
                 .asBitmap()
                 .load(contentModel.getContentImageUrl())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .centerCrop()
                 .into(holder.content_imageview);
 
         Glide.with(context)
@@ -80,6 +83,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 .load(contentModel.getUserProfile())
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .circleCrop()
                 .into(holder.profile_img_icon);
 
         if (contentList.get(position).getLikedBy() != null)
@@ -117,15 +121,17 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount, post_username;
+        TextView contentTitle, contentLikeCount, post_username, post_category;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
+        boolean isImageCropped = true;
 
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             contentTitle = itemView.findViewById(R.id.content_title);
+            post_category = itemView.findViewById(R.id.post_category);
             post_username = itemView.findViewById(R.id.post_username);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
@@ -137,6 +143,41 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                     itemClick.onclick(false, contentList.get(getAdapterPosition()));
                 } else
                     itemClick.onclick(true, contentList.get(getAdapterPosition()));
+            });
+
+            content_imageview.setOnClickListener(new DoubleClickEvent() {
+                @Override
+                public void onSingleClick(View v) {
+                    if (isImageCropped) {
+                        isImageCropped = false;
+                        Glide.with(context)
+                                .asBitmap()
+                                .load(contentList.get(getAdapterPosition()).getContentImageUrl())
+                                .placeholder(R.drawable.avatar)
+                                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                                .fitCenter()
+                                .into(content_imageview);
+                    }
+                    else {
+                        isImageCropped = true;
+                        Glide.with(context)
+                                .asBitmap()
+                                .load(contentList.get(getAdapterPosition()).getContentImageUrl())
+                                .placeholder(R.drawable.avatar)
+                                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                                .centerCrop()
+                                .into(content_imageview);
+                    }
+
+                }
+
+                @Override
+                public void onDoubleClick(View v) {
+                    if (likedList.contains(fID)) {   // ie. already liked so here dislike.
+                        itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                    } else
+                        itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                }
             });
 
         }

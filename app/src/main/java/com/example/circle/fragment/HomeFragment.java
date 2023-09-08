@@ -148,8 +148,10 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        Glide.with(getActivity()).load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
+        Glide.with(getActivity()).load(sessionManager.getUserModel("loggedIn_UserModel")
+                        .getProfileImage())
                 .placeholder(R.drawable.avatar)
+                .circleCrop()
                 .into(binding.profileImgIcon);
 
 

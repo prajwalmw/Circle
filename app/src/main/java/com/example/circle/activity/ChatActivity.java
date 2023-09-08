@@ -150,6 +150,7 @@ public class ChatActivity extends AppCompatActivity {
         binding.name.setText(name);
         Glide.with(ChatActivity.this).load(profile)
                 .placeholder(R.drawable.avatar)
+                .circleCrop()
                 .into(binding.profile);
 
         // arrow back click

@@ -42,18 +42,38 @@
                     app:strokeColor="@color/black"
                     app:strokeWidth="1dp" />
 
-                <TextView
-                    android:id="@+id/post_username"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toEndOf="@+id/profile_img_icon"
-                    tools:text="Prajwal W."
-                    android:fontFamily="@font/lato_bold"
-                    android:padding="5dp"
-                    android:text="This is Title"
-                    android:textColor="@color/color_primary_dark"
-                    android:textSize="12sp"/>
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/profile_img_icon">
+
+                    <TextView
+                        android:id="@+id/post_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="This is Title"
+                        android:textColor="@color/color_primary_dark"
+                        android:textSize="12sp"
+                        tools:text="Prajwal W." />
+
+                    <TextView
+                        android:id="@+id/post_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/post_username"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_toEndOf="@+id/profile_img_icon"
+                        android:text="Sports and Fitness"
+                        android:textColor="@color/red"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -141,9 +161,9 @@
                 android:layout_below="@+id/content_imageview"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/cornered_edge_box"
-                android:elevation="2dp"
                 android:fontFamily="@font/lato_bold"
-                android:padding="5dp">
+                android:layout_marginTop="4dp"
+                android:padding="2dp">
 
                 <TextView
                     android:id="@+id/content_like_count"
@@ -171,13 +191,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_alignStart="@id/linear_heart"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/linear_heart"
             android:background="@drawable/cornered_edge_box"
-            android:elevation="2dp"
             android:fontFamily="@font/lato_bold"
-            android:padding="5dp"
+            android:padding="2dp"
             android:text="This is Title"
             android:textColor="@color/color_primary_dark"
             android:textSize="12sp" />

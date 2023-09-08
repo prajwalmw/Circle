@@ -7,19 +7,18 @@
 
     <ImageView
         android:id="@+id/tabIcon"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
         android:gravity="center"
         android:src="@drawable/sport_large_icon"/>
 
     <TextView
         android:id="@+id/tabTitle"
-        android:layout_width="60dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="Sports"
         android:textSize="12sp"
         android:gravity="center"
-        android:layout_marginVertical="2dp"
         android:layout_below="@id/tabIcon" />
 
 

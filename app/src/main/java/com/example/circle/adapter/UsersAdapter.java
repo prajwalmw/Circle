@@ -104,6 +104,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersViewHol
 
         Glide.with(context).load(user.getProfileImage())
                 .placeholder(R.drawable.avatar)
+                .circleCrop()
                 .into(holder.binding.profile);
 
 

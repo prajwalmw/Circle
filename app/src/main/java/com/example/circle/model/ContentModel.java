@@ -15,10 +15,11 @@ public class ContentModel {
 
     private List<String> likedBy;
     private Long lastUpdatedAt;
+    private String category_value;
 
     public ContentModel(String userID,String userName,String userProfile,
                         String uuid, String contentImageUrl, String contenTitle,
-                        int contentHeartCount, long lastUpdatedAt) {
+                        int contentHeartCount, long lastUpdatedAt, String category_value) {
         this.userID = userID;
         this.userName = userName;
         this.userProfile = userProfile;
@@ -27,11 +28,19 @@ public class ContentModel {
         this.contenTitle = contenTitle;
         this.contentHeartCount = contentHeartCount;
         this.lastUpdatedAt = lastUpdatedAt;
+        this.category_value = category_value;
     }
 
     public ContentModel() {
     }
 
+    public String getCategory_value() {
+        return category_value;
+    }
+
+    public void setCategory_value(String category_value) {
+        this.category_value = category_value;
+    }
 
     public String getContentImageUrl() {
         return contentImageUrl;
