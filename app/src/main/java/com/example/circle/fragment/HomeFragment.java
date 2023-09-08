@@ -33,7 +33,10 @@ import com.example.circle.model.CategoryModel;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -77,6 +80,31 @@ public class HomeFragment extends Fragment {
             Bundle args = intent.getBundleExtra("BUNDLE");
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
         }
+
+        if (categoryList != null && categoryList.size() > 0) {
+            List<CategoryModel> tempModel = categoryList;
+
+            for (int i = 0; i < categoryList.size(); i++) {
+                int finalI = i;
+                database.getReference()
+                        .child("post")
+                        .child(categoryList.get(i).getTitle())
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    tempModel.add(categoryList.get(finalI));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+            }
+        }
+
 
         FragmentPagerItems.Creator creator = null;
         List<FragmentPagerItem> itemList = new ArrayList<>();

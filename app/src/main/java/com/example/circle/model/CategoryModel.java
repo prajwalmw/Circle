@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class CategoryModel implements Serializable{
     private int icon;
     private String title;
+    private int items_count;
 
     public CategoryModel() {
     }
@@ -16,6 +17,12 @@ public class CategoryModel implements Serializable{
     public CategoryModel(int icon, String title) {
         this.icon = icon;
         this.title = title;
+    }
+
+    public CategoryModel(int icon, String title, int items_count) {
+        this.icon = icon;
+        this.title = title;
+        this.items_count = items_count;
     }
 
     public int getIcon() {
@@ -34,4 +41,11 @@ public class CategoryModel implements Serializable{
         this.title = title;
     }
 
+    public int getItems_count() {
+        return items_count;
+    }
+
+    public void setItems_count(int items_count) {
+        this.items_count = items_count;
+    }
 }
