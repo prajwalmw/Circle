@@ -18,7 +18,8 @@
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/avatar"
+        android:icon="@drawable/person_icon"
+        android:iconTint="@color/white"
         android:title="Profile"
         app:showAsAction="ifRoom"/>
 
