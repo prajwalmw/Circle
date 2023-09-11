@@ -1,14 +1,19 @@
 package com.example.circle.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +22,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.circle.R;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.databinding.ActivityMyCommunityBinding;
@@ -40,6 +48,7 @@ public class MyCommunity extends AppCompatActivity {
     private MyCommunityAdapter adapter;
     FirebaseDatabase database;
     private SessionManager sessionManager;
+    private Context context = MyCommunity.this;
 
 
     @Override
@@ -71,6 +80,29 @@ public class MyCommunity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.bottomnavbar, navController);
+
+        String url = sessionManager.getUserModel("loggedIn_UserModel").getProfileImage();
+        binding.bottomnavbar.setItemIconTintList(null);
+        binding.bottomnavbar.getMenu().findItem(R.id.nav_home).setIcon(R.drawable.icon_home);
+        binding.bottomnavbar.getMenu().findItem(R.id.nav_status).setIcon(R.drawable.icon_explore);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Glide.with(context)
+                    .asBitmap()
+                    .load(url)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            Drawable drawable = new BitmapDrawable(getResources(), resource);
+//                            imageView.setImageDrawable(drawable);
+//                            imageView.setVisibility(View.VISIBLE);
+
+                            binding.bottomnavbar.getMenu().findItem(R.id.nav_profile).setIcon(drawable);
+                        }
+                    });
+        }
+
 
         // bottom nav bar - end
 

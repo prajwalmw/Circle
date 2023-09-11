@@ -82,7 +82,8 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
         Intent manage_intent = getIntent();
         update = manage_intent.getBooleanExtra("screen", false);
         Bundle manage_args = manage_intent.getBundleExtra("BUNDLE");
-        checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");
+        if (manage_args != null)
+            checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");
 
 
         modelList = new ArrayList<>();

@@ -5,22 +5,23 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/icon_home"
-        android:iconTint="@color/white"
+        android:iconTint="@color/color_primary"
         android:title="Home"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/nav_status"
         android:icon="@drawable/icon_explore"
-        android:iconTint="@color/white"
+        android:iconTint="@color/color_primary"
         android:title="Top 10"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/person_icon"
-        android:iconTint="@color/white"
+        android:iconTint="@color/color_primary"
         android:title="Profile"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
 
 </menu>
