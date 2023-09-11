@@ -43,6 +43,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,6 +95,17 @@ public class HomeFragment extends Fragment {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getActivity().getSupportFragmentManager(), pagerItems);
         binding.viewpager.setAdapter(adapter);
+
+
+        binding.manageList.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CategoryActivity.class);
+            intent.putExtra("screen", true);
+
+            Bundle args = new Bundle();
+            args.putSerializable("category_list", (Serializable) categoryList);
+            intent.putExtra("BUNDLE", args);
+            startActivity(intent);
+        });
 
         binding.viewpagertab.setCustomTabView(new SmartTabLayout.TabProvider() {
             @Override

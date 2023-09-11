@@ -79,10 +79,10 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
             }
         }*/
 
-       /* Intent manage_intent = getIntent();
+        Intent manage_intent = getIntent();
         update = manage_intent.getBooleanExtra("screen", false);
         Bundle manage_args = manage_intent.getBundleExtra("BUNDLE");
-        checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");*/
+        checkedValues = (List<CategoryModel>) manage_args.getSerializable("category_list");
 
 
         modelList = new ArrayList<>();
@@ -108,7 +108,12 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
 
         recyclerview_category = findViewById(R.id.recyclerview_category);
         join_txtview = findViewById(R.id.join_txtview);
-        adapter = new CategoryAdapter(this, modelList);
+
+        if (checkedValues.size() > 0)
+            adapter = new CategoryAdapter(this, modelList, checkedValues);
+        else
+            adapter = new CategoryAdapter(this, modelList);
+
         recyclerview_category.setAdapter(adapter);
 
         join_txtview.setOnClickListener(v -> {

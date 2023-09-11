@@ -35,6 +35,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         checkedValues = new ArrayList<>();
     }
 
+    public CategoryAdapter(Context context, List<CategoryModel> modelList, List<CategoryModel> checkedValues) {
+        this.context = context;
+        this.modelList = modelList;
+        this.checkedValues = checkedValues;
+    }
+
     @NonNull
     @Override
     public CategoryAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,6 +63,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                     holder.checkBox.setChecked(true);
             });*/
 
+            if (checkedValues.size() > 0) {
+                try {
+                    if (checkedValues.get(position).getTitle().equalsIgnoreCase(model.getTitle()))
+                        holder.checkBox.setChecked(true);
+                    else
+                        holder.checkBox.setChecked(false);
+                }
+                catch (Exception e) {
+
+                }
+            }
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
