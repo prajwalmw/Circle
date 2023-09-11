@@ -42,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:background="@null"
             android:layout_centerVertical="true"
             android:src="@drawable/status_add_icon" />
