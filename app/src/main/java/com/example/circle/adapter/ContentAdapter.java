@@ -1,6 +1,9 @@
 package com.example.circle.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +101,16 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             holder.like_btn.setImageDrawable(context.getDrawable(R.drawable.like_heart_unfilled));
         }
 
+        if (!contentModel.getLink().equalsIgnoreCase("")) {
+            holder.linkstxt.setVisibility(View.VISIBLE);
+            String link = "<a href =" + contentModel.getLink().trim() + ">visit</a>";
+            holder.linkstxt.setText(Html.fromHtml(link));
+            holder.linkstxt.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        else {
+            holder.linkstxt.setVisibility(View.GONE);
+        }
+
 /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +134,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount, post_username, post_category;
+        TextView contentTitle, contentLikeCount, post_username, post_category, linkstxt;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
@@ -133,6 +146,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             contentTitle = itemView.findViewById(R.id.content_title);
             post_category = itemView.findViewById(R.id.post_category);
             post_username = itemView.findViewById(R.id.post_username);
+            linkstxt = itemView.findViewById(R.id.linkstxt);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);

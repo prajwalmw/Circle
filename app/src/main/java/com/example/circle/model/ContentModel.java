@@ -16,10 +16,11 @@ public class ContentModel {
     private List<String> likedBy;
     private Long lastUpdatedAt;
     private String category_value;
+    private String link = "";
 
     public ContentModel(String userID,String userName,String userProfile,
                         String uuid, String contentImageUrl, String contenTitle,
-                        int contentHeartCount, long lastUpdatedAt, String category_value) {
+                        int contentHeartCount, long lastUpdatedAt, String category_value, String link) {
         this.userID = userID;
         this.userName = userName;
         this.userProfile = userProfile;
@@ -29,6 +30,7 @@ public class ContentModel {
         this.contentHeartCount = contentHeartCount;
         this.lastUpdatedAt = lastUpdatedAt;
         this.category_value = category_value;
+        this.link = link;
     }
 
     public ContentModel() {
@@ -145,5 +147,13 @@ public class ContentModel {
 
     public void setLastUpdatedAt(Long lastUpdatedAt) {
         this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

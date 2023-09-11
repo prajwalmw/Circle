@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,6 +22,7 @@ import com.example.circle.databinding.ActivityPostDetailsBinding;
 import com.example.circle.model.ContentModel;
 import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
+import com.example.circle.utilities.DoubleClickEvent;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +47,8 @@ public class PostDetailsActivity extends AppCompatActivity {
     StorageReference reference;
     public static final String SUCCESS = "SUCCESS";
     ProgressDialog dialog;
+    boolean isImageCropped = true;
+    private Context context = PostDetailsActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                 .load(uri)
                 .placeholder(R.drawable.avatar)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .centerCrop()
                 .into(binding.imgCard);
 
         binding.shareBtn.setOnClickListener(v -> {
@@ -83,6 +89,42 @@ public class PostDetailsActivity extends AppCompatActivity {
             }).start();
 
         });
+
+        binding.imgCard.setOnClickListener(new DoubleClickEvent() {
+            @Override
+            public void onSingleClick(View v) {
+                if (isImageCropped) {
+                    isImageCropped = false;
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(uri)
+                            .placeholder(R.drawable.avatar)
+                            .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .fitCenter()
+                            .into(binding.imgCard);
+                }
+                else {
+                    isImageCropped = true;
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(uri)
+                            .placeholder(R.drawable.avatar)
+                            .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .centerCrop()
+                            .into(binding.imgCard);
+                }
+
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+//                if (likedList.contains(fID)) {   // ie. already liked so here dislike.
+//                    itemClick.onclick(false, contentList.get(getAdapterPosition()));
+//                } else
+//                    itemClick.onclick(true, contentList.get(getAdapterPosition()));
+            }
+        });
+
     }
 
     private void image_upload(String data, int requestCode) {
@@ -116,7 +158,9 @@ public class PostDetailsActivity extends AppCompatActivity {
                             ContentModel contentModel = new ContentModel(   // adding values...
                                     FirebaseAuth.getInstance().getUid(), userStatus.getName(),
                                     userStatus.getProfileImage(), UUID.randomUUID().toString(), imageUrl,
-                                    binding.descriptionInput.getText().toString().trim(), 0, userStatus.getLastUpdated(), category_value);
+                                    binding.descriptionInput.getText().toString().trim(), 0,
+                                    userStatus.getLastUpdated(), category_value,
+                                    binding.linkInput.getText().toString().trim());
 
                             if (requestCode == STATUS_CAPTURE) {
                                 database.getReference()
