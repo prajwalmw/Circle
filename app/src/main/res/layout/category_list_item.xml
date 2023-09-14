@@ -29,11 +29,11 @@
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkboxItem"
+        style="@style/Widget.App.CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:selectAllOnFocus="true"
-        style="@style/Widget.App.CheckBox"
-        android:layout_marginEnd="24dp" />
+        android:layout_marginEnd="24dp"
+        android:selectAllOnFocus="true" />
 </RelativeLayout>
