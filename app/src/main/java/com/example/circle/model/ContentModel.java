@@ -1,8 +1,9 @@
 package com.example.circle.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ContentModel {
+public class ContentModel implements Serializable {
 
     private String userID;
     private String userName;

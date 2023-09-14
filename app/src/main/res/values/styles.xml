@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar"/>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
 
     <style name="toolbar_title">
         <item name="android:textSize">
@@ -88,6 +88,15 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
 
+    </style>
+
+    <style name="Widget.AppTheme.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

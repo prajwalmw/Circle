@@ -1,6 +1,7 @@
 package com.example.circle.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
+import com.example.circle.activity.FullscreenImageActivity;
 import com.example.circle.model.ContentModel;
 import com.example.circle.utilities.OnItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -58,6 +61,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
         holder.rank_likes_count.setText(model.getContentHeartCount() + "+");
         holder.rank_category.setText(model.getCategory_value());
+
+        holder.rank_image.setOnClickListener(v -> {
+            Intent intent = new Intent(context, FullscreenImageActivity.class);
+            intent.putExtra("model", model);
+            context.startActivity(intent);
+        });
+
 
     }
 

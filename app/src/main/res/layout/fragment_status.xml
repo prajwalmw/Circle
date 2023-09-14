@@ -73,7 +73,7 @@
                     android:src="@drawable/crown" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img1"
+                    android:id="@+id/imgvFirst"
                     android:layout_width="104dp"
                     android:layout_height="104dp"
                     android:layout_below="@+id/imgview_1st"
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:layout_below="@+id/img1"
+                    android:layout_below="@+id/imgvFirst"
                     android:text="King K."
                     android:maxLines="1"
                     android:maxLength="8"
@@ -164,7 +164,7 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/img2"
+                        android:id="@+id/imgvSecond"
                         android:layout_width="84dp"
                         android:layout_height="84dp"
                         android:layout_below="@+id/rank2"
@@ -185,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        android:layout_below="@+id/img2"
+                        android:layout_below="@+id/imgvSecond"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
@@ -245,7 +245,7 @@
                     android:layout_centerHorizontal="true" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img3"
+                    android:id="@+id/imgvThird"
                     android:layout_width="84dp"
                     android:layout_height="84dp"
                     android:padding="6dp"
@@ -266,7 +266,7 @@
                     android:id="@+id/third_name_txt3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/img3"
+                    android:layout_below="@+id/imgvThird"
                     android:visibility="gone"
                     android:text="Jack J."
                     android:maxLines="1"

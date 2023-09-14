@@ -22,6 +22,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".activity.FullscreenImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_fullscreen_image"
+            android:theme="@style/AppTheme.Fullscreen" />
+        <activity
             android:name=".activity.PostDetailsActivity"
             android:exported="false" />
         <activity

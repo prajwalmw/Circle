@@ -2,6 +2,7 @@ package com.example.circle.fragment;
 
 import static com.example.circle.activity.Chat_UserList.TAG;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
+import com.example.circle.activity.FullscreenImageActivity;
 import com.example.circle.adapter.LeaderboardAdapter;
 import com.example.circle.databinding.FragmentStatusBinding;
 import com.example.circle.model.ContentModel;
@@ -31,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -74,6 +77,8 @@ public class StatusFragment extends Fragment {
         contentModelArrayList = new ArrayList<>();
         contentRemoveList = new ArrayList<>();
 
+        rankImgViewClickListeners();
+
         binding.backbtn.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
         });
@@ -104,6 +109,25 @@ public class StatusFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void rankImgViewClickListeners() {
+
+        binding.imgvFirst.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+            intent.putExtra("model", (Serializable) contentModelArrayList.get(0));
+            startActivity(intent);
+        });
+        binding.imgvSecond.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+            intent.putExtra("model", (Serializable) contentModelArrayList.get(1));
+            startActivity(intent);
+        });
+        binding.imgvThird.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+            intent.putExtra("model", (Serializable) contentModelArrayList.get(2));
+            startActivity(intent);
+        });
     }
 
     private void fetchPostValues(String category) {
@@ -158,7 +182,7 @@ public class StatusFragment extends Fragment {
                     .load(top3ContentList.get(0).getContentImageUrl())
                     .placeholder(R.drawable.avatar)
                     .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(binding.img1);
+                    .into(binding.imgvFirst);
      //   }
      //   else if (rank == 1) {
             binding.secondLikes.setText(top3ContentList.get(1).getContentHeartCount() + "+");
@@ -168,7 +192,7 @@ public class StatusFragment extends Fragment {
                     .load(top3ContentList.get(1).getContentImageUrl())
                     .placeholder(R.drawable.avatar)
                     .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(binding.img2);
+                    .into(binding.imgvSecond);
      //   }
      //   else if (rank == 2) {
             binding.thirdLikes.setText(top3ContentList.get(2).getContentHeartCount() + "+");
@@ -178,7 +202,7 @@ public class StatusFragment extends Fragment {
                     .load(top3ContentList.get(2).getContentImageUrl())
                     .placeholder(R.drawable.avatar)
                     .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(binding.img3);
+                    .into(binding.imgvThird);
       //  }
     }
 
