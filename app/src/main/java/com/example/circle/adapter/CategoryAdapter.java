@@ -18,6 +18,8 @@ import com.example.circle.R;
 import com.example.circle.activity.Chat_UserList;
 import com.example.circle.activity.ProfileOTP_Login;
 import com.example.circle.model.CategoryModel;
+import com.example.circle.model.ContentModel;
+import com.example.circle.utilities.SessionManager;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.io.Serializable;
@@ -28,17 +30,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     private Context context;
     private List<CategoryModel> modelList;
     private List<CategoryModel> checkedValues;
+    private SessionManager sessionManager;
 
     public CategoryAdapter(Context context, List<CategoryModel> modelList) {
         this.context = context;
         this.modelList = modelList;
         checkedValues = new ArrayList<>();
+        sessionManager = new SessionManager(context);
     }
 
     public CategoryAdapter(Context context, List<CategoryModel> modelList, List<CategoryModel> checkedValues) {
         this.context = context;
         this.modelList = modelList;
         this.checkedValues = checkedValues;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -63,6 +68,49 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                     holder.checkBox.setChecked(true);
             });*/
 
+            //in some cases, it will prevent unwanted situations
+            holder.checkBox.setOnCheckedChangeListener(null);
+            holder.checkBox.setChecked(false);  // this was the issue as everytime load it will first deselect it and than since no data this will be deseldcted itself.
+
+            //if true, your checkbox will be selected, else unselected
+            if (sessionManager.getArrayList("my_community") != null) {
+                checkedValues = sessionManager.getArrayList("my_community");
+
+                for (CategoryModel c: checkedValues) {
+                    if (c.getTitle().equalsIgnoreCase(model.getTitle()))
+                        holder.checkBox.setChecked(c.isChecked());
+                }
+            }
+            else {
+                  holder.checkBox.setChecked(model.isChecked());
+            }
+
+
+
+
+          /*  if (holder.checkBox.isChecked())
+                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
+            else
+                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));*/
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    model.setChecked(isChecked);
+                    checkedValues.add(model);
+
+                  /*  if (isChecked) {
+                        modelList.get(holder.getAdapterPosition()).setChecked(isChecked);
+                        checkedValues.add(modelList.get(holder.getAdapterPosition()));
+                    } else {
+                        modelList.get(holder.getAdapterPosition()).setChecked(isChecked);
+                        checkedValues.remove(modelList.get(holder.getAdapterPosition()));
+                    }*/
+                }
+            });
+
+
+/*
             if (checkedValues.size() > 0) {
                 try {
                     if (checkedValues.get(position).getTitle().equalsIgnoreCase(model.getTitle()))
@@ -74,18 +122,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
 
                 }
             }
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked) {
-                        checkedValues.add(modelList.get(holder.getAdapterPosition()));
-                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
-                    } else {
-                        checkedValues.remove(modelList.get(holder.getAdapterPosition()));
-                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));
-                    }
-                }
-            });
+*/
 
         }
     }

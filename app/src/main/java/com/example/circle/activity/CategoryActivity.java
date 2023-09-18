@@ -87,25 +87,27 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
 
 
         modelList = new ArrayList<>();
-        modelList.add(new CategoryModel(R.drawable.sport_large_icon, "Sports and Fitness"));
-        modelList.add(new CategoryModel(R.drawable.travel_large_icon, "Travel and Adventure"));
-        modelList.add(new CategoryModel(R.drawable.friends_icon, "FRIENDS"));
-        modelList.add(new CategoryModel(R.drawable.food_new_icon, "Foodie Forever"));
-        modelList.add(new CategoryModel(R.drawable.career_icon, "Career"));
-        modelList.add(new CategoryModel(R.drawable.technology_large_icon, "Tech and Future"));
-        modelList.add(new CategoryModel(R.drawable.anime_icon, "Comics and Anime"));
-        modelList.add(new CategoryModel(R.drawable.business_large_icon, "Business and Startup"));
-        modelList.add(new CategoryModel(R.drawable.meme_icon, "Memes"));
-        modelList.add(new CategoryModel(R.drawable.stockmarket_large_icon, "Stock Market World"));
-        modelList.add(new CategoryModel(R.drawable.movies_icon, "Movies"));
-        modelList.add(new CategoryModel(R.drawable.crypto_icon, "Crypto"));
-        modelList.add(new CategoryModel(R.drawable.senior_citizen_icon, "Senior Citizens Garden"));
-        modelList.add(new CategoryModel(R.drawable.diy_icon, "DIY"));
-        modelList.add(new CategoryModel(R.drawable.fun_large_icon, "Gaming"));
-        modelList.add(new CategoryModel(R.drawable.dance_large_icon, "Dance Mania"));
-        modelList.add(new CategoryModel(R.drawable.fashion_icon, "Fashion and Lifestyle"));
-        modelList.add(new CategoryModel(R.drawable.music_large_icon, "Music and Masti"));
-        modelList.add(new CategoryModel(R.drawable.camera_large_icon, "Photography"));
+        modelList.add(new CategoryModel(R.drawable.sport_large_icon, "Sports and Fitness", false));
+        modelList.add(new CategoryModel(R.drawable.travel_large_icon, "Travel and Adventure", false));
+        modelList.add(new CategoryModel(R.drawable.friends_icon, "FRIENDS", false));
+        modelList.add(new CategoryModel(R.drawable.food_new_icon, "Foodie Forever", false));
+        modelList.add(new CategoryModel(R.drawable.career_icon, "Career", false));
+        modelList.add(new CategoryModel(R.drawable.technology_large_icon, "Tech and Future", false));
+        modelList.add(new CategoryModel(R.drawable.anime_icon, "Comics and Anime", false));
+        modelList.add(new CategoryModel(R.drawable.business_large_icon, "Business and Startup", false));
+        modelList.add(new CategoryModel(R.drawable.meme_icon, "Memes", false));
+        modelList.add(new CategoryModel(R.drawable.stockmarket_large_icon, "Stock Market World", false));
+        modelList.add(new CategoryModel(R.drawable.movies_icon, "Movies", false));
+        modelList.add(new CategoryModel(R.drawable.crypto_icon, "Crypto", false));
+        modelList.add(new CategoryModel(R.drawable.senior_citizen_icon, "Senior Citizens Garden", false));
+        modelList.add(new CategoryModel(R.drawable.diy_icon, "DIY", false));
+        modelList.add(new CategoryModel(R.drawable.fun_large_icon, "Gaming", false));
+        modelList.add(new CategoryModel(R.drawable.dance_large_icon, "Dance Mania", false));
+        modelList.add(new CategoryModel(R.drawable.fashion_icon, "Fashion and Lifestyle", false));
+        modelList.add(new CategoryModel(R.drawable.music_large_icon, "Music and Masti", false));
+        modelList.add(new CategoryModel(R.drawable.camera_large_icon, "Photography", false));
+
+        sessionManager.saveArrayList(modelList, "modelList"); // store value
 
         recyclerview_category = findViewById(R.id.recyclerview_category);
         join_txtview = findViewById(R.id.join_txtview);
