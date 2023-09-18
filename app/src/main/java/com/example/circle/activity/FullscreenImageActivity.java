@@ -161,6 +161,7 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
         binding.postUsername.setText(contentModel.getUserName());
         binding.postCategory.setText(contentModel.getCategory_value());
+        binding.tvDescription.setText(contentModel.getContenTitle());
 
 
         // Set up the user interaction to manually show or hide the system UI.

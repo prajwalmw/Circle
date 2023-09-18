@@ -25,7 +25,7 @@
          android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <RelativeLayout
@@ -119,9 +119,35 @@
 
             </RelativeLayout>
             <!--            end -->
+        </RelativeLayout>
+    </FrameLayout>
 
+
+    <FrameLayout
+        android:id="@+id/flBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="bottom">
+
+        <RelativeLayout
+            android:id="@+id/dd"
+            style="@style/Widget.AppTheme.ButtonBar.Fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="description to show up here" />
 
         </RelativeLayout>
     </FrameLayout>
 
-</FrameLayout>
+    </FrameLayout>
