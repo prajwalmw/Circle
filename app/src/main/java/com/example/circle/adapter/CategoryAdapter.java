@@ -97,15 +97,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     model.setChecked(isChecked);
-                    checkedValues.add(model);
 
-                  /*  if (isChecked) {
-                        modelList.get(holder.getAdapterPosition()).setChecked(isChecked);
-                        checkedValues.add(modelList.get(holder.getAdapterPosition()));
+                    if (isChecked) {
+                        checkedValues.add(model);
                     } else {
-                        modelList.get(holder.getAdapterPosition()).setChecked(isChecked);
-                        checkedValues.remove(modelList.get(holder.getAdapterPosition()));
-                    }*/
+                        checkedValues.remove(model);
+                    }
                 }
             });
 
