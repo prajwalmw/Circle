@@ -42,4 +42,5 @@ public class CategoryModel implements Serializable{
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
 }

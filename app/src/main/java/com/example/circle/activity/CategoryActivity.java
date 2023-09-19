@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.circle.R;
 import com.example.circle.adapter.CategoryAdapter;
@@ -123,6 +124,11 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
             if (adapter != null) {
                 checkedValues = adapter.getCheckedValues();
                 Log.v("Category", "checkedvalues: " + checkedValues.size());
+                if (checkedValues.size() == 0 || checkedValues.size() < 0) {
+                    Toast.makeText(this, "Please select atleast one category.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 if (update) { // ie. user wants to edit the category list.
                     setLoggedInUserDetails(checkedValues);
@@ -161,6 +167,7 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
     }
 
     private void setLoggedInUserDetails(List<CategoryModel> checkedValues) {
+
         for (int i = 0; i < checkedValues.size(); i++) {
             String category = checkedValues.get(i).getTitle();
 

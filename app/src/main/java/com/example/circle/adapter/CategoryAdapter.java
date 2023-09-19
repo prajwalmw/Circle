@@ -2,6 +2,7 @@ package com.example.circle.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,37 +62,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             holder.image.setImageDrawable(context.getDrawable(id));
             holder.title.setText(model.getTitle());
 
-         /*   holder.relativeLayout.setOnClickListener(v -> {
-                if (holder.checkBox.isChecked())
-                    holder.checkBox.setChecked(false);
-                else
-                    holder.checkBox.setChecked(true);
-            });*/
-
             //in some cases, it will prevent unwanted situations
             holder.checkBox.setOnCheckedChangeListener(null);
             holder.checkBox.setChecked(false);  // this was the issue as everytime load it will first deselect it and than since no data this will be deseldcted itself.
+            holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));
 
-            //if true, your checkbox will be selected, else unselected
-            if (sessionManager.getArrayList("my_community") != null) {
-                checkedValues = sessionManager.getArrayList("my_community");
+            for (CategoryModel c : checkedValues) {
+                if (c.getTitle().equalsIgnoreCase(model.getTitle())) {
+                    if (c.isChecked())
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
+                    else
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));
 
-                for (CategoryModel c: checkedValues) {
-                    if (c.getTitle().equalsIgnoreCase(model.getTitle()))
-                        holder.checkBox.setChecked(c.isChecked());
+                    holder.checkBox.setChecked(c.isChecked());
                 }
+
             }
-            else {
-                  holder.checkBox.setChecked(model.isChecked());
-            }
-
-
-
-
-          /*  if (holder.checkBox.isChecked())
-                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
-            else
-                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));*/
 
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -100,26 +86,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
 
                     if (isChecked) {
                         checkedValues.add(model);
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
                     } else {
-                        checkedValues.remove(model);
+//                        model.setChecked(true);
+                        holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            checkedValues.removeIf(n -> n.getTitle().equalsIgnoreCase(model.getTitle()));
+                        }
                     }
                 }
             });
-
-
-/*
-            if (checkedValues.size() > 0) {
-                try {
-                    if (checkedValues.get(position).getTitle().equalsIgnoreCase(model.getTitle()))
-                        holder.checkBox.setChecked(true);
-                    else
-                        holder.checkBox.setChecked(false);
-                }
-                catch (Exception e) {
-
-                }
-            }
-*/
 
         }
     }
@@ -148,4 +124,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     public List<CategoryModel> getCheckedValues() {
         return checkedValues;
     }
+
+     /*  if (holder.checkBox.isChecked())
+                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.fade_color));
+            else
+                holder.relativeLayout.setBackgroundColor(context.getColor(R.color.white));*/
+
+
 }
