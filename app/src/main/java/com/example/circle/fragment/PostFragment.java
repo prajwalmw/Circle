@@ -254,10 +254,10 @@ public class PostFragment extends Fragment {
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.recyclerView.setAdapter(usersAdapter);
 
-        if (users.size() <= 0)
-            binding.noData.setVisibility(View.VISIBLE);
-        else
-            binding.noData.setVisibility(View.GONE);
+//        if (users.size() <= 0)
+//            binding.noData.setVisibility(View.VISIBLE);
+//        else
+//            binding.noData.setVisibility(View.GONE);
 
 
         /**
@@ -290,10 +290,10 @@ public class PostFragment extends Fragment {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 if (!snapshot.exists()) {
                                                     users.add(user);
-                                                    if (users.size() <= 0)
+                                                   /* if (users.size() <= 0)
                                                         binding.noData.setVisibility(View.VISIBLE);
                                                     else
-                                                        binding.noData.setVisibility(View.GONE);
+                                                        binding.noData.setVisibility(View.GONE);*/
 
                                                     binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
                                                     usersAdapter.notifyDataSetChanged();
@@ -309,10 +309,10 @@ public class PostFragment extends Fragment {
                                                     } else {
                                                         user.setIsblocked(false);
                                                         users.add(user); // ie. getActivity() user has not blocked me on his end.
-                                                        if (users.size() <= 0)
+                                                      /*  if (users.size() <= 0)
                                                             binding.noData.setVisibility(View.VISIBLE);
                                                         else
-                                                            binding.noData.setVisibility(View.GONE);
+                                                            binding.noData.setVisibility(View.GONE);*/
 
                                                         binding.toolbarTitle.setText(category_value + "(" + users.size() + ")");
                                                     }
