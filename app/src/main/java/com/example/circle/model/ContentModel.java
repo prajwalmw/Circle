@@ -12,6 +12,7 @@ public class ContentModel implements Serializable {
     private String contentImageUrl;
     private String contenTitle;
     private int contentHeartCount;
+    private int contentViewCount;
   //  private likedBy likedBy;
 
     private List<String> likedBy;
@@ -21,7 +22,7 @@ public class ContentModel implements Serializable {
 
     public ContentModel(String userID,String userName,String userProfile,
                         String uuid, String contentImageUrl, String contenTitle,
-                        int contentHeartCount, long lastUpdatedAt, String category_value, String link) {
+                        int contentHeartCount, int contentViewCount, long lastUpdatedAt, String category_value, String link) {
         this.userID = userID;
         this.userName = userName;
         this.userProfile = userProfile;
@@ -29,6 +30,7 @@ public class ContentModel implements Serializable {
         this.contentImageUrl = contentImageUrl;
         this.contenTitle = contenTitle;
         this.contentHeartCount = contentHeartCount;
+        this.contentViewCount = contentViewCount;
         this.lastUpdatedAt = lastUpdatedAt;
         this.category_value = category_value;
         this.link = link;
@@ -156,5 +158,13 @@ public class ContentModel implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public int getContentViewCount() {
+        return contentViewCount;
+    }
+
+    public void setContentViewCount(int contentViewCount) {
+        this.contentViewCount = contentViewCount;
     }
 }

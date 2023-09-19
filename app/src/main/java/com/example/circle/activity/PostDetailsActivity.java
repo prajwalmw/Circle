@@ -158,7 +158,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             ContentModel contentModel = new ContentModel(   // adding values...
                                     FirebaseAuth.getInstance().getUid(), userStatus.getName(),
                                     userStatus.getProfileImage(), UUID.randomUUID().toString(), imageUrl,
-                                    binding.descriptionInput.getText().toString().trim(), 0,
+                                    binding.descriptionInput.getText().toString().trim(), 0, 0,
                                     userStatus.getLastUpdated(), category_value,
                                     binding.linkInput.getText().toString().trim());
 

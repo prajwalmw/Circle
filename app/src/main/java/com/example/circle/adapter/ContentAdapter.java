@@ -71,7 +71,10 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
+        holder.views_txt.setText(String.valueOf(contentModel.getContentViewCount()));
         holder.post_category.setText(contentModel.getCategory_value());
+
+        itemClick.onclick("item", false, contentList.get(position), position);
 
         Glide.with(context)
                 .asBitmap()
@@ -134,7 +137,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount, post_username, post_category, linkstxt;
+        TextView contentTitle, contentLikeCount, post_username, post_category, linkstxt, views_txt;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
@@ -147,16 +150,18 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             post_category = itemView.findViewById(R.id.post_category);
             post_username = itemView.findViewById(R.id.post_username);
             linkstxt = itemView.findViewById(R.id.linkstxt);
+            views_txt = itemView.findViewById(R.id.views_txt);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
             like_btn = itemView.findViewById(R.id.like_btn);
 
+
             like_btn.setOnClickListener(v -> {
                 if (likedList.contains(fID)) {   // ie. already liked so here dislike.
-                    itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                    itemClick.onclick("like_btn", false, contentList.get(getAdapterPosition()), getAdapterPosition());
                 } else
-                    itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                    itemClick.onclick("like_btn", true, contentList.get(getAdapterPosition()), getAdapterPosition());
             });
 
             content_imageview.setOnClickListener(new DoubleClickEvent() {
@@ -188,9 +193,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
                 @Override
                 public void onDoubleClick(View v) {
                     if (likedList.contains(fID)) {   // ie. already liked so here dislike.
-                        itemClick.onclick(false, contentList.get(getAdapterPosition()));
+                        itemClick.onclick("content_imageview", false, contentList.get(getAdapterPosition()), getAdapterPosition());
                     } else
-                        itemClick.onclick(true, contentList.get(getAdapterPosition()));
+                        itemClick.onclick("content_imageview", true, contentList.get(getAdapterPosition()), getAdapterPosition());
                 }
             });
 
@@ -198,7 +203,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public interface OnItemClick {
-        public void onclick(boolean isLiked, ContentModel contentModel);
+        public void onclick(String view, boolean isLiked, ContentModel contentModel, int position);
     }
 
 }

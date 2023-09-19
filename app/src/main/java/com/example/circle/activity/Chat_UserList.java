@@ -14,6 +14,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -237,8 +239,19 @@ public class Chat_UserList extends AppCompatActivity {
 
         contentAdapter = new ContentAdapter(this, contentList, new ContentAdapter.OnItemClick() {
             @Override
-            public void onclick(boolean isLiked, ContentModel contentModel) {
-                plus_minus_heartCount(isLiked, contentModel);
+            public void onclick(String view, boolean isLiked, ContentModel contentModel, int position) {
+                if (view.equalsIgnoreCase("like_btn") || view.equalsIgnoreCase("content_imageview"))
+                    plus_minus_heartCount(isLiked, contentModel);
+
+                if (view.equalsIgnoreCase("item")) {
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateViewsDBCount(contentModel);
+                        }
+                    }, 60000); // 1 mins.
+
+                }
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -440,6 +453,11 @@ public class Chat_UserList extends AppCompatActivity {
 
     }
 
+    private void viewCounter() {
+
+        contentAdapter.notifyDataSetChanged();
+    }
+
     private void sortByTrending() {
         Collections.sort(contentList, new Comparator<ContentModel>() {
             @Override
@@ -513,18 +531,41 @@ public class Chat_UserList extends AppCompatActivity {
                                         .child("imagesPath")
                                         .child(data.getKey())
                                         .updateChildren(obj);
+                            }
+                        }
+                    }
 
-                              /*  // Updating userIDs who like the post.
-                                Map<String, Object> updates = new HashMap<>();
-                                updates.put(mod.getUserID(), true);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+    private void updateViewsDBCount(ContentModel contentModel) {
+        database.getReference("post")
+                .child(category_value)
+                .child(contentModel.getUserID())
+                .child("imagesPath")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                        for (DataSnapshot data : snapshot1.getChildren()) {
+                            ContentModel mod = data.getValue(ContentModel.class);
+
+                            if (mod.getUuid().equalsIgnoreCase(contentModel.getUuid())) {  // this makes sure that only the clicked item's heart count is updated.
+
+                                // Automic Server-Side Increments for Like/Unlike post.
+                                HashMap<String, Object> obj = new HashMap<>();
+                                User user = sessionManager.getUserModel("loggedIn_UserModel");
+
+                                obj.put("contentViewCount", ServerValue.increment(1));   // mod
                                 database.getReference()
                                         .child("post")
                                         .child(category_value)
                                         .child(contentModel.getUserID())
                                         .child("imagesPath")
                                         .child(data.getKey())
-                                        .child("likedBy")
-                                        .updateChildren(updates);*/
+                                        .updateChildren(obj);
                             }
                         }
                     }

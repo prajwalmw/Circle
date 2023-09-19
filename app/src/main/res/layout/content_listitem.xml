@@ -43,7 +43,7 @@
                     app:strokeWidth="1dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_centerVertical="true"
@@ -140,11 +140,16 @@
               app:layout_constraintTop_toTopOf="parent"
               android:background="@drawable/circular_shape_white_solid"/>-->
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content_imageview">
+
+
             <ImageButton
                 android:id="@+id/like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/content_imageview"
                 android:src="@drawable/like_heart_unfilled"
                 android:layout_marginStart="5dp"
                 android:padding="10dp"
@@ -152,23 +157,29 @@
                 android:background="@null"
                 />
 
+                <!--likes and view ll-->
+                <LinearLayout
+                    android:id="@+id/ll_likes_views"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toEndOf="@+id/like_btn"
+                    android:layout_marginStart="5dp"
+                    >
+
             <LinearLayout
                 android:id="@+id/linear_heart"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_toEndOf="@+id/like_btn"
-                android:layout_below="@+id/content_imageview"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/cornered_edge_box"
-                android:fontFamily="@font/lato_bold"
-                android:layout_marginTop="4dp"
-                android:padding="2dp">
+                >
 
                 <TextView
                     android:id="@+id/content_like_count"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="10"
                     android:textColor="@color/theme_red_sports"
                     android:textSize="12sp"
@@ -177,7 +188,7 @@
                 <TextView
                     android:id="@+id/likes_txt"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text=" Likes"
                     android:textColor="@color/theme_red_sports"
                     android:textSize="12sp"
@@ -185,14 +196,45 @@
 
             </LinearLayout>
 
-        <TextView
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="15dp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:gravity="center"
+                        android:src="@drawable/view_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/views_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginStart="2dp"
+                        android:text="1.3k"
+                        android:textColor="@color/teal_100"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <TextView
             android:id="@+id/content_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:layout_alignStart="@id/linear_heart"
+            android:layout_alignStart="@id/ll_likes_views"
             android:layout_marginBottom="10dp"
-            android:layout_below="@+id/linear_heart"
+            android:layout_below="@+id/ll_likes_views"
             android:background="@drawable/cornered_edge_box"
             android:fontFamily="@font/lato_bold"
             android:padding="2dp"
@@ -208,12 +250,12 @@
                 tools:visibility="visible"
                 android:layout_toEndOf="@id/content_title"
                 tools:text="visit"
-                android:layout_below="@+id/linear_heart"
+                android:layout_below="@+id/ll_likes_views"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_alignBaseline="@id/content_title"
                 android:linksClickable="true"
                 android:textColorLink="@color/design_default_color_primary_dark"/>
 
+            </RelativeLayout>
         <!--
             <ImageButton
                 android:id="@+id/imagebtn_address"
