@@ -232,7 +232,7 @@ public class PostFragment extends Fragment {
                         public void run() {
                             updateViewsDBCount(contentModel);
                         }
-                    }, 60000); // 1 mins.
+                    }, 300000); // 5 mins.
                 }
             }
         });
