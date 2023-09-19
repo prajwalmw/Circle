@@ -249,7 +249,7 @@ public class Chat_UserList extends AppCompatActivity {
                         public void run() {
                             updateViewsDBCount(contentModel);
                         }
-                    }, 300000); // 5 mins.
+                    }, 180000); // 5 mins.
 
                 }
             }
