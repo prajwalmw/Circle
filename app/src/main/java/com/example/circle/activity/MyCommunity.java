@@ -86,18 +86,17 @@ public class MyCommunity extends AppCompatActivity {
         binding.bottomnavbar.getMenu().findItem(R.id.nav_home).setIcon(R.drawable.icon_home);
         binding.bottomnavbar.getMenu().findItem(R.id.nav_status).setIcon(R.drawable.icon_explore);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Glide.with(context)
                     .asBitmap()
                     .load(url)
+                    .placeholder(R.drawable.avatar)
                     .apply(RequestOptions.circleCropTransform())
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             Drawable drawable = new BitmapDrawable(getResources(), resource);
-//                            imageView.setImageDrawable(drawable);
-//                            imageView.setVisibility(View.VISIBLE);
-
                             binding.bottomnavbar.getMenu().findItem(R.id.nav_profile).setIcon(drawable);
                         }
                     });
