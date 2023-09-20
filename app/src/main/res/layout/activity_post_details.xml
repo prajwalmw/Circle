@@ -4,10 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".activity.PostDetailsActivity">
 
+    <RelativeLayout
+        android:id="@+id/vd_addnotes_header_expandview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cardImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp">
 
+        <!--Personal Sub-Child-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAdditionalNotesVS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            app:counterEnabled="true"
+            app:counterMaxLength="1000"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:gravity="top">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:background="@drawable/edittext_border"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="16sp"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:maxLength="1000"
+                android:textSize="14sp"
+                android:textColorHint="@color/edittext_hint_color"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <!--
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilAdditionalNotesVS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cardImg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="1000"
+            android:gravity="top">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="3"
+                android:background="@drawable/edittext_border"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:padding="12dp"
+                android:maxLength="1000"
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="14sp"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+    -->
+
+
+<!--
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/descriptionInput"
         android:layout_width="0dp"
@@ -22,17 +102,23 @@
         app:layout_constraintTop_toBottomOf="@id/cardImg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+-->
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/linkInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:inputType="textUri"
-        app:layout_constraintTop_toBottomOf="@id/descriptionInput"
-        app:layout_constraintStart_toStartOf="@id/descriptionInput"
-        app:layout_constraintEnd_toEndOf="@id/descriptionInput"
+        android:background="@drawable/edittext_border"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="16sp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/vd_addnotes_header_expandview"
+        app:layout_constraintStart_toStartOf="@id/vd_addnotes_header_expandview"
+        app:layout_constraintEnd_toEndOf="@id/vd_addnotes_header_expandview"
         android:hint="paste your link here [Optional]"
+        android:textColorHint="@color/edittext_hint_color"
         />
 
 
@@ -40,26 +126,32 @@
         android:id="@+id/cardImg"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="10dp"
+        app:cardCornerRadius="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/camera_user_profile"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="3dp"/>
+            android:src="@drawable/camera_user_profile" />
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/shareBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Share"
-        android:padding="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="60dp"
+        android:text="Upload"
+        android:background="@drawable/btn_bg"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="16sp"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/linkInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -36,5 +36,7 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
 
+    <color name="edittext_hint_color">#B0ADBE</color>
+    <color name="ui2_chat_edit_bubble_color">#0FD197</color>
 
 </resources>
