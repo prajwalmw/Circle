@@ -163,6 +163,27 @@ public class FullscreenImageActivity extends AppCompatActivity {
 
         binding.postUsername.setText(contentModel.getUserName());
         binding.postCategory.setText(contentModel.getCategory_value());
+
+        if (contentModel.getContenTitle().length() > 70) {
+            binding.txtShowMore.setVisibility(View.VISIBLE);
+        }
+        else {
+            binding.txtShowMore.setVisibility(View.GONE);
+        }
+
+        binding.txtShowMore.setOnClickListener(v -> {
+            if (binding.txtShowMore.getText().toString().equalsIgnoreCase(getString(R.string.show_more)))
+            {
+                binding.tvDescription.setMaxLines(Integer.MAX_VALUE);//your TextView
+                binding.txtShowMore.setText(Html.fromHtml("<u>show less</u>"));
+            }
+            else
+            {
+                binding.tvDescription.setMaxLines(2);//your TextView
+                binding.txtShowMore.setText(Html.fromHtml("<u>show more</u>"));
+            }
+        });
+
         binding.tvDescription.setText(contentModel.getContenTitle());
         if (!contentModel.getLink().equalsIgnoreCase("")) {
             binding.linkstxt.setVisibility(View.VISIBLE);

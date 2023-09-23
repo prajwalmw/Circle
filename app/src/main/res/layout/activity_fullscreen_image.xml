@@ -136,12 +136,12 @@
             style="@style/Widget.AppTheme.ButtonBar.Fullscreen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:paddingHorizontal="20dp"
             tools:ignore="UselessParent">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/llDescription"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
@@ -149,13 +149,15 @@
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:paddingVertical="10dp"
+                android:paddingTop="10dp"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 tools:text="This is Title jsdsdkssallllllllllllllllllllllllllllllllllllllldwkewkeelkalkdlakdalskdalkdalkdakdakd;askdkdl;akekq;ke;lkd;lfkd;lfks;lfksl;fksf;lskdf;lskfs;lkfsl;dkf;lsdkfs;dlkfs;lfksf;lksdf;lksdf;lksdf;lskf;lskfsd;lfks;lfksdf;lksdf;lksdf;lksdlfks;lfks;lfks;lfksdfksfkls"
                 />
 
@@ -169,13 +171,31 @@
                 android:paddingEnd="5dp"
                 android:visibility="gone"
                 tools:visibility="visible"
+                tools:textColor="@color/light_blue_A400"
                 tools:text="visit"
                 android:textSize="12sp"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="top"
                 android:linksClickable="true"
-                android:textColorLink="@color/url_link"/>
+                android:textColorLink="@color/light_blue_A400"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_show_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_alignStart="@+id/llDescription"
+                android:layout_alignEnd="@+id/llDescription"
+                android:layout_below="@+id/llDescription"
+                android:paddingEnd="50dp"
+                android:gravity="end"
+                android:textColor="@color/white"
+                android:text="@string/show_more"
+                android:textSize="12sp"
+                android:paddingBottom="5dp"/>
+
 
 
         </RelativeLayout>

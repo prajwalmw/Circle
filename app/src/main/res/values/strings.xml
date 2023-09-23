@@ -10,5 +10,7 @@
     <string name="i_agree_and_accept_terms_of_use">I agree and accept <a href="https://prajwalwaingankar.wixsite.com/heshe-chat/terms-conditions">Terms of Use</a></string>
     <string name="no_previous_details_found_welcome_to_heshe_chat">No previous details found. \nWelcome to Circle!</string>
     <string name="visit"><b><u>visit</u></b></string>
+    <string name="show_more"><u>show more</u></string>
+    <string name="show_less"><u>show less</u></string>
 
 </resources>
