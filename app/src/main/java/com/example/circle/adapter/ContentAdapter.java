@@ -68,6 +68,26 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
         ContentModel contentModel = contentList.get(position);
 
+        if (contentModel.getContenTitle().length() > 70) {
+            holder.txt_show_more.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.txt_show_more.setVisibility(View.GONE);
+        }
+
+        holder.txt_show_more.setOnClickListener(v -> {
+            if (holder.txt_show_more.getText().toString().equalsIgnoreCase("show more"))
+            {
+                holder.contentTitle.setMaxLines(Integer.MAX_VALUE);//your TextView
+                holder.txt_show_more.setText("show less");
+            }
+            else
+            {
+                holder.contentTitle.setMaxLines(2);//your TextView
+                holder.txt_show_more.setText("show more");
+            }
+        });
+
         holder.contentTitle.setText(contentModel.getContenTitle());
         holder.post_username.setText(contentModel.getUserName());
         holder.contentLikeCount.setText(String.valueOf(contentModel.getContentHeartCount()));
@@ -137,7 +157,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     }
 
     public class ContentViewHolder extends RecyclerView.ViewHolder {
-        TextView contentTitle, contentLikeCount, post_username, post_category, linkstxt, views_txt;
+        TextView contentTitle, contentLikeCount, post_username, post_category, linkstxt, views_txt, txt_show_more;
         ImageView content_imageview, profile_img_icon;
         ImageButton like_btn;
         List<String> likedList;
@@ -151,6 +171,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
             post_username = itemView.findViewById(R.id.post_username);
             linkstxt = itemView.findViewById(R.id.linkstxt);
             views_txt = itemView.findViewById(R.id.views_txt);
+            txt_show_more = itemView.findViewById(R.id.txt_show_more);
             contentLikeCount = itemView.findViewById(R.id.content_like_count);
             content_imageview = itemView.findViewById(R.id.content_imageview);
             profile_img_icon = itemView.findViewById(R.id.profile_img_icon);
