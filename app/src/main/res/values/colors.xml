@@ -39,4 +39,6 @@
     <color name="edittext_hint_color">#B0ADBE</color>
     <color name="ui2_chat_edit_bubble_color">#0FD197</color>
 
+    <color name="url_link">#0000FF</color>
+
 </resources>

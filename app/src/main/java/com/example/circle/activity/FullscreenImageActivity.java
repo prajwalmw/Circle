@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -162,6 +164,16 @@ public class FullscreenImageActivity extends AppCompatActivity {
         binding.postUsername.setText(contentModel.getUserName());
         binding.postCategory.setText(contentModel.getCategory_value());
         binding.tvDescription.setText(contentModel.getContenTitle());
+        if (!contentModel.getLink().equalsIgnoreCase("")) {
+            binding.linkstxt.setVisibility(View.VISIBLE);
+            String link = "<a href =" + contentModel.getLink().trim() + ">visit</a>";
+            binding.linkstxt.setText(Html.fromHtml(link));
+            binding.linkstxt.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        else {
+            binding.linkstxt.setVisibility(View.GONE);
+        }
+
 
 
         // Set up the user interaction to manually show or hide the system UI.

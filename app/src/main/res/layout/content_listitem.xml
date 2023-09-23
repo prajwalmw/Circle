@@ -200,6 +200,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_views"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -227,33 +228,46 @@
 
                 </LinearLayout>
 
-                <TextView
-            android:id="@+id/content_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_alignStart="@id/ll_likes_views"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@+id/ll_likes_views"
-            android:background="@drawable/cornered_edge_box"
-            android:fontFamily="@font/lato_bold"
-            android:padding="2dp"
-            android:text="This is Title"
-            android:textColor="@color/color_primary_dark"
-            android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignStart="@id/ll_likes_views"
+                    android:layout_below="@+id/ll_likes_views"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/ll_views"
+                    android:gravity="center_vertical"
+                    >
 
-            <TextView
-                android:id="@+id/linkstxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_toEndOf="@id/content_title"
-                tools:text="visit"
-                android:layout_below="@+id/ll_likes_views"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:linksClickable="true"
-                android:textColorLink="@color/design_default_color_primary_dark"/>
+                    <TextView
+                        android:id="@+id/content_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cornered_edge_box"
+                        android:fontFamily="@font/lato_bold"
+                        android:text="This is Title"
+                        android:textColor="@color/color_primary_dark"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/linkstxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="2dp"
+                        android:paddingEnd="5dp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:text="visit"
+                        android:textSize="12sp"
+                        android:linksClickable="true"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColorLink="@color/url_link"/>
+
+                </LinearLayout>
 
             </RelativeLayout>
         <!--
