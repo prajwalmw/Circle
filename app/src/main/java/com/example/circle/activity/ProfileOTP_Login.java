@@ -144,9 +144,12 @@ public class ProfileOTP_Login extends AppCompatActivity {
             //  startActivity(new Intent(ProfileOTP_Login.this, UserSetupScreen.class));
         }*/
 
+        binding.countrycodeSpinner.registerCarrierNumberEditText(binding.mobileNoBox); // attaches the ccp spinner with the edittext
+
         binding.sendOtpBtn.setOnClickListener(v -> {
             String mobileString = binding.mobileNoBox.getText().toString().trim();
-            if(mobileString.isEmpty() || mobileString.length() < 10) {
+
+            if(mobileString.isEmpty() /*|| mobileString.length() < 10*/) {
                 binding.mobileNoBox.setError("Enter a valid mobile number");
                 binding.mobileNoBox.requestFocus();
                 return;
@@ -179,8 +182,9 @@ public class ProfileOTP_Login extends AppCompatActivity {
      * @return void
      */
     private void phone_verification(String mobile) {
+        Log.v("mobile", "mobile: " + binding.countrycodeSpinner.getFullNumberWithPlus());
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91" + mobile,
+                binding.countrycodeSpinner.getFullNumberWithPlus(),
                 60,
                 TimeUnit.SECONDS,
                 ProfileOTP_Login.this,
@@ -210,6 +214,7 @@ public class ProfileOTP_Login extends AppCompatActivity {
                 public void onVerificationFailed(@NonNull FirebaseException e) {
                     // here in onsuccess -> dismiss the Dialog box.
                     dismissDialog();
+                    binding.mobileNoBox.setText("");
                     Toast.makeText(ProfileOTP_Login.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
