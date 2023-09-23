@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 public class StatusFragment extends Fragment {
     private FragmentStatusBinding binding;
@@ -46,8 +47,8 @@ public class StatusFragment extends Fragment {
     FirebaseDatabase database;
     FirebaseStorage storage;
     ArrayList<String> categoryTitleList;
-    ArrayList<ContentModel> contentModelArrayList, contentRemoveList;
-    HashSet<ContentModel> top3ContentList;
+    List<ContentModel> contentModelArrayList, contentRemoveList;
+    List<ContentModel> top3ContentList, top10List;
 
     @Nullable
     @Override
@@ -61,19 +62,13 @@ public class StatusFragment extends Fragment {
             getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.leader_head_color));
         }
 
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         sessionManager = new SessionManager(getActivity());
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
         categoryTitleList = new ArrayList<>();
-        top3ContentList = new HashSet<>();
+        top3ContentList = new ArrayList<>();
+        top10List = new ArrayList<>();
         contentModelArrayList = new ArrayList<>();
         contentRemoveList = new ArrayList<>();
 
@@ -82,7 +77,7 @@ public class StatusFragment extends Fragment {
         binding.backbtn.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
         });
-        adapter = new LeaderboardAdapter(getActivity(), contentModelArrayList, top3ContentList, new OnItemClickListener() {
+        adapter = new LeaderboardAdapter(getActivity(), top10List, top3ContentList, new OnItemClickListener() {
             @Override
             public void onItemClick() {
 
@@ -109,23 +104,28 @@ public class StatusFragment extends Fragment {
 
                     }
                 });
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void rankImgViewClickListeners() {
-
         binding.imgvFirst.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-            intent.putExtra("model", (Serializable) contentModelArrayList.get(0));
+            intent.putExtra("model", (Serializable) top3ContentList.get(0));
             startActivity(intent);
         });
         binding.imgvSecond.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-            intent.putExtra("model", (Serializable) contentModelArrayList.get(1));
+            intent.putExtra("model", (Serializable) top3ContentList.get(1));
             startActivity(intent);
         });
         binding.imgvThird.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
-            intent.putExtra("model", (Serializable) contentModelArrayList.get(2));
+            intent.putExtra("model", (Serializable) top3ContentList.get(2));
             startActivity(intent);
         });
     }
@@ -136,31 +136,20 @@ public class StatusFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean isExists = true;
                         for(DataSnapshot childSnapshot : snapshot.getChildren()) {
 
                             for (DataSnapshot innerChildSnapShot : childSnapshot.child("imagesPath").getChildren()) {
                                 ContentModel contentModel = innerChildSnapShot.getValue(ContentModel.class);
-                                boolean isAdded = contentModelArrayList.add(contentModel);
-
-                                if (isAdded) {
-                                    // sort list in desc order of heart count.
-                                    contentModelArrayList = sortListInDescOrder(contentModelArrayList);
-                                    if (adapter != null && contentModelArrayList.size() > 3) {
-                                        top3ContentList.clear();
-                                        top3ContentList.add(contentModelArrayList.get(0));
-                                        top3ContentList.add(contentModelArrayList.get(1));
-                                        top3ContentList.add(contentModelArrayList.get(2));
-
-                                        ArrayList<ContentModel> topArrayList = new ArrayList<>();
-                                        topArrayList.addAll(top3ContentList);
-                                        topArrayList = sortListInDescOrder(topArrayList);
-                                        setTop3UIValues(topArrayList);
-
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
+                                contentModelArrayList.add(contentModel);
                             }
                         }
+
+                        isExists = false;
+
+                        // sort list in desc order of heart count.
+                        if (!isExists)
+                            setValues(contentModelArrayList);
                     }
 
                     @Override
@@ -170,7 +159,23 @@ public class StatusFragment extends Fragment {
                 });
     }
 
-    private void setTop3UIValues(ArrayList<ContentModel> top3ContentList) {
+    private void setValues(List<ContentModel> contentModelArrayList) {
+        contentModelArrayList = sortListInDescOrder(contentModelArrayList);
+        if (adapter != null && contentModelArrayList.size() > 3) {
+            top3ContentList.clear();
+            top3ContentList.addAll(contentModelArrayList.subList(0, 3));    // TOP 3
+            setTop3UIValues(top3ContentList);
+
+            if (contentModelArrayList.size() > 10) {
+                top10List.clear();
+                top10List.addAll(contentModelArrayList.subList(3, 10));    // TOP 10
+            }
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setTop3UIValues(List<ContentModel> top3ContentList) {
         if (getActivity() == null || top3ContentList.size() == 0)
             return;
 
@@ -206,7 +211,7 @@ public class StatusFragment extends Fragment {
       //  }
     }
 
-    private ArrayList<ContentModel> sortListInDescOrder(ArrayList<ContentModel> contentModelArrayList) {
+    private List<ContentModel> sortListInDescOrder(List<ContentModel> contentModelArrayList) {
         // heart count - contentList - sort as per desc of heart count.
         Collections.sort(contentModelArrayList, new Comparator<ContentModel>() {
             @Override
@@ -218,11 +223,5 @@ public class StatusFragment extends Fragment {
         return contentModelArrayList;
     }
         // end
-
-//        ArrayList<ContentModel> list2 = new ArrayList<>();
-//        if (contentModelArrayList.size() > 3) {
-//
-//        }
-
 
 }

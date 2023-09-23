@@ -21,21 +21,21 @@ import com.example.circle.utilities.OnItemClickListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyHolder> {
     private Context context;
-    private ArrayList<ContentModel> contentModelArrayList = new ArrayList<>();
-    HashSet<ContentModel> top3ContentList;
+    private List<ContentModel> contentModelArrayList = new ArrayList<>();
+    List<ContentModel> top3ContentList;
     private OnItemClickListener listener;
 
-    public LeaderboardAdapter(Context context, ArrayList<ContentModel> contentModelArrayList, HashSet<ContentModel> top3ContentList, OnItemClickListener listener) {
+    public LeaderboardAdapter(Context context, List<ContentModel> contentModelArrayList, List<ContentModel> top3ContentList, OnItemClickListener listener) {
         this.context = context;
         this.contentModelArrayList = contentModelArrayList;
         this.top3ContentList = top3ContentList;
         this.listener = listener;
-
     }
 
     @NonNull
@@ -67,7 +67,6 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             intent.putExtra("model", model);
             context.startActivity(intent);
         });
-
 
     }
 

@@ -104,6 +104,12 @@ public class PostFragment extends Fragment {
         binding = FragmentPostBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         setStatusBarColor();
+
+        if (getArguments() != null) {
+            category_value = getArguments().getString(ARG_PARAM1);
+            codeLogic();
+        }
+
         return root;
     }
 
@@ -111,10 +117,6 @@ public class PostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getArguments() != null) {
-            category_value = getArguments().getString(ARG_PARAM1);
-            codeLogic();
-        }
 
     }
 
