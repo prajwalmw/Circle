@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +23,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
 import com.example.circle.activity.Chat_UserList;
 import com.example.circle.activity.PostDetailsActivity;
@@ -39,6 +45,7 @@ import com.example.circle.model.User;
 import com.example.circle.model.UserStatus;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -236,6 +243,32 @@ public class PostFragment extends Fragment {
                         }
                     }, 180000); // 5 mins.
                 }
+            }
+
+            @Override
+            public void onProfileClick(String profileImg, String username, String description) {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+                View view = getLayoutInflater().inflate(R.layout.fragment_profile, null);
+                builder.setView(view);
+                ImageView img = view.findViewById(R.id.profile_img_icon);
+                RecyclerView rv = view.findViewById(R.id.rv_settings);
+                rv.setVisibility(View.GONE);
+                Glide.with(getActivity())
+                        .asBitmap()
+                        .load(profileImg)
+                        .placeholder(R.drawable.avatar)
+                        .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .circleCrop()
+                        .into(img);
+
+                TextView userName = view.findViewById(R.id.userNameTxt);
+                userName.setText(username);
+
+                TextView desc = view.findViewById(R.id.aboutMeTxt);
+                desc.setText(description);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

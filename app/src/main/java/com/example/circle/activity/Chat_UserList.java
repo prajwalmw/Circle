@@ -2,12 +2,14 @@ package com.example.circle.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -17,9 +19,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.R;
 import com.example.circle.adapter.ContentAdapter;
 import com.example.circle.adapter.TopStatusAdapter;
@@ -32,6 +40,7 @@ import com.example.circle.model.UserStatus;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -73,7 +82,7 @@ public class Chat_UserList extends AppCompatActivity {
     public static final int STATUS_CAPTURE = 75;
     public static final int POST_CAPTURE = 99;
     public static final int SHARE_REQUEST_CODE = 98;
-
+    private Context context;
 
 
     @Override
@@ -87,6 +96,8 @@ public class Chat_UserList extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.WHITE);
         }
+
+        context = Chat_UserList.this;
 
         intent = getIntent();
         if (intent.getExtras() != null) {
@@ -253,7 +264,13 @@ public class Chat_UserList extends AppCompatActivity {
 
                 }
             }
+
+            @Override
+            public void onProfileClick(String profileImg, String username, String description) {
+
+            }
         });
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         binding.contentRecycler.setLayoutManager(layoutManager);

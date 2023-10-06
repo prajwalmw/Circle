@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
@@ -95,6 +97,27 @@ public class UserSetupScreen extends AppCompatActivity {
 //                    }
 //                });
 
+        binding.descriptionInput.setHint("Tell something about yourself! [Optional]");
+        binding.descriptionInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.descriptionInput.setHint("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().equalsIgnoreCase(""))
+                    binding.descriptionInput.setHint("What's on your mind!");
+                else
+                    binding.descriptionInput.setHint("");
+            }
+        });
+
 
 
         binding.imageViewIcon.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +161,10 @@ public class UserSetupScreen extends AppCompatActivity {
 
                                         User user = new User(uid, name, phone, imageUrl);
                                         sessionManager.setUserModel(user, "loggedIn_UserModel");
+                                        setValuesInSharedPrefs();
+
+
+
                                      //   sessionManager.saveArrayList(categoryList, "my_community"); // store value
 
 /*
@@ -224,6 +251,8 @@ public class UserSetupScreen extends AppCompatActivity {
                     String n = sessionManager.getLoggedInUsername();
                     User user = new User(uid, name, phone, "No Image");
                     sessionManager.setUserModel(user, "loggedIn_UserModel");
+                    setValuesInSharedPrefs();
+
                     if (sessionManager.getLoggedInUsername().equalsIgnoreCase(""))
                         sessionManager.setLoggedInUsername(name);   // Adding username who logged-in into the session manager.
 
@@ -305,6 +334,15 @@ public class UserSetupScreen extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void setValuesInSharedPrefs() {
+        sessionManager.setAboutmeDesc(binding.descriptionInput.getText().toString().trim());
+        sessionManager.setInstagramId(binding.instaBox.getText().toString().trim());
+        sessionManager.setYoutubeId(binding.youtubeBox.getText().toString().trim());
+
+        Log.d("TAG", "setValuesInSharedPrefs: " + binding.descriptionInput + "\n" + binding.instaBox + "\n" + binding.youtubeBox);
     }
 
     @Override

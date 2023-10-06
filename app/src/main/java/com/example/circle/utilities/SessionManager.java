@@ -22,6 +22,9 @@ public class SessionManager {
     private static final String USER_MODEL = "USER_MODEL";
     private static final String LOGGED_IN_USERNAME = "LOGGED_IN_USERNAME";
     public static final String ACCEPTED = "ACCEPTED";
+    public static final String INSTAGRAM_ID = "INSTAGRAM_ID";
+    public static final String YOUTUBE_ID = "YOUTUBE_ID";
+    public static final String ABOUTME_DESC = "ABOUTME_DESC";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -47,6 +50,27 @@ public class SessionManager {
         editor.commit();
     }
 
+    public String getInstagramId() {
+        return pref.getString(INSTAGRAM_ID, "");
+    }
+    public void setInstagramId(String instagramId) {
+        editor.putString(INSTAGRAM_ID, instagramId);
+        editor.commit();
+    }
+    public String getYoutubeId() {
+        return pref.getString(YOUTUBE_ID, "");
+    }
+    public void setYoutubeId(String youtubeId) {
+        editor.putString(YOUTUBE_ID, youtubeId);
+        editor.commit();
+    }
+    public String getAboutmeDesc() {
+        return pref.getString(ABOUTME_DESC, "");
+    }
+    public void setAboutmeDesc(String aboutmeDesc) {
+        editor.putString(ABOUTME_DESC, aboutmeDesc);
+        editor.commit();
+    }
     public String getCategorySelected() {
         return pref.getString(CATEGORY_SELECTED, "");
     }

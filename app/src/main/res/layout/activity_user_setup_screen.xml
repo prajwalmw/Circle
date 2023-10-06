@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <RelativeLayout
         android:id="@+id/category_toolbar"
@@ -15,7 +20,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         >
 
         <ImageButton
@@ -55,7 +60,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:elevation="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/category_toolbar"
         android:foreground="@color/fade_color"
         android:layout_centerHorizontal="true"
@@ -95,29 +100,102 @@
         android:gravity="center"
         android:layout_below="@+id/phoneLbl"
         android:layout_centerHorizontal="true"
-        android:text="[ Please set your name and an optional profile image ]"
+        android:text="[ Please set your details and an optional profile image ]"
         android:textColor="@null"
         android:textSize="@null"
         android:textAppearance="@style/sub_title"
         />
 
-            <EditText
-                android:id="@+id/nameBox"
+    <EditText
+        android:id="@+id/nameBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/textbox_outline"
+        android:ems="10"
+        android:hint="Type your name*"
+        android:inputType="textCapWords"
+        android:padding="14dp"
+        android:textAppearance="@style/type_mobile_no"
+        android:textColor="@null"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@null" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/aboutMeBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameBox"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            app:counterEnabled="true"
+            app:counterMaxLength="100"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:gravity="top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textbox_outline"
-                android:ems="10"
-                android:textColor="@null"
-                android:textSize="@null"
-                android:textAppearance="@style/type_mobile_no"
-                android:textColorHint="@color/hint_color"
-                android:layout_below="@+id/subText"
-                android:layout_centerHorizontal="true"
-                android:hint="Type your name*"
-                android:inputType="textCapWords"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="30dp"
-                android:padding="14dp" />
+                android:minLines="3"
+                android:background="@drawable/edittext_border"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="16sp"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:maxLength="100"
+                android:textSize="14sp"
+                android:textColorHint="@color/edittext_hint_color"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <EditText
+        android:id="@+id/instaBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:drawableStart="@drawable/instagram"
+            android:drawablePadding="5dp"
+            android:padding="5dp"
+        android:layout_below="@+id/aboutMeBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textbox_outline"
+        android:ems="10"
+        android:hint="Instagram ID [Optional]"
+        android:inputType="text"
+        android:textAppearance="@style/type_mobile_no"
+        android:textColor="@null"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@null" />
+
+    <EditText
+        android:id="@+id/youtubeBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/youtube"
+        android:layout_below="@+id/instaBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textbox_outline"
+        android:ems="10"
+        android:hint="YouTube Channel Link [Optional]"
+        android:inputType="text"
+        android:drawablePadding="5dp"
+        android:padding="5dp"
+        android:textAppearance="@style/type_mobile_no"
+        android:textColor="@null"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@null" />
 
     <RelativeLayout
         android:id="@+id/continueBtn"
@@ -125,7 +203,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/send_otp_svg"
         android:layout_marginHorizontal="60dp"
-        android:layout_below="@+id/nameBox"
+        android:layout_below="@+id/youtubeBox"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true" >
@@ -141,4 +219,5 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

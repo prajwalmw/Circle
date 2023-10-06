@@ -1,6 +1,9 @@
 package com.example.circle.fragment;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -9,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
@@ -102,6 +106,63 @@ public class ProfileFragment extends Fragment {
         settingsAdapter = new SettingsAdapter(getActivity(), listItemModels);
         binding.rvSettings.setAdapter(settingsAdapter);
 
+        // instagram and youtube btn - START
+        if (!sessionManager.getInstagramId().isEmpty())
+            binding.instagramBtn.setVisibility(View.VISIBLE);
+        else
+            binding.instagramBtn.setVisibility(View.GONE);
+
+        if (!sessionManager.getYoutubeId().isEmpty())
+            binding.youtubeBtn.setVisibility(View.VISIBLE);
+        else
+            binding.youtubeBtn.setVisibility(View.GONE);
+
+        binding.instagramBtn.setOnClickListener(v -> {
+            Uri uri = Uri.parse("http://instagram.com/_u/x__optimistic_creature__x");
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+            likeIng.setPackage("com.instagram.android");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://instagram.com/x__optimistic_creature__x")));
+            }
+        });
+
+        binding.aboutMeTxt.setText(sessionManager.getAboutmeDesc());
+
+        binding.youtubeBtn.setOnClickListener(v -> {
+            Uri url = Uri.parse(sessionManager.getYoutubeId());
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
+            likeIng.setPackage("com.google.android.youtube");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+               /* startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://instagram.com/x__optimistic_creature__x")));*/
+                Toast.makeText(getActivity(), "Something went wrong! Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // instagram and youtube btn - END
+
+      //  binding.instagTXT.setText("My Instagram");
+/*
+        binding.instagTXT.setOnClickListener(v -> {
+            Uri uri = Uri.parse("http://instagram.com/_u/x__optimistic_creature__x");
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+            likeIng.setPackage("com.instagram.android");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://instagram.com/x__optimistic_creature__x")));
+            }
+        });
+*/
+
         return root;
     }
 
@@ -109,12 +170,15 @@ public class ProfileFragment extends Fragment {
         listItemModels = new ArrayList<>();
       /*  listItemModels.add(new ListItemModel(R.drawable.avatar, "About Us"));
         listItemModels.add(new ListItemModel(R.drawable.avatar, "Privacy Policy"));
-        listItemModels.add(new ListItemModel(R.drawable.avatar, "Terms & Conditions"));*/
+        listItemModels.add(new ListItemModel(R.drawable.avatar, "Terms & Conditions")); */
 
         listItemModels.add(new ListItemModel("About Us"));
         listItemModels.add(new ListItemModel("Privacy Policy"));
         listItemModels.add(new ListItemModel("Terms & Conditions"));
         listItemModels.add(new ListItemModel("Feedback"));
+
+      /*  listItemModels.add(new ListItemModel("Instagram Profile"));
+        listItemModels.add(new ListItemModel("YouTube Channel"));*/
     }
 
 
