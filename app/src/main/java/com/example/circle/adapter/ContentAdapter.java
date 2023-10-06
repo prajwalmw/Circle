@@ -102,7 +102,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
         holder.profile_img_icon.setOnClickListener(v -> {
 
             itemClick.onProfileClick(contentModel.getUserProfile(),
-                    contentModel.getUserName(), contentModel.getCategory_value());
+                    contentModel.getUserName(), sessionManager.getAboutmeDesc() /*contentModel.getCategory_value()*/);
 
         });
 

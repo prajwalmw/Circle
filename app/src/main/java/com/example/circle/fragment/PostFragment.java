@@ -248,11 +248,11 @@ public class PostFragment extends Fragment {
             @Override
             public void onProfileClick(String profileImg, String username, String description) {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-                View view = getLayoutInflater().inflate(R.layout.fragment_profile, null);
+                View view = getLayoutInflater().inflate(R.layout.profile_ui, null);
                 builder.setView(view);
                 ImageView img = view.findViewById(R.id.profile_img_icon);
-                RecyclerView rv = view.findViewById(R.id.rv_settings);
-                rv.setVisibility(View.GONE);
+//                RecyclerView rv = view.findViewById(R.id.rv_settings);
+//                rv.setVisibility(View.GONE);
                 Glide.with(getActivity())
                         .asBitmap()
                         .load(profileImg)

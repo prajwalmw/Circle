@@ -98,9 +98,9 @@ public class ProfileFragment extends Fragment {
         Glide.with(getActivity()).load(user.getProfileImage())
                 .placeholder(R.drawable.avatar)
                 .circleCrop()
-                .into(binding.profileImgIcon);
+                .into(binding.profileUi.profileImgIcon);
 
-        binding.userNameTxt.setText(user.getName().trim());
+        binding.profileUi.userNameTxt.setText(user.getName().trim());
 
         getListItemForSettings();
         settingsAdapter = new SettingsAdapter(getActivity(), listItemModels);
@@ -108,16 +108,16 @@ public class ProfileFragment extends Fragment {
 
         // instagram and youtube btn - START
         if (!sessionManager.getInstagramId().isEmpty())
-            binding.instagramBtn.setVisibility(View.VISIBLE);
+            binding.profileUi.instagramBtn.setVisibility(View.VISIBLE);
         else
-            binding.instagramBtn.setVisibility(View.GONE);
+            binding.profileUi.instagramBtn.setVisibility(View.GONE);
 
         if (!sessionManager.getYoutubeId().isEmpty())
-            binding.youtubeBtn.setVisibility(View.VISIBLE);
+            binding.profileUi.youtubeBtn.setVisibility(View.VISIBLE);
         else
-            binding.youtubeBtn.setVisibility(View.GONE);
+            binding.profileUi.youtubeBtn.setVisibility(View.GONE);
 
-        binding.instagramBtn.setOnClickListener(v -> {
+        binding.profileUi.instagramBtn.setOnClickListener(v -> {
             Uri uri = Uri.parse("http://instagram.com/_u/x__optimistic_creature__x");
             Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
             likeIng.setPackage("com.instagram.android");
@@ -130,9 +130,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        binding.aboutMeTxt.setText(sessionManager.getAboutmeDesc());
+        if (!sessionManager.getAboutmeDesc().isEmpty())
+            binding.profileUi.aboutMeTxt.setText(sessionManager.getAboutmeDesc());
 
-        binding.youtubeBtn.setOnClickListener(v -> {
+        binding.profileUi.youtubeBtn.setOnClickListener(v -> {
             Uri url = Uri.parse(sessionManager.getYoutubeId());
             Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
             likeIng.setPackage("com.google.android.youtube");

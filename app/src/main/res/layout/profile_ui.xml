@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="5dp"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_img_icon"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleImageView"
+        app:srcCompat="@drawable/avatar"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/profile_img_icon"
+        android:layout_alignParentEnd="true" >
+
+        <TextView
+            android:id="@+id/userNameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Prajwal W." />
+
+        <TextView
+            android:id="@+id/aboutMeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userNameTxt"
+            android:layout_marginTop="5dp"
+            android:text="Welcome to Circle Community!"
+            android:textColor="@color/teal_100"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aboutMeTxt"
+            android:layout_marginTop="5dp">
+
+            <ImageButton
+                android:id="@+id/instagramBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/instagram"
+                android:background="@null"
+                />
+
+            <ImageButton
+                android:id="@+id/youtubeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/instagramBtn"
+                android:src="@drawable/youtube"
+                android:background="@null"
+                android:layout_marginStart="10dp"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
