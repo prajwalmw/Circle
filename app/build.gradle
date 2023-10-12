@@ -81,6 +81,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'com.hbb20:ccp:2.6.1'    // country picker code
+    implementation 'com.google.android.gms:play-services-ads:21.1.0'    // google admob.
 
 
 }

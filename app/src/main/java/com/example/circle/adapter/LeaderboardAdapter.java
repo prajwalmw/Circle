@@ -2,6 +2,7 @@ package com.example.circle.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     private Context context;
     private List<ContentModel> contentModelArrayList = new ArrayList<>();
     List<ContentModel> top3ContentList;
-    private OnItemClickListener listener;
+    private LeaderboardAdapter.OnItemClickListener listener;
 
-    public LeaderboardAdapter(Context context, List<ContentModel> contentModelArrayList, List<ContentModel> top3ContentList, OnItemClickListener listener) {
+    public LeaderboardAdapter(Context context, List<ContentModel> contentModelArrayList,
+                              List<ContentModel> top3ContentList,
+                              LeaderboardAdapter.OnItemClickListener listener) {
         this.context = context;
         this.contentModelArrayList = contentModelArrayList;
         this.top3ContentList = top3ContentList;
@@ -63,9 +66,19 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         holder.rank_category.setText(model.getCategory_value());
 
         holder.rank_image.setOnClickListener(v -> {
+            listener.onItemClick(model);
+
+            /*if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
+
             Intent intent = new Intent(context, FullscreenImageActivity.class);
             intent.putExtra("model", model);
             context.startActivity(intent);
+            */
+
         });
 
     }
@@ -88,5 +101,10 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             rank_image = itemView.findViewById(R.id.rank_image);
             rank_category = itemView.findViewById(R.id.rank_category);
         }
+    }
+
+    public interface OnItemClickListener {
+
+        public void onItemClick(ContentModel model);
     }
 }

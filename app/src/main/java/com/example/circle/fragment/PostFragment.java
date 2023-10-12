@@ -96,6 +96,7 @@ public class PostFragment extends Fragment {
         // Required empty public constructor
     }
 
+/*
     public static PostFragment newInstance(String param1, String param2) {
         PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
@@ -103,6 +104,7 @@ public class PostFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

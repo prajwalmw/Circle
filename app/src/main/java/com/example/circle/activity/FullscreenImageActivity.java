@@ -2,6 +2,7 @@ package com.example.circle.activity;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +25,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.circle.databinding.ActivityFullscreenImageBinding;
 import com.example.circle.R;
 import com.example.circle.model.ContentModel;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -271,4 +279,6 @@ public class FullscreenImageActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 */
+
+
 }

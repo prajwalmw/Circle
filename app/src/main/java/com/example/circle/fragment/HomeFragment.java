@@ -58,7 +58,9 @@ public class HomeFragment extends Fragment {
     public static final int POST_CAPTURE = 99;
     public static final int SHARE_REQUEST_CODE = 98;
     private Intent intent;
-
+    FragmentPagerItems pagerItems;
+    List<FragmentPagerItem> itemList;
+    FragmentPagerItemAdapter adapter1;
 
 
     @Nullable
@@ -79,8 +81,56 @@ public class HomeFragment extends Fragment {
             categoryList = (List<CategoryModel>) args.getSerializable("category_list");
         }
 
+        // start
+        sessionManager = new SessionManager(getActivity());
+
+        if (categoryList == null) {
+            //  startActivity(new Intent(this.getActivity(), CategoryActivity.class));
+
+            if (sessionManager.getArrayList("my_community") != null) {
+                categoryList = sessionManager.getArrayList("my_community");
+            }
+        }
+
+        Glide.with(getActivity()).load(sessionManager.getUserModel("loggedIn_UserModel")
+                        .getProfileImage())
+                .placeholder(R.drawable.avatar)
+                .circleCrop()
+                .into(binding.profileImgIcon);
+
+
+        if (categoryList != null) {
+            adapter = new MyCommunityAdapter(getActivity(), categoryList);
+            binding.recyclerviewCategory.setAdapter(adapter);
+
+            for (int i = 0; i < categoryList.size(); i++) {
+                String category_title = categoryList.get(i).getTitle();
+                database = FirebaseDatabase.getInstance();
+                /**
+                 * need to upate token else notific wont show up as it requires token.
+                 */
+                FirebaseMessaging.getInstance()
+                        .getToken()
+                        .addOnSuccessListener(new OnSuccessListener<String>() {
+                            @Override
+                            public void onSuccess(String token) {
+                                HashMap<String, Object> map = new HashMap<>();
+                                map.put("token", token);
+                                database.getReference()
+                                        .child("users")
+                                        .child(category_title)
+                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .updateChildren(map);
+                                //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        }
+
+        // end
+
         FragmentPagerItems.Creator creator = null;
-        List<FragmentPagerItem> itemList = new ArrayList<>();
+        itemList = new ArrayList<>();
         if (categoryList != null && categoryList.size() > 0) {
             for (int i = 0; i < categoryList.size(); i++) {
                 String split[] = categoryList.get(i).getTitle().split(" ");
@@ -90,11 +140,13 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        FragmentPagerItems pagerItems = new FragmentPagerItems(getActivity());
+        pagerItems = new FragmentPagerItems(getActivity());
         pagerItems.addAll(itemList);
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getActivity().getSupportFragmentManager(), pagerItems);
-        binding.viewpager.setAdapter(adapter);
+        if (adapter1 == null) {
+            adapter1 = new FragmentPagerItemAdapter(
+                    getActivity().getSupportFragmentManager(), pagerItems);
+        }
+        binding.viewpager.setAdapter(adapter1);
 
 
         binding.manageList.setOnClickListener(v -> {
@@ -149,52 +201,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        sessionManager = new SessionManager(getActivity());
-
-        if (categoryList == null) {
-          //  startActivity(new Intent(this.getActivity(), CategoryActivity.class));
-
-            if (sessionManager.getArrayList("my_community") != null) {
-                categoryList = sessionManager.getArrayList("my_community");
-            }
-        }
-
-        Glide.with(getActivity()).load(sessionManager.getUserModel("loggedIn_UserModel")
-                        .getProfileImage())
-                .placeholder(R.drawable.avatar)
-                .circleCrop()
-                .into(binding.profileImgIcon);
-
-
-        if (categoryList != null) {
-            adapter = new MyCommunityAdapter(getActivity(), categoryList);
-            binding.recyclerviewCategory.setAdapter(adapter);
-
-            for (int i = 0; i < categoryList.size(); i++) {
-                String category_title = categoryList.get(i).getTitle();
-                database = FirebaseDatabase.getInstance();
-                /**
-                 * need to upate token else notific wont show up as it requires token.
-                 */
-                FirebaseMessaging.getInstance()
-                        .getToken()
-                        .addOnSuccessListener(new OnSuccessListener<String>() {
-                            @Override
-                            public void onSuccess(String token) {
-                                HashMap<String, Object> map = new HashMap<>();
-                                map.put("token", token);
-                                database.getReference()
-                                        .child("users")
-                                        .child(category_title)
-                                        .child(FirebaseAuth.getInstance().getUid())
-                                        .updateChildren(map);
-                                //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        }
-
     }
 
     @Override

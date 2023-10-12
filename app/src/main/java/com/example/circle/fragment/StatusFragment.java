@@ -5,10 +5,12 @@ import static com.example.circle.activity.Chat_UserList.TAG;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.circle.AppConstants;
 import com.example.circle.R;
 import com.example.circle.activity.FullscreenImageActivity;
 import com.example.circle.adapter.LeaderboardAdapter;
@@ -27,6 +30,16 @@ import com.example.circle.databinding.FragmentStatusBinding;
 import com.example.circle.model.ContentModel;
 import com.example.circle.utilities.OnItemClickListener;
 import com.example.circle.utilities.SessionManager;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,6 +63,9 @@ public class StatusFragment extends Fragment {
     List<ContentModel> contentModelArrayList, contentRemoveList;
     List<ContentModel> top3ContentList, top10List;
 
+    private InterstitialAd mInterstitialAd;
+    private AdRequest adRequest;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +77,33 @@ public class StatusFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.leader_head_color));
         }
+
+        initAds();
+        adRequest = new AdRequest.Builder().build();
+        loadFullScreenAd();
+
+        // Admob - Start
+//        final Handler handelay = new Handler();
+//        handelay.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                initAds();
+//
+//                adRequest = new AdRequest.Builder().build();
+//              /*  binding.adView.loadAd(adRequest);
+//                binding.adView.setAdListener(new AdListener() {
+//                    @Override
+//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//                        super.onAdFailedToLoad(loadAdError);
+//                        binding.adView.loadAd(adRequest);
+//                    }
+//                });
+//*/
+//                loadFullScreenAd();
+//            }
+//        }, 5000);
+
+        // Admob - End
 
         sessionManager = new SessionManager(getActivity());
         database = FirebaseDatabase.getInstance();
@@ -77,11 +120,23 @@ public class StatusFragment extends Fragment {
         binding.backbtn.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
         });
-        adapter = new LeaderboardAdapter(getActivity(), top10List, top3ContentList, new OnItemClickListener() {
-            @Override
-            public void onItemClick() {
 
-            }
+        adapter = new LeaderboardAdapter(getActivity(), top10List, top3ContentList,
+                new LeaderboardAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(ContentModel model) {
+                       // Toast.makeText(getActivity(), "Hi", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
+                        intent.putExtra("model", model);
+                        startActivity(intent);
+                        if (mInterstitialAd != null) {
+                            mInterstitialAd.show(getActivity());
+                        } else {
+                            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                        }
+
+                    }
         });
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -117,16 +172,36 @@ public class StatusFragment extends Fragment {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
             intent.putExtra("model", (Serializable) top3ContentList.get(0));
             startActivity(intent);
+
+                    if (mInterstitialAd != null) {
+                        mInterstitialAd.show(getActivity());
+                    } else {
+                        Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                    }
         });
+
         binding.imgvSecond.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
             intent.putExtra("model", (Serializable) top3ContentList.get(1));
             startActivity(intent);
+
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
         });
+
         binding.imgvThird.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), FullscreenImageActivity.class);
             intent.putExtra("model", (Serializable) top3ContentList.get(2));
             startActivity(intent);
+            
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(getActivity());
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.");
+            }
         });
     }
 
@@ -223,5 +298,53 @@ public class StatusFragment extends Fragment {
         return contentModelArrayList;
     }
         // end
+
+    // only once...
+    private void initAds() {
+        // Ads initialize only once.
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+    }
+
+    public void loadFullScreenAd() {
+        // Fullscreen ads.
+        InterstitialAd.load(getActivity(), AppConstants.FULLSCREEN, adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        mInterstitialAd = null;
+                        loadFullScreenAd();
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        super.onAdLoaded(interstitialAd);
+                        mInterstitialAd = interstitialAd;
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                super.onAdDismissedFullScreenContent();
+                                //   mInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                super.onAdFailedToShowFullScreenContent(adError);
+                                mInterstitialAd = null;
+                                loadFullScreenAd();
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                super.onAdShowedFullScreenContent();
+                            }
+                        });
+                    }
+                });
+    }
 
 }
