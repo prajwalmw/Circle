@@ -3,6 +3,7 @@ package com.example.circle.fragment;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,11 +64,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostFragment#newInstance} factory method to
- * create an instance of getActivity() fragment.
- */
+
 public class PostFragment extends Fragment {
 
    private static final String ARG_PARAM1 = "key";
@@ -248,13 +246,54 @@ public class PostFragment extends Fragment {
             }
 
             @Override
-            public void onProfileClick(String profileImg, String username, String description) {
+            public void onProfileClick(String profileImg, String username, String description, String instagram, String youtube) {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
                 View view = getLayoutInflater().inflate(R.layout.profile_ui, null);
                 builder.setView(view);
+
+                ImageButton manage_list = view.findViewById(R.id.manage_list);
+                manage_list.setVisibility(View.GONE);
+
+                ImageButton instaBtn = view.findViewById(R.id.instagramBtn);
+                ImageButton youtubeBtn = view.findViewById(R.id.youtubeBtn);
+
+                // instagram and youtube btn - START
+                if (!instagram.isEmpty())
+                    instaBtn.setVisibility(View.VISIBLE);
+                else
+                    instaBtn.setVisibility(View.GONE);
+
+                if (!youtube.isEmpty())
+                    youtubeBtn.setVisibility(View.VISIBLE);
+                else
+                    youtubeBtn.setVisibility(View.GONE);
+
+                instaBtn.setOnClickListener(v -> {
+                    Uri uri = Uri.parse("http://instagram.com/_u/" +  instagram);
+                    Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+                    likeIng.setPackage("com.instagram.android");
+
+                    try {
+                        startActivity(likeIng);
+                    } catch (ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("http://instagram.com/x__optimistic_creature__x")));
+                    }
+                });
+
+                youtubeBtn.setOnClickListener(v -> {
+                    Uri url = Uri.parse(youtube);
+                    Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
+                    likeIng.setPackage("com.google.android.youtube");
+
+                    try {
+                        startActivity(likeIng);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getActivity(), "Invalid Url", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 ImageView img = view.findViewById(R.id.profile_img_icon);
-//                RecyclerView rv = view.findViewById(R.id.rv_settings);
-//                rv.setVisibility(View.GONE);
                 Glide.with(getActivity())
                         .asBitmap()
                         .load(profileImg)

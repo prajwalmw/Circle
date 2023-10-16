@@ -101,8 +101,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
 
         holder.profile_img_icon.setOnClickListener(v -> {
 
-            itemClick.onProfileClick(contentModel.getUserProfile(),
-                    contentModel.getUserName(), sessionManager.getAboutmeDesc() /*contentModel.getCategory_value()*/);
+            itemClick.onProfileClick(contentModel.getUserProfile(), contentModel.getUserName(),
+                    contentModel.getProfileDescription(), contentModel.getInstagramURL(), contentModel.getYoutubeURL() /*contentModel.getCategory_value()*/);
 
         });
 
@@ -236,7 +236,8 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentV
     public interface OnItemClick {
         public void onclick(String view, boolean isLiked, ContentModel contentModel, int position);
 
-        public void onProfileClick(String profileImg, String username, String description);
+        public void onProfileClick(String profileImg, String username, String description,
+                                   String instagram, String youtube);
     }
 
 }

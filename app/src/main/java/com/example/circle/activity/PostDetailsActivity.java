@@ -171,6 +171,9 @@ public class PostDetailsActivity extends AppCompatActivity {
                             userStatus.setName(user.getName());
                             userStatus.setProfileImage(user.getProfileImage());
                             userStatus.setLastUpdated(date.getTime());
+                            userStatus.setDescription(user.getDescription());
+                            userStatus.setInstagramURL(user.getInstagramID());
+                            userStatus.setYoutubeURL(user.getYoutubeID());
 
                             HashMap<String, Object> obj = new HashMap<>();
                             obj.put("name", userStatus.getName());
@@ -184,6 +187,9 @@ public class PostDetailsActivity extends AppCompatActivity {
                                     binding.descriptionInput.getText().toString().trim(), 0, 0,
                                     userStatus.getLastUpdated(), category_value,
                                     binding.linkInput.getText().toString().trim());
+                            contentModel.setInstagramURL(user.getInstagramID());
+                            contentModel.setYoutubeURL(user.getYoutubeID());
+                            contentModel.setProfileDescription(user.getDescription());
 
                             if (requestCode == STATUS_CAPTURE) {
                                 database.getReference()

@@ -266,7 +266,7 @@ public class Chat_UserList extends AppCompatActivity {
             }
 
             @Override
-            public void onProfileClick(String profileImg, String username, String description) {
+            public void onProfileClick(String profileImg, String username, String description, String instagram, String youtube) {
 
             }
         });

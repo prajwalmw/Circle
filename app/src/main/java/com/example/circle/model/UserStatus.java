@@ -3,7 +3,7 @@ package com.example.circle.model;
 import java.util.ArrayList;
 
 public class UserStatus {
-    private String name, profileImage;
+    private String name, profileImage, description, instagramURL, youtubeURL;
     private long lastUpdated;
     private ArrayList<Status> statuses;
 
@@ -47,5 +47,29 @@ public class UserStatus {
 
     public void setStatuses(ArrayList<Status> statuses) {
         this.statuses = statuses;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getInstagramURL() {
+        return instagramURL;
+    }
+
+    public void setInstagramURL(String instagramURL) {
+        this.instagramURL = instagramURL;
+    }
+
+    public String getYoutubeURL() {
+        return youtubeURL;
+    }
+
+    public void setYoutubeURL(String youtubeURL) {
+        this.youtubeURL = youtubeURL;
     }
 }

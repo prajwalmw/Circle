@@ -19,7 +19,7 @@ public class ContentModel implements Serializable {
     private Long lastUpdatedAt;
     private String category_value;
     private String link = "";
-
+    private String instagramURL = "", youtubeURL = "", profileDescription = "";
     public ContentModel(String userID,String userName,String userProfile,
                         String uuid, String contentImageUrl, String contenTitle,
                         int contentHeartCount, int contentViewCount, long lastUpdatedAt, String category_value, String link) {
@@ -166,5 +166,29 @@ public class ContentModel implements Serializable {
 
     public void setContentViewCount(int contentViewCount) {
         this.contentViewCount = contentViewCount;
+    }
+
+    public String getInstagramURL() {
+        return instagramURL;
+    }
+
+    public void setInstagramURL(String instagramURL) {
+        this.instagramURL = instagramURL;
+    }
+
+    public String getYoutubeURL() {
+        return youtubeURL;
+    }
+
+    public void setYoutubeURL(String youtubeURL) {
+        this.youtubeURL = youtubeURL;
+    }
+
+    public String getProfileDescription() {
+        return profileDescription;
+    }
+
+    public void setProfileDescription(String profileDescription) {
+        this.profileDescription = profileDescription;
     }
 }
