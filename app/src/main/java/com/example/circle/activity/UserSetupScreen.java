@@ -15,6 +15,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.example.circle.R;
 import com.example.circle.databinding.ActivityUserSetupScreenBinding;
 import com.example.circle.model.CategoryModel;
 import com.example.circle.model.User;
@@ -44,6 +46,7 @@ public class UserSetupScreen extends AppCompatActivity {
     private String category_value;
     private SessionManager sessionManager;
     private List<CategoryModel> categoryList;
+    private String profileEdit = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,30 @@ public class UserSetupScreen extends AppCompatActivity {
         if (intent.getExtras() != null) {
           //  category_value = intent.getStringExtra("category");
             Bundle args = intent.getBundleExtra("BUNDLE");
-            categoryList = (List<CategoryModel>) args.getSerializable("category_list");
-            Log.v("Category", "checkedvalues: " + categoryList.size());
+            if (args != null) {
+                categoryList = (List<CategoryModel>) args.getSerializable("category_list");
+                Log.v("Category", "checkedvalues: " + categoryList.size());
+            }
+
+            profileEdit = intent.getStringExtra("profile");
+            if (!profileEdit.isEmpty()) {
+                Glide.with(this).load(profileEdit)
+                        .placeholder(R.drawable.avatar)
+                        .into(binding.imageViewIcon);
+            }
+
+            String name = intent.getStringExtra("name");
+            if (!name.isEmpty()) binding.nameBox.setText(name);
+
+            String description = intent.getStringExtra("description");
+            if (!description.isEmpty()) binding.descriptionInput.setText(description);
+
+            String instagram = intent.getStringExtra("instagram");
+            if (!instagram.isEmpty()) binding.instaBox.setText(instagram);
+
+            String youtube = intent.getStringExtra("youtube");
+            if (!youtube.isEmpty()) binding.youtubeBox.setText(youtube);
+
         }
 
         // changing status bar color
@@ -133,7 +158,14 @@ public class UserSetupScreen extends AppCompatActivity {
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = binding.nameBox.getText().toString();
+                String name = binding.nameBox.getText().toString().trim();
+                String description = binding.descriptionInput.getText().toString().trim();
+                String instagramID = binding.instaBox.getText().toString().trim();
+                String youtubeID = binding.youtubeBox.getText().toString().trim();
+
+               /* sessionManager.setAboutmeDesc(binding.descriptionInput.getText().toString().trim());
+                sessionManager.setInstagramId(binding.instaBox.getText().toString().trim());
+                sessionManager.setYoutubeId(binding.youtubeBox.getText().toString().trim());*/
 
                 if(name.isEmpty()) {
                     binding.nameBox.setError("Please type a name");
@@ -159,7 +191,7 @@ public class UserSetupScreen extends AppCompatActivity {
                                         if (sessionManager.getLoggedInUsername().equalsIgnoreCase("")) // Adding username who logged-in into the session manager.
                                             sessionManager.setLoggedInUsername(name);
 
-                                        User user = new User(uid, name, phone, imageUrl);
+                                        User user = new User(uid, name, phone, imageUrl, description, instagramID, youtubeID);
                                         sessionManager.setUserModel(user, "loggedIn_UserModel");
                                         setValuesInSharedPrefs();
 
@@ -249,7 +281,12 @@ public class UserSetupScreen extends AppCompatActivity {
                     String phone = auth.getCurrentUser().getPhoneNumber();
 
                     String n = sessionManager.getLoggedInUsername();
-                    User user = new User(uid, name, phone, "No Image");
+                    User user;
+                    if (!profileEdit.isEmpty())
+                        user = new User(uid, name, phone, profileEdit, description, instagramID, youtubeID);
+                    else
+                        user = new User(uid, name, phone, "No Image", description, instagramID, youtubeID);
+
                     sessionManager.setUserModel(user, "loggedIn_UserModel");
                     setValuesInSharedPrefs();
 
@@ -352,6 +389,12 @@ public class UserSetupScreen extends AppCompatActivity {
         if(data != null) {
             if(data.getData() != null) {
                 Uri uri = data.getData(); // filepath
+
+                Glide.with(this).load(uri)
+                        .placeholder(R.drawable.avatar)
+                        .into(binding.imageViewIcon);
+
+
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 long time = new Date().getTime();
                 StorageReference reference = storage.getReference().child("Profiles").child(time+"");

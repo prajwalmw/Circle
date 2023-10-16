@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.circle.R;
+import com.example.circle.activity.UserSetupScreen;
 import com.example.circle.adapter.MyCommunityAdapter;
 import com.example.circle.adapter.SettingsAdapter;
 import com.example.circle.databinding.FragmentHomeBinding;
@@ -106,6 +107,16 @@ public class ProfileFragment extends Fragment {
         settingsAdapter = new SettingsAdapter(getActivity(), listItemModels);
         binding.rvSettings.setAdapter(settingsAdapter);
 
+        binding.profileUi.manageList.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), UserSetupScreen.class);
+            intent.putExtra("profile", user.getProfileImage());
+            intent.putExtra("name", binding.profileUi.userNameTxt.getText().toString().trim());
+            intent.putExtra("description", binding.profileUi.aboutMeTxt.getText().toString().trim());
+            intent.putExtra("instagram", user.getInstagramID());
+            intent.putExtra("youtube", user.getYoutubeID());
+            startActivity(intent);
+        });
+
         // instagram and youtube btn - START
         if (!sessionManager.getInstagramId().isEmpty())
             binding.profileUi.instagramBtn.setVisibility(View.VISIBLE);
@@ -118,7 +129,7 @@ public class ProfileFragment extends Fragment {
             binding.profileUi.youtubeBtn.setVisibility(View.GONE);
 
         binding.profileUi.instagramBtn.setOnClickListener(v -> {
-            Uri uri = Uri.parse("http://instagram.com/_u/x__optimistic_creature__x");
+            Uri uri = Uri.parse("http://instagram.com/_u/" +  user.getInstagramID());
             Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
             likeIng.setPackage("com.instagram.android");
 
@@ -131,10 +142,11 @@ public class ProfileFragment extends Fragment {
         });
 
         if (!sessionManager.getAboutmeDesc().isEmpty())
-            binding.profileUi.aboutMeTxt.setText(sessionManager.getAboutmeDesc());
+            if (!user.getDescription().isEmpty())
+                binding.profileUi.aboutMeTxt.setText(user.getDescription());
 
         binding.profileUi.youtubeBtn.setOnClickListener(v -> {
-            Uri url = Uri.parse(sessionManager.getYoutubeId());
+            Uri url = Uri.parse(user.getYoutubeID());
             Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
             likeIng.setPackage("com.google.android.youtube");
 
@@ -143,7 +155,7 @@ public class ProfileFragment extends Fragment {
             } catch (ActivityNotFoundException e) {
                /* startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://instagram.com/x__optimistic_creature__x")));*/
-                Toast.makeText(getActivity(), "Something went wrong! Please try again later.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Invalid Url", Toast.LENGTH_SHORT).show();
             }
         });
         // instagram and youtube btn - END

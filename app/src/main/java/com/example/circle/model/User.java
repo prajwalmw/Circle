@@ -1,18 +1,21 @@
 package com.example.circle.model;
 
 public class User {
-    private String uid, name, phoneNumber, profileImage, token;
+    private String uid, name, phoneNumber, profileImage, token, description, instagramID, youtubeID;
     private boolean isblocked = false;
 
     public User() {
 
     }
 
-    public User(String uid, String name, String phoneNumber, String profileImage) {
+    public User(String uid, String name, String phoneNumber, String profileImage, String description, String instagramID, String youtubeID) {
         this.uid = uid;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profileImage = profileImage;
+        this.description = description;
+        this.instagramID = instagramID;
+        this.youtubeID = youtubeID;
     }
 
     public String getUid() {
@@ -61,5 +64,29 @@ public class User {
 
     public void setIsblocked(boolean isblocked) {
         this.isblocked = isblocked;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getInstagramID() {
+        return instagramID;
+    }
+
+    public void setInstagramID(String instagramID) {
+        this.instagramID = instagramID;
+    }
+
+    public String getYoutubeID() {
+        return youtubeID;
+    }
+
+    public void setYoutubeID(String youtubeID) {
+        this.youtubeID = youtubeID;
     }
 }
