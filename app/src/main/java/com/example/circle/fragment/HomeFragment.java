@@ -144,9 +144,10 @@ public class HomeFragment extends Fragment {
         pagerItems.addAll(itemList);
         if (adapter1 == null) {
             adapter1 = new FragmentPagerItemAdapter(
-                    getActivity().getSupportFragmentManager(), pagerItems);
+                    getChildFragmentManager(), pagerItems);
         }
         binding.viewpager.setAdapter(adapter1);
+     //   mPager.setAdapter(new BasePagerAdapter(getChildFragmentManager(), getResources()));
 
 
         binding.manageList.setOnClickListener(v -> {
@@ -193,6 +194,7 @@ public class HomeFragment extends Fragment {
                 return itemView;
             }
         });
+
         binding.viewpagertab.setViewPager(binding.viewpager);
 
         return root;
