@@ -99,33 +99,33 @@ public class HomeFragment extends Fragment {
                 .into(binding.profileImgIcon);
 
 
-        if (categoryList != null) {
-            adapter = new MyCommunityAdapter(getActivity(), categoryList);
-            binding.recyclerviewCategory.setAdapter(adapter);
-
-            for (int i = 0; i < categoryList.size(); i++) {
-                String category_title = categoryList.get(i).getTitle();
-                database = FirebaseDatabase.getInstance();
-                /**
-                 * need to upate token else notific wont show up as it requires token.
-                 */
-                FirebaseMessaging.getInstance()
-                        .getToken()
-                        .addOnSuccessListener(new OnSuccessListener<String>() {
-                            @Override
-                            public void onSuccess(String token) {
-                                HashMap<String, Object> map = new HashMap<>();
-                                map.put("token", token);
-                                database.getReference()
-                                        .child("users")
-                                        .child(category_title)
-                                        .child(FirebaseAuth.getInstance().getUid())
-                                        .updateChildren(map);
-                                //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        }
+//        if (categoryList != null) {
+//            adapter = new MyCommunityAdapter(getActivity(), categoryList);
+//            binding.recyclerviewCategory.setAdapter(adapter);
+//
+//            for (int i = 0; i < categoryList.size(); i++) {
+//                String category_title = categoryList.get(i).getTitle();
+//                database = FirebaseDatabase.getInstance();
+//                /**
+//                 * need to upate token else notific wont show up as it requires token.
+//                 */
+//                FirebaseMessaging.getInstance()
+//                        .getToken()
+//                        .addOnSuccessListener(new OnSuccessListener<String>() {
+//                            @Override
+//                            public void onSuccess(String token) {
+//                                HashMap<String, Object> map = new HashMap<>();
+//                                map.put("token", token);
+//                                database.getReference()
+//                                        .child("users")
+//                                        .child(category_title)
+//                                        .child(FirebaseAuth.getInstance().getUid())
+//                                        .updateChildren(map);
+//                                //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//            }
+//        }
 
         // end
 
