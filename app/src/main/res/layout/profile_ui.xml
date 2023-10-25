@@ -7,7 +7,6 @@
     android:layout_marginEnd="5dp"
     android:layout_alignParentTop="true"
     android:layout_alignParentStart="true"
-    android:padding="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -15,7 +14,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:scaleType="centerCrop"
-        android:padding="6dp"
+        android:padding="4dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleImageView"
         app:srcCompat="@drawable/avatar"
         app:strokeColor="@color/black"
@@ -44,7 +43,7 @@
             android:layout_below="@id/userNameTxt"
             android:layout_marginTop="5dp"
             android:text="Welcome to Circle Community!"
-            android:textColor="@color/teal_100"
+            android:textColor="@color/leader_head_color"
             android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -83,7 +82,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/edit_icon"
-        android:layout_marginEnd="5dp"
         android:backgroundTint="@color/dark_fade_color"
         android:background="?selectableItemBackground"
         android:layout_centerVertical="true"

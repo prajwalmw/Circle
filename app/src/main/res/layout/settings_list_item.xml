@@ -3,10 +3,13 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
-    android:paddingHorizontal="30dp"
-    android:paddingVertical="10dp"
+    android:layout_marginHorizontal="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/main_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/image"
@@ -28,12 +31,23 @@
         />
 
     <ImageButton
+        android:id="@+id/arrow_move"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:src="@drawable/right_arrow_svg"
         android:background="@null"
         android:layout_centerVertical="true"
+        />
+
+    </RelativeLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:dividerColor="@color/grey"
+        android:layout_below="@id/main_relative"
+        android:layout_marginVertical="20dp"
         />
 
 </RelativeLayout>
