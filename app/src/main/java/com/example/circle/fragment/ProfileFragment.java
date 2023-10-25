@@ -118,7 +118,7 @@ public class ProfileFragment extends Fragment {
         });
 
         // instagram and youtube btn - START
-        if (!sessionManager.getInstagramId().isEmpty())
+       /* if (!sessionManager.getInstagramId().isEmpty())
             binding.profileUi.instagramBtn.setVisibility(View.VISIBLE);
         else
             binding.profileUi.instagramBtn.setVisibility(View.GONE);
@@ -126,24 +126,29 @@ public class ProfileFragment extends Fragment {
         if (!sessionManager.getYoutubeId().isEmpty())
             binding.profileUi.youtubeBtn.setVisibility(View.VISIBLE);
         else
-            binding.profileUi.youtubeBtn.setVisibility(View.GONE);
+            binding.profileUi.youtubeBtn.setVisibility(View.GONE);*/
+
+        if (!sessionManager.getAboutmeDesc().isEmpty())
+            if (!user.getDescription().isEmpty())
+                binding.profileUi.aboutMeTxt.setText(user.getDescription());
 
         binding.profileUi.instagramBtn.setOnClickListener(v -> {
-            Uri uri = Uri.parse("http://instagram.com/_u/" +  user.getInstagramID());
+            String url = "";
+            if (user.getInstagramID().isEmpty())
+                url = "https://instagram.com/_u/circlecommunity2023";
+            else
+                url = "https://instagram.com/_u/" +  user.getInstagramID();
+
+            Uri uri = Uri.parse(url);
             Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
             likeIng.setPackage("com.instagram.android");
 
             try {
                 startActivity(likeIng);
             } catch (ActivityNotFoundException e) {
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://instagram.com/x__optimistic_creature__x")));
+                Toast.makeText(getActivity(), "Invalid Url", Toast.LENGTH_SHORT).show();
             }
         });
-
-        if (!sessionManager.getAboutmeDesc().isEmpty())
-            if (!user.getDescription().isEmpty())
-                binding.profileUi.aboutMeTxt.setText(user.getDescription());
 
         binding.profileUi.youtubeBtn.setOnClickListener(v -> {
             Uri url = Uri.parse(user.getYoutubeID());
