@@ -24,16 +24,27 @@
             android:visibility="gone"
             android:background="@null"/>
 
+        <ImageView
+            android:id="@+id/cc"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="-10dp"
+            android:src="@drawable/circle_logo_ss"
+            android:layout_toEndOf="@+id/arrow_back"/>
+
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/arrow_back"
+            android:layout_toEndOf="@+id/cc"
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
+            android:visibility="visible"
+            tools:visibility="visible"
             android:layout_centerVertical="true"
             android:lineSpacingExtra="1sp"
-            android:text="Circle"
+            android:text="ircle"
+            android:layout_marginStart="-15dp"
             android:textAppearance="@style/toolbar_title"
             android:textColor="@null"
             android:textSize="30sp"
