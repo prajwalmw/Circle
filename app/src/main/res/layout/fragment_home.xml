@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="10dp"
         android:layout_alignParentTop="true"
         >
 
@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:src="@drawable/edit_category_icon"
-            android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
             android:backgroundTint="@color/dark_fade_color"
             android:background="?selectableItemBackground"
