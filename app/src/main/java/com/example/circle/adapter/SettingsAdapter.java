@@ -27,6 +27,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
     public static final String ABOUT_US = "https://circlecommunityhey.wixsite.com/circle-community";
     public static final String PRIVACY_POLICY = "https://circlecommunityhey.wixsite.com/circle-community/privacy-policy";
     public static final String TERMS_USE = "https://circlecommunityhey.wixsite.com/circle-community/terms-conditions";
+    public static final String FAQ = "https://circlecommunityhey.wixsite.com/circle-community/faq";
 
 
     public SettingsAdapter(Context context, List<ListItemModel> listItemModelList) {
@@ -88,6 +89,20 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
                     });
                     break;
                 }
+                case 3: {
+                    holder.relativeLayout.setOnClickListener(v -> {
+                        Uri url = Uri.parse(FAQ);
+                        Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
+
+                        try {
+                            context.startActivity(likeIng);
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(context, "Invalid Url", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    break;
+                }
+
             }
         }
     }

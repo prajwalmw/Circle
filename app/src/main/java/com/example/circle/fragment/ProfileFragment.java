@@ -193,7 +193,7 @@ public class ProfileFragment extends Fragment {
         listItemModels.add(new ListItemModel("About Us"));
         listItemModels.add(new ListItemModel("Privacy Policy"));
         listItemModels.add(new ListItemModel("Terms of Use"));
-      //  listItemModels.add(new ListItemModel("Feedback"));
+        listItemModels.add(new ListItemModel("FAQ"));
 
       /*  listItemModels.add(new ListItemModel("Instagram Profile"));
         listItemModels.add(new ListItemModel("YouTube Channel"));*/
