@@ -24,6 +24,10 @@ import java.util.List;
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyViewHolder> {
     private Context context;
     private List<ListItemModel> listItemModelList;
+    public static final String ABOUT_US = "https://circlecommunityhey.wixsite.com/circle-community";
+    public static final String PRIVACY_POLICY = "https://circlecommunityhey.wixsite.com/circle-community/privacy-policy";
+    public static final String TERMS_USE = "https://circlecommunityhey.wixsite.com/circle-community/terms-conditions";
+
 
     public SettingsAdapter(Context context, List<ListItemModel> listItemModelList) {
         this.context = context;
@@ -46,9 +50,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
 
             switch (position) {
                 case 0: {
-/*
-                    holder.title.setOnClickListener(v -> {
-                        Uri url = Uri.parse("https://circlecommunityhey.wixsite.com/circle-community/privacy-policy");
+                    holder.relativeLayout.setOnClickListener(v -> {
+                        Uri url = Uri.parse(ABOUT_US);
                         Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
 
                         try {
@@ -57,12 +60,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
                             Toast.makeText(context, "Invalid Url", Toast.LENGTH_SHORT).show();
                         }
                     });
-*/
                     break;
                 }
                 case 1: {
                     holder.relativeLayout.setOnClickListener(v -> {
-                        Uri url = Uri.parse("https://circlecommunityhey.wixsite.com/circle-community/privacy-policy");
+                        Uri url = Uri.parse(PRIVACY_POLICY);
                         Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
 
                         try {
@@ -75,7 +77,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
                 }
                 case 2: {
                     holder.relativeLayout.setOnClickListener(v -> {
-                        Uri url = Uri.parse("https://circlecommunityhey.wixsite.com/circle-community/terms-conditions");
+                        Uri url = Uri.parse(TERMS_USE);
                         Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
 
                         try {

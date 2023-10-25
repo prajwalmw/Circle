@@ -68,7 +68,7 @@
                 android:layout_toEndOf="@+id/instagramBtn"
                 android:src="@drawable/youtube"
                 android:background="@null"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 />
 
         </RelativeLayout>
