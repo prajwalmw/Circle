@@ -2,12 +2,11 @@ plugins {
     id 'com.android.application'
 }
 
-
 android {
     compileSdk 33
     namespace 'com.example.circle'
     defaultConfig {
-        applicationId "com.example.circle"
+        applicationId 'com.example.circle'
         minSdk 23
         targetSdk 33
         versionCode 1

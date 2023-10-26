@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.circle.R;
 import com.example.circle.databinding.ActivityProfileOtpLogin1Binding;
-import com.example.circle.databinding.ActivityProfileOtpLoginBinding;
 import com.example.circle.model.CategoryModel;
 import com.example.circle.utilities.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
