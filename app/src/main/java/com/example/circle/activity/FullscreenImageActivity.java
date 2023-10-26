@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +21,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,6 +39,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -169,6 +177,11 @@ public class FullscreenImageActivity extends AppCompatActivity {
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(binding.profileImgIcon);
 
+        binding.profileImgIcon.setOnClickListener(v -> {
+            if (contentModel != null)
+                showPreview();
+        });
+
         binding.postUsername.setText(contentModel.getUserName());
         binding.postCategory.setText(contentModel.getCategory_value());
 
@@ -217,6 +230,70 @@ public class FullscreenImageActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
     //    binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
+    }
+
+    private void showPreview() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
+        View view = getLayoutInflater().inflate(R.layout.profile_ui, null);
+        builder.setView(view);
+
+        ImageButton manage_list = view.findViewById(R.id.manage_list);
+        manage_list.setVisibility(View.GONE);
+
+        ImageButton instaBtn = view.findViewById(R.id.instagramBtn);
+        ImageButton youtubeBtn = view.findViewById(R.id.youtubeBtn);
+
+        instaBtn.setOnClickListener(v -> {
+            String url = "";
+            if (contentModel.getInstagramURL() == null || contentModel.getInstagramURL().isEmpty())
+                url = "https://instagram.com/_u/circlecommunity2023";
+            else
+                url = "https://instagram.com/_u/" +  contentModel.getInstagramURL();
+
+            Uri uri = Uri.parse(url);
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+            likeIng.setPackage("com.instagram.android");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(context, "Invalid Url", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // youtube
+        youtubeBtn.setOnClickListener(v -> {
+            Uri url = Uri.parse(contentModel.getYoutubeURL());
+            Intent likeIng = new Intent(Intent.ACTION_VIEW, url);
+            likeIng.setPackage("com.google.android.youtube");
+
+            try {
+                startActivity(likeIng);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(context, "Invalid Url", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // others
+        ImageView img = view.findViewById(R.id.profile_img_icon);
+        Glide.with(context)
+                .asBitmap()
+                .load(contentModel.getUserProfile())
+                .placeholder(R.drawable.avatar)
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .circleCrop()
+                .into(img);
+
+        TextView userName = view.findViewById(R.id.userNameTxt);
+        userName.setText(contentModel.getUserName());
+
+        TextView desc = view.findViewById(R.id.aboutMeTxt);
+        if (!contentModel.getProfileDescription().isEmpty())
+            desc.setText(contentModel.getProfileDescription());
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     @Override

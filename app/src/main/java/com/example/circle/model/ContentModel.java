@@ -13,13 +13,13 @@ public class ContentModel implements Serializable {
     private String contenTitle;
     private int contentHeartCount;
     private int contentViewCount;
-  //  private likedBy likedBy;
 
     private List<String> likedBy;
     private Long lastUpdatedAt;
     private String category_value;
     private String link = "";
     private String instagramURL = "", youtubeURL = "", profileDescription = "";
+
     public ContentModel(String userID,String userName,String userProfile,
                         String uuid, String contentImageUrl, String contenTitle,
                         int contentHeartCount, int contentViewCount, long lastUpdatedAt, String category_value, String link) {
@@ -110,39 +110,6 @@ public class ContentModel implements Serializable {
     public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
     }
-
-    //    public likedBy getLikedBy() {
-//        return likedBy;
-//    }
-//
-//    public void setLikedBy(likedBy likedBy) {
-//        this.likedBy = likedBy;
-//    }
-
-
-    /* public likedBy getLikedBy() {
-        return likedBy;
-    }
-
-    public void setlikedBy(likedBy likedBy) {
-        this.likedBy = likedBy;
-    }
-
-    public class likedBy {
-
-        public likedBy() {
-        }
-
-        private boolean userIDKey;
-
-        public boolean isUserIDKey() {
-            return userIDKey;
-        }
-
-        public void setUserIDKey(boolean userIDKey) {
-            this.userIDKey = userIDKey;
-        }
-    }*/
 
     public Long getLastUpdatedAt() {
         return lastUpdatedAt;

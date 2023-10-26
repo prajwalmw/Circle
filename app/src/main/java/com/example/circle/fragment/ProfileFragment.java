@@ -158,8 +158,6 @@ public class ProfileFragment extends Fragment {
             try {
                 startActivity(likeIng);
             } catch (ActivityNotFoundException e) {
-               /* startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://instagram.com/x__optimistic_creature__x")));*/
                 Toast.makeText(getActivity(), "Invalid Url", Toast.LENGTH_SHORT).show();
             }
         });

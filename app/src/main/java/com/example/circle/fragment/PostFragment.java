@@ -258,7 +258,7 @@ public class PostFragment extends Fragment {
                 ImageButton youtubeBtn = view.findViewById(R.id.youtubeBtn);
 
                 // instagram and youtube btn - START
-                if (!instagram.isEmpty())
+               /* if (!instagram.isEmpty())
                     instaBtn.setVisibility(View.VISIBLE);
                 else
                     instaBtn.setVisibility(View.GONE);
@@ -266,18 +266,23 @@ public class PostFragment extends Fragment {
                 if (!youtube.isEmpty())
                     youtubeBtn.setVisibility(View.VISIBLE);
                 else
-                    youtubeBtn.setVisibility(View.GONE);
+                    youtubeBtn.setVisibility(View.GONE);*/
 
                 instaBtn.setOnClickListener(v -> {
-                    Uri uri = Uri.parse("http://instagram.com/_u/" +  instagram);
+                    String url = "";
+                    if (instagram.isEmpty())
+                        url = "https://instagram.com/_u/circlecommunity2023";
+                    else
+                        url = "https://instagram.com/_u/" +  instagram;
+
+                    Uri uri = Uri.parse(url);
                     Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
                     likeIng.setPackage("com.instagram.android");
 
                     try {
                         startActivity(likeIng);
                     } catch (ActivityNotFoundException e) {
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("http://instagram.com/x__optimistic_creature__x")));
+                        Toast.makeText(getActivity(), "Invalid Url", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -306,7 +311,8 @@ public class PostFragment extends Fragment {
                 userName.setText(username);
 
                 TextView desc = view.findViewById(R.id.aboutMeTxt);
-                desc.setText(description);
+                if (!description.isEmpty())
+                    desc.setText(description);
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
