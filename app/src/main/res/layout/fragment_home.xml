@@ -29,7 +29,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="-10dp"
-            android:src="@drawable/circle_logo_ss"
+            android:src="@drawable/circleee_logo"
             android:layout_toEndOf="@+id/arrow_back"/>
 
         <TextView
