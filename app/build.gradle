@@ -1,9 +1,7 @@
 plugins {
     id 'com.android.application'
 }
-apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
-apply plugin: 'com.google.firebase.crashlytics'
+
 
 android {
     compileSdk 33
@@ -82,6 +80,8 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'com.hbb20:ccp:2.6.1'    // country picker code
     implementation 'com.google.android.gms:play-services-ads:21.1.0'    // google admob.
-
-
 }
+
+apply plugin: 'com.google.gms.google-services'
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
