@@ -147,7 +147,7 @@
                 android:background="@drawable/edittext_border"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="16sp"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:gravity="top"
                 android:maxLength="100"
                 android:textSize="14sp"

@@ -188,6 +188,24 @@ public class HomeFragment extends Fragment {
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.meme_icon));
                 else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Stock"))
                     icon.setImageDrawable(getResources().getDrawable(R.drawable.stockmarket_large_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Movies"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.movies_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Crypto"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.crypto_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Senior"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.senior_citizen_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("DIY"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.diy_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Gaming"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.fun_large_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Dance"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.dance_large_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Fashion"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.fashion_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Music"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.music_large_icon));
+                else if (adapter.getPageTitle(position).toString().equalsIgnoreCase("Photography"))
+                    icon.setImageDrawable(getResources().getDrawable(R.drawable.camera_large_icon));
 
                 // todo: add rest
 
