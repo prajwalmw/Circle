@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.circle.circle">
+    package="com.circle.community">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
-        android:name="com.circle.circle.utilities.MyApplication"
+        android:name="com.circle.community.utilities.MyApplication"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -27,16 +27,16 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name="com.circle.circle.activity.FullscreenImageActivity"
+            android:name="com.circle.community.activity.FullscreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_fullscreen_image"
             android:theme="@style/AppTheme.Fullscreen" />
         <activity
-            android:name="com.circle.circle.activity.PostDetailsActivity"
+            android:name="com.circle.community.activity.PostDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="com.circle.circle.activity.GroupChatActivity"
+            android:name="com.circle.community.activity.GroupChatActivity"
             android:exported="false"
             android:theme="@style/AppTheme">
             <meta-data
@@ -44,7 +44,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.circle.circle.activity.ChatActivity"
+            android:name="com.circle.community.activity.ChatActivity"
             android:exported="false"
             android:theme="@style/AppTheme">
             <meta-data
@@ -52,21 +52,21 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.circle.circle.activity.Chat_UserList"
+            android:name="com.circle.community.activity.Chat_UserList"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="com.circle.circle.activity.CategoryActivity"
+            android:name="com.circle.community.activity.CategoryActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="com.circle.circle.activity.UserSetupScreen"
+            android:name="com.circle.community.activity.UserSetupScreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -74,7 +74,7 @@
         </activity>
 
         <activity
-            android:name="com.circle.circle.activity.PrivacyPolicyActivity"
+            android:name="com.circle.community.activity.PrivacyPolicyActivity"
             android:exported="true">
 
             <intent-filter>
@@ -89,7 +89,7 @@
         </activity>
 
         <activity
-            android:name="com.circle.circle.activity.ProfileOTP_Login"
+            android:name="com.circle.community.activity.ProfileOTP_Login"
             android:exported="true">
 
             <meta-data
@@ -98,7 +98,7 @@
         </activity>
 
         <activity
-            android:name="com.circle.circle.activity.MainActivity"
+            android:name="com.circle.community.activity.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -106,7 +106,7 @@
         </activity>
 
         <service
-            android:name="com.circle.circle.utilities.MyFirstbaseService"
+            android:name="com.circle.community.utilities.MyFirstbaseService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -118,7 +118,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.circle.circle.activity.MyCommunity"
+            android:name="com.circle.community.activity.MyCommunity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

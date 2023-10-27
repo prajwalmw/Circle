@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/fullscreenBackgroundColor"
     android:theme="@style/ThemeOverlay.Circle.FullscreenContainer"
-    tools:context=".activity.FullscreenImageActivity">
+    tools:context="com.circle.community.activity.FullscreenImageActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,

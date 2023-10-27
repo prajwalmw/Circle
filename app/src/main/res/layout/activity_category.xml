@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.CategoryActivity">
+    tools:context="com.circle.community.activity.CategoryActivity">
 
     <RelativeLayout
         android:id="@+id/category_toolbar"

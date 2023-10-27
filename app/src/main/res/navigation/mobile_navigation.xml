@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.circle.circle.fragment.HomeFragment"
+        android:name="com.circle.community.fragment.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_status"
-        android:name="com.circle.circle.fragment.StatusFragment"
+        android:name="com.circle.community.fragment.StatusFragment"
         android:label="Status"
         tools:layout="@layout/fragment_status" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.circle.circle.fragment.ProfileFragment"
+        android:name="com.circle.community.fragment.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 

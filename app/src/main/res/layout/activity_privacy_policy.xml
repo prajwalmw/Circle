@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_primary"
-    tools:context=".activity.PrivacyPolicyActivity">
+    tools:context="com.circle.community.activity.PrivacyPolicyActivity">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/icon"

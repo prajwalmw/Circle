@@ -4,9 +4,9 @@ plugins {
 
 android {
     compileSdk 33
-    namespace 'com.circle.circle'
+    namespace 'com.circle.community'
     defaultConfig {
-        applicationId "com.circle.circle"
+        applicationId "com.circle.community"
         minSdk 23
         targetSdk 33
         versionCode 1

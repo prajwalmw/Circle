@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.Chat_UserList">
+    tools:context="com.circle.community.activity.Chat_UserList">
 
     <RelativeLayout
         android:id="@+id/category_toolbar"
