@@ -353,7 +353,7 @@ public class PostFragment extends Fragment {
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             User user = snapshot1.getValue(User.class);
                             String cuuid = FirebaseAuth.getInstance().getUid();
-                            if (!user.getUid().equals(cuuid)) {
+                            if (user != null && user.getUid() != null && !user.getUid().equals(cuuid)) {
                                 // now logic of Display only those users that are not blocked and hv not blocked me as well.
 
                                 //2. Other user has blocked me so now he should nt be seen in my lists ie. dont add that user in my list.

@@ -79,11 +79,13 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        Glide.with(getActivity()).load(sessionManager.getUserModel("loggedIn_UserModel")
-                        .getProfileImage())
-                .placeholder(R.drawable.avatar)
-                .circleCrop()
-                .into(binding.profileImgIcon);
+        if (sessionManager != null && sessionManager.getUserModel("loggedIn_UserModel") != null) {
+            Glide.with(getActivity())
+                    .load(sessionManager.getUserModel("loggedIn_UserModel").getProfileImage())
+                    .placeholder(R.drawable.avatar)
+                    .circleCrop()
+                    .into(binding.profileImgIcon);
+        }
 
 
 //        if (categoryList != null) {
