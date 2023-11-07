@@ -112,7 +112,7 @@ public class CategoryActivity extends AppCompatActivity implements CheckboxSelec
         recyclerview_category = findViewById(R.id.recyclerview_category);
         join_txtview = findViewById(R.id.join_txtview);
 
-        if (checkedValues.size() > 0)
+        if (checkedValues != null && checkedValues.size() > 0)
             adapter = new CategoryAdapter(this, modelList, checkedValues);
         else
             adapter = new CategoryAdapter(this, modelList);
